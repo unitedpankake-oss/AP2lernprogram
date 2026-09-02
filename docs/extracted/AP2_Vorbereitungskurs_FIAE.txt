@@ -1,0 +1,2024 @@
+﻿
+
+IHK-PRÜFUNGSVORBEREITUNG
+AP2 Intensivkurs
+Fachinformatiker/-in Anwendungsentwicklung
+57 Kerngebiete • drei Prüfungsteile • Aufgaben mit Musterlösungen
+Ziel: Prüfungsaufgaben nicht nur wiedererkennen, sondern strukturiert lösen, fachlich begründen und in der vorgegebenen Zeit sauber darstellen.
+
+
+Fallstudie: HelpDesk Pro – webbasiertes Ticket- und Serviceportal
+Arbeitsstand: September 2026
+
+So arbeitest du mit diesem Kurs
+Der Kurs ist auf aktive Wiederholung ausgelegt. Lies pro Modul zuerst den Prüfungskern, decke danach die Musterlösung ab und bearbeite die Aufgabe auf Papier. Vergleiche erst anschließend mit dem Lösungsteil.
+Phase
+Vorgehen
+Zeit
+1. Verstehen
+Kernbegriffe und Beispiel durcharbeiten
+25–40 min
+2. Abrufen
+Checkliste ohne Unterlagen reproduzieren
+10 min
+3. Anwenden
+Prüfungsaufgabe schriftlich lösen
+20–35 min
+4. Korrigieren
+Fehler markieren und Antwort verbessern
+10–15 min
+5. Wiederholen
+Nach 1, 3 und 7 Tagen kurz testen
+je 5–10 min
+
+Acht-Wochen-Plan
+Woche
+Schwerpunkt
+Module
+1
+Analyse und Modellierung
+1–4
+2
+Dynamische Modelle und Daten
+5–8
+3
+Schnittstellen, Code und Prozesse
+9–11
+4
+Recht, Qualität, Sicherheit und Muster
+12–15
+5
+SQL, Algorithmen und Tests
+16–24
+6
+OOP, Kryptografie, Normalisierung und Migration
+25–29 + Probeklausuren
+7
+Ausbildungs-/Arbeitsrecht und soziale Sicherung
+30–43
+8
+Wirtschaft, Verträge und Organisation
+44–57 + WiSo-MC
+
+Prüfungsregel: Antworte exakt auf den Operator: nennen = Stichwort; beschreiben = Merkmal plus Ablauf; erläutern/begründen = Zusammenhang plus Ursache oder Nutzen; erstellen/ergänzen = vollständige, konsistente Darstellung.
+
+Inhaltsübersicht
+Stakeholder- und Umfeldanalyse
+UML-Klassendiagramm
+UML-Anwendungsfalldiagramm
+UML-Aktivitätsdiagramm
+UML-Sequenzdiagramm
+UML-Zustandsdiagramm
+ER-Modell
+Mockup und Usability
+REST, HTTP und CRUD
+Pseudocode
+Vorgehensmodelle
+Datenschutz und DSGVO
+Qualitätssicherung
+Sicherheitstechnische Anforderungen
+Entwurfsmuster
+SQL SELECT mit JOIN/GROUP BY
+SQL-DML
+Pseudocode: Filtern, Zählen, Sortieren
+Sortieralgorithmus
+Whitebox- und Blackbox-Tests
+Coverage-Metriken
+Pfade und Pfadüberdeckung
+Unit- und Regressionstests
+Semantische Fehler finden
+OOP-Begriffe
+Verschlüsselung, TLS und Hashing
+Normalisierung bis 3. NF
+GRANT und Berechtigungen
+Datenmigration und Datenimport
+Probezeit im Ausbildungsvertrag
+Kündigung des Ausbildungsvertrags
+Ende des Ausbildungsverhältnisses
+Befristung von Arbeitsverträgen
+Tarifvertrag
+Betriebsrat und Mitbestimmung
+Fünf Säulen der Sozialversicherung
+Beitragsbemessungsgrenze
+Generationenvertrag und Umlageverfahren
+Mutterschutz
+Allgemeines Gleichbehandlungsgesetz
+Arbeitsschutz und Arbeitsschutzausschuss
+Sicherheits- und Rettungszeichen
+Brandschutz
+Unternehmensformen
+Stamm- und Grundkapital
+Handelsregister A und B
+Wirtschaftssektoren
+Wirtschaftlichkeit und Rentabilität
+Marktformen
+Kartelle
+Mahnverfahren und Verzug
+Kaufvertrag und Mängel
+Steuern
+Inflation, EZB und Leitzins
+Nachhaltigkeit und Verursacherprinzip
+Businessplan und Existenzgründung
+Leitungssysteme
+MODUL 01  |  60–75 Minuten
+Stakeholder- und Umfeldanalyse
+Lernziel: Stakeholder erkennen, Einfluss und Interesse bewerten sowie Erwartungen, Befürchtungen und passende Maßnahmen formulieren.
+
+Prüfungskern
+Stakeholder sind Personen oder Gruppen, die das Projekt beeinflussen oder von seinem Ergebnis betroffen sind. Das Umfeld umfasst interne, externe, sachliche und soziale Einflussfaktoren.
+Stakeholder
+Erwartung
+Befürchtung
+Einfluss/Interesse
+Maßnahme
+Auftraggeber
+Nutzen, Termin, Budget
+Kostenüberschreitung
+hoch / hoch
+regelmäßiger Status, Abnahmekriterien
+Endnutzer
+einfache, schnelle Bedienung
+komplizierte Maske, Datenverlust
+mittel / hoch
+Interviews, Usability-Test
+Entwicklungsteam
+klare Anforderungen
+Scope Creep, technische Schulden
+hoch / hoch
+Definition of Done, Refinement
+Datenschutzbeauftragte
+Datenminimierung, Nachweisbarkeit
+Rechtsverstoß
+hoch / mittel
+frühe Prüfung, Löschkonzept
+Betriebsrat
+Transparenz, Beschäftigtenschutz
+Leistungsüberwachung
+hoch / mittel
+Mitbestimmung, Auswertung begrenzen
+
+Vorgehen in fünf Schritten
+Stakeholder aus Auftrag, Organigramm, Prozess und externem Umfeld sammeln.
+Interesse und Einfluss bewerten.
+Je Stakeholder mindestens eine konkrete Erwartung und Befürchtung formulieren.
+Konflikte sichtbar machen, z. B. Komfort versus Datenschutz.
+Kommunikations- oder Beteiligungsmaßnahme ableiten.
+Typischer Fehler: „Kunde will gute Software“ ist zu allgemein. Prüfungsstark ist: „Der Auftraggeber erwartet eine messbar kürzere Bearbeitungszeit; er befürchtet steigende Betriebskosten.“
+
+Übung 1
+Erstelle für HelpDesk Pro eine Tabelle mit vier Stakeholdern. Nenne je eine Erwartung, eine Befürchtung und eine Maßnahme. Markiere den Stakeholder mit dem größten Projektrisiko.
+MODUL 02  |  90 Minuten
+UML-Klassendiagramm
+Lernziel: Klassen, Attribute, Operationen, Sichtbarkeit, Multiplizitäten, Aggregation/Komposition und Vererbung korrekt lesen und ergänzen.
+
+
+Beispiel: fachliches Klassendiagramm der Fallstudie
+Notation
+Element
+Notation
+Bedeutung
+Sichtbarkeit
++ public, - private, # protected
+Zugriff auf Attribut oder Methode
+Attribut
+- status: TicketStatus
+Name und Datentyp
+Operation
++ statusAendern(neu: TicketStatus): void
+Parameter mit Typ und Rückgabetyp
+Multiplizität
+0..1, 1, *, 1..*
+Anzahl zulässiger Objekte am Beziehungsende
+Aggregation
+weiße Raute
+Teil kann unabhängig existieren
+Komposition
+schwarze Raute
+Teil gehört lebenszyklusabhängig zum Ganzen
+Vererbung
+Linie mit leerem Dreieck zur Oberklasse
+Unterklasse ist eine Spezialisierung
+
+Prüfungslogik
+Nomen im Text liefern Kandidaten für Klassen; Eigenschaften liefern Attribute; Verben liefern Methoden oder Beziehungen.
+Multiplizitäten immer an beiden Enden lesen: Ein Kunde erstellt 0..* Tickets; jedes Ticket gehört genau 1 Kunden.
+Methodensignaturen vollständig: Sichtbarkeit, Name, Parametername, Parametertyp und Rückgabetyp.
+Keine Datenbankdetails wie Fremdschlüssel in ein fachliches UML-Klassendiagramm mischen, sofern nicht verlangt.
+Übung 2
+Ergänze: Ein Ticket besitzt genau eine Kategorie; eine Kategorie kann für beliebig viele Tickets gelten. Jeder Kommentar gehört genau zu einem Ticket und wird von genau einem Benutzer verfasst. Entscheide, ob zwischen Ticket und Kommentar Aggregation oder Komposition sinnvoll ist, und begründe.
+MODUL 03  |  60 Minuten
+UML-Anwendungsfalldiagramm
+Lernziel: Akteure, Systemgrenze, Use Cases sowie <<include>> und <<extend>> aus Anforderungen ableiten.
+
+
+Beispiel: Use-Case-Diagramm mit externem Dienst
+Beziehung
+Wann verwenden?
+Pfeilrichtung
+Assoziation
+Akteur nimmt am Anwendungsfall teil
+Linie zwischen Akteur und Use Case
+<<include>>
+Teilablauf wird immer wiederverwendet
+vom Basisfall zum eingebundenen Fall
+<<extend>>
+optionale/bedingte Erweiterung
+vom Erweiterungsfall zum Basisfall
+Generalisierung
+Akteur oder Use Case spezialisiert einen allgemeineren
+Dreieck zeigt zum allgemeineren Element
+
+Merksatz: Use Cases beschreiben Ziele aus Sicht eines Akteurs, nicht technische Komponenten. „Ticket anlegen“ ist geeignet; „SQL INSERT ausführen“ nicht.
+
+Übung 3
+Modelliere: Ein Gast darf die Wissensdatenbank durchsuchen. Ein angemeldeter Kunde darf zusätzlich Tickets anlegen. Beim Anlegen wird immer validiert; optional kann eine Datei angehängt werden.
+MODUL 04  |  75 Minuten
+UML-Aktivitätsdiagramm
+Lernziel: Abläufe mit Swimlanes, Entscheidungen, Guards sowie Fork/Join korrekt darstellen.
+
+
+Beispiel: Aktivitätsdiagramm mit Entscheidung und Parallelisierung
+Symbol
+Bedeutung
+Prüfpunkt
+schwarzer Punkt
+Start
+genau einen sinnvollen Einstieg wählen
+abgerundete Aktion
+ausgeführter Schritt
+Verb + Objekt verwenden
+Raute
+Decision/Merge
+ausgehende Kanten mit Guards [Bedingung]
+dicker Balken
+Fork/Join
+parallele Zweige aufteilen bzw. synchronisieren
+Swimlane
+Verantwortung
+Aktion in die Lane des Ausführenden setzen
+Zielscheibe
+Ende
+Prozessabschluss, nicht nur letzter Arbeitsschritt
+
+Typischer Fehler: Ein Fork ohne passenden Join kann korrekt sein, wenn ein Zweig bewusst unabhängig weiterläuft. In Prüfungsaufgaben wird aber oft eine Synchronisation erwartet – Aufgabenwortlaut beachten.
+
+Übung 4
+Erweitere den Ablauf: Nach dem Speichern werden E-Mail und Push-Nachricht parallel versendet. Der Prozess endet erst, wenn beide Versandversuche abgeschlossen sind. Bei ungültiger E-Mail-Adresse wird nur Push gesendet.
+MODUL 05  |  75 Minuten
+UML-Sequenzdiagramm
+Lernziel: Interaktionen zeitlich ordnen, Lifelines sinnvoll wählen und synchrone, asynchrone sowie Rückgabe-Nachrichten unterscheiden.
+
+
+Beispiel: Sequenzdiagramm für das Erstellen eines Tickets
+Zeit läuft von oben nach unten; horizontale Position zeigt Beteiligte, nicht Ablaufphasen.
+Synchroner Aufruf: Sender wartet auf Abschluss. Asynchroner Aufruf: Sender kann fortfahren.
+Rückgaben werden häufig gestrichelt gezeichnet und sollten einen Wert oder Status benennen.
+Mit alt/opt/loop lassen sich Alternativen, optionale Abläufe und Wiederholungen modellieren.
+Lifelines sollten Rollen oder konkrete Objekte benennen, z. B. webApp:TicketController.
+alt [Eingaben gültig]  WebApp -> TicketService: createTicket(dto)else [ungültig]  WebApp --> Kunde: HTTP 400 + Fehlerlisteend
+
+Übung 5
+Ergänze im Beispiel einen AuthService. Vor createTicket(dto) wird synchron authorize(token) aufgerufen. Bei fehlender Berechtigung antwortet die WebApp mit HTTP 403. Bei Erfolg läuft die Erstellung weiter.
+MODUL 06  |  60 Minuten
+UML-Zustandsdiagramm
+Lernziel: Lebenszyklus eines einzelnen Objekts als Zustände, Ereignisse, Übergänge, Guards und Aktionen darstellen.
+
+
+Beispiel: Zustandsautomat eines Tickets
+Eine Transition kann kompakt als event [guard] / action beschriftet werden. Beispiel: schließen [rolle=Agent] / geschlossenAm setzen.
+Begriff
+Frage
+Beispiel
+Zustand
+In welcher stabilen Situation befindet sich das Objekt?
+In Bearbeitung
+Ereignis
+Was löst einen Übergang aus?
+Kunde antwortet
+Guard
+Welche Bedingung muss gelten?
+[innerhalb 14 Tage]
+Aktion/Effekt
+Was geschieht beim Übergang?
+Zeitstempel setzen
+entry/exit/do
+Was geschieht beim Eintritt, Austritt oder währenddessen?
+entry / Benachrichtigung senden
+
+Abgrenzung: Aktivitätsdiagramm = Ablauf mehrerer Tätigkeiten; Zustandsdiagramm = Lebenszyklus eines Objekts. Ein Statusfeld im Datenmodell ist oft ein Hinweis auf ein Zustandsdiagramm.
+
+Übung 6
+Füge den Zustand „Storniert“ hinzu. Stornieren darf ein Kunde nur aus „Neu“ oder „Zugewiesen“. Aus „In Bearbeitung“ darf nur ein Mitarbeiter stornieren. Formuliere passende Guards.
+MODUL 07  |  90 Minuten
+ER-Modell
+Lernziel: Entitäten, Attribute, Schlüssel, Beziehungen und Kardinalitäten konsistent in ein relationales Schema überführen.
+
+
+Beispiel: ER-Modell mit Primär- und Fremdschlüsseln
+Kardinalität
+Bedeutung
+Relationale Umsetzung
+1:1
+jedem Datensatz höchstens/genau ein Gegenstück
+FK auf einer Seite, meist UNIQUE
+1:n
+ein A hat viele B; jedes B gehört zu einem A
+FK der 1-Seite in Tabelle der n-Seite
+n:m
+viele A zu vielen B
+Zwischentabelle mit zwei FKs; oft zusammengesetzter PK
+
+TICKET(ticket_id PK, kunden_id FK, titel, status)TAG(tag_id PK, name UNIQUE)TICKET_TAG(ticket_id PK/FK, tag_id PK/FK)
+
+Qualitätscheck
+Jede Entität besitzt einen Primärschlüssel.
+Attribute sind atomar; wiederholende Gruppen werden ausgelagert.
+Fremdschlüssel liegen bei 1:n auf der n-Seite.
+Optionalität und Kardinalität stimmen mit dem Text überein.
+n:m-Beziehungen werden bei der Tabellenableitung aufgelöst.
+Übung 7
+Ein Ticket kann mehrere Tags besitzen, ein Tag gehört zu mehreren Tickets. Ein Mitarbeiter kann Tickets beobachten; diese Beziehung speichert zusätzlich abonniert_am. Erweitere das ER-Modell einschließlich Schlüssel.
+MODUL 08  |  75 Minuten
+Mockup bewerten und verbessern
+Lernziel: Mindestens drei konkrete Usability-Mängel mit Auswirkung benennen und einen nachvollziehbar verbesserten Entwurf skizzieren.
+
+Drei prüfungsstarke Mangeltypen
+Mangel
+Auswirkung
+Verbesserung
+Unklare Beschriftung („OK“, „Los“)
+Nutzer erkennt Folge der Aktion nicht
+handlungsorientiert: „Ticket erstellen“
+Fehlende visuelle Hierarchie
+wichtige Aktion und Inhalte sind schwer auffindbar
+Titel, Gruppen, Abstände und Primärbutton einsetzen
+Nur Farbe signalisiert Fehler
+für Farbsehschwäche unzugänglich; Bedeutung unklar
+Text, Icon und Fokus zusätzlich verwenden
+Zu kleine Klickziele / schwacher Kontrast
+Fehleingaben, schlechte mobile Nutzung
+ausreichende Größe, Kontrast und Abstand
+Keine Rückmeldung nach Aktion
+Unsicherheit, Mehrfachklicks
+Ladezustand, Erfolg oder konkrete Fehlermeldung
+
+
+Verbessertes Mockup: klare Hierarchie, Pflichtfelder, sprechende Aktionen und Datenschutzhinweis
+Antwortformel: Mangel + Auswirkung + konkrete Verbesserung. Beispiel: „Das Pflichtfeld ist nicht markiert; dadurch bleiben Eingaben unvollständig. Eine sichtbare Kennzeichnung mit * und Inline-Validierung verhindert dies.“
+
+Übung 8
+Bewerte ein Formular mit grauem Text auf weißem Grund, einem Button „OK“, Fehlermeldungen nur als rote Umrandung und Navigation ausschließlich über Symbole. Nenne drei Mängel und skizziere eine verbesserte Anordnung.
+MODUL 09  |  105 Minuten
+REST, HTTP und CRUD
+Lernziel: Ressourcenorientierte Endpunkte, HTTP-Methoden, Statuscodes, Header und JSON-Nachrichten korrekt auswählen.
+
+CRUD
+HTTP
+Beispiel
+Erfolg
+Create
+POST
+POST /api/tickets
+201 Created + Location
+Read
+GET
+GET /api/tickets/42
+200 OK
+Update vollständig
+PUT
+PUT /api/tickets/42
+200 OK oder 204 No Content
+Update teilweise
+PATCH
+PATCH /api/tickets/42
+200 OK oder 204 No Content
+Delete
+DELETE
+DELETE /api/tickets/42
+204 No Content
+
+Wichtige Statuscodes
+Code
+Bedeutung
+Wann?
+200 OK
+Anfrage erfolgreich
+GET oder Update mit Response-Body
+201 Created
+Ressource angelegt
+POST erfolgreich; Location auf neue Ressource
+204 No Content
+erfolgreich ohne Body
+DELETE oder Update
+400 Bad Request
+syntaktisch/fachlich ungültig
+Validierungsfehler
+401 Unauthorized
+nicht authentifiziert
+Token fehlt/ungültig
+403 Forbidden
+authentifiziert, aber nicht berechtigt
+Rolle reicht nicht
+404 Not Found
+Ressource nicht gefunden
+ID existiert nicht
+409 Conflict
+Konflikt mit aktuellem Zustand
+Versionskonflikt/Duplikat
+415 Unsupported Media Type
+Content-Type nicht unterstützt
+z. B. XML statt JSON
+500 Internal Server Error
+unerwarteter Serverfehler
+keine vertraulichen Details ausgeben
+
+POST /api/tickets HTTP/1.1Host: example.testAuthorization: Bearer <token>Content-Type: application/jsonAccept: application/json{  "title": "Login nicht möglich",  "categoryId": "auth",  "priority": "HIGH"}
+
+HTTP/1.1 201 CreatedLocation: /api/tickets/42Content-Type: application/json{"id": 42, "status": "NEW"}
+
+REST-Prinzipien
+Ressourcen als Substantive und plural benennen, z. B. /tickets statt /createTicket.
+Stateless: Jede Anfrage enthält die nötigen Informationen; keine versteckte Sitzungsvoraussetzung.
+Idempotenz: GET, PUT und DELETE sollen bei Wiederholung denselben beabsichtigten Zustand erzeugen; POST ist typischerweise nicht idempotent.
+Content-Type beschreibt den gesendeten Body; Accept die gewünschten Antwortformate.
+Authentifizierung (401) und Autorisierung (403) unterscheiden.
+Übung 9
+Entwirf Requests und Responses für: Ticket lesen, Priorität ändern, Ticket löschen und unbekanntes Ticket bearbeiten. Gib Methode, URL, relevante Header, JSON-Body und Statuscode an.
+MODUL 10  |  105 Minuten
+Pseudocode für Klassenmethoden
+Lernziel: Vorgegebene Methodensignaturen vollständig, robust und nachvollziehbar in sprachneutralem Pseudocode implementieren.
+
+Pseudocode wird nach Logik bewertet, nicht nach einer konkreten Programmiersprache. Verwende eindeutige Zuweisungen, Bedingungen, Schleifen, Rückgaben und Fehlerbehandlung.
+METHOD statusAendern(neu: TicketStatus): Boolean    IF neu IS NULL THEN        RETURN FALSE    ENDIF    erlaubteUebergaenge <- {        NEU: [ZUGEWIESEN, STORNIERT],        ZUGEWIESEN: [IN_BEARBEITUNG, STORNIERT],        IN_BEARBEITUNG: [WARTET, GELOEST]    }    IF neu NOT IN erlaubteUebergaenge[this.status] THEN        RETURN FALSE    ENDIF    this.status <- neu    this.geaendertAm <- NOW()    RETURN TRUEENDMETHOD
+
+Robuste Lösungsstruktur
+Vorbedingungen und Sonderfälle prüfen.
+Benötigte Variablen initialisieren.
+Kernalgorithmus mit klaren Bedingungen/Schleifen umsetzen.
+Objektzustand nur konsistent ändern.
+Ergebnis oder Fehler eindeutig zurückgeben.
+Typischer Fehler: Die Methode soll einen Wert zurückgeben, aber ein Ausführungspfad endet ohne RETURN. Prüfe alle Zweige.
+
+Übung 10
+Implementiere countOpenTickets(tickets: List<Ticket>): Integer. NULL-Einträge sollen ignoriert werden. Offen sind NEU, ZUGEWIESEN, IN_BEARBEITUNG und WARTET. Formuliere zusätzlich zwei Testfälle.
+MODUL 11  |  90 Minuten
+Vorgehensmodelle: Wasserfall, V-Modell und Scrum
+Lernziel: Modelle nicht nur definieren, sondern anhand von Änderungsrate, Risiko, Nachweisbedarf und Kundenverfügbarkeit begründet auswählen.
+
+Kriterium
+Wasserfall
+V-Modell
+Scrum/agil
+Ablauf
+sequenzielle Phasen
+Entwicklungsschritte mit zugeordneten Teststufen
+iterative Sprints und laufendes Feedback
+Stärke
+klar planbar bei stabilen Anforderungen
+starke Verifikation/Validierung und Nachweisführung
+früher Nutzen, schnelle Anpassung
+Schwäche
+spätes Feedback, Änderungen teuer
+Dokumentationsaufwand, weniger flexibel
+benötigt Mitarbeit, Priorisierung und reifes Team
+Geeignet
+stabile, klar abgegrenzte Vorhaben
+sicherheits-/qualitätskritisch, reguliert
+dynamische Anforderungen, Produktentwicklung
+
+Scrum kompakt
+Rollen
+Ereignisse
+Artefakte/Commitments
+Product Owner, Scrum Master, Developers
+Sprint, Planning, Daily, Review, Retrospective
+Product Backlog/Product Goal, Sprint Backlog/Sprint Goal, Increment/Definition of Done
+
+Begründungsformel: Projektmerkmal → Wirkung des Modells → Entscheidung. Beispiel: „Da Anforderungen häufig wechseln und der Fachbereich wöchentlich Feedback geben kann, reduziert Scrum durch kurze Sprints das Risiko einer Fehlentwicklung.“
+
+Übung 11
+Wähle ein Modell für (a) eine behördliche Fachanwendung mit verbindlicher Spezifikation und umfangreichen Abnahmen und (b) ein neues Kundenportal mit unklaren Nutzerbedürfnissen. Begründe jeweils mit zwei Kriterien.
+MODUL 12  |  90 Minuten
+Datenschutz und DSGVO
+Lernziel: Rechtsgrundlage, Einwilligung, Betroffenenrechte, Datenminimierung und sichere Passwortspeicherung prüfungstauglich erläutern.
+
+Grundprinzipien
+Rechtmäßigkeit, Transparenz und Zweckbindung: Daten nur für einen festgelegten legitimen Zweck verarbeiten.
+Datenminimierung: nur erforderliche Daten erheben.
+Richtigkeit und Speicherbegrenzung: Daten aktuell halten und löschen/anonymisieren, wenn der Zweck entfällt.
+Integrität und Vertraulichkeit: angemessene technische und organisatorische Maßnahmen.
+Rechenschaftspflicht: Einhaltung nachweisen können.
+Wirksame Einwilligung
+Eine Einwilligung muss freiwillig, informiert, zweckgebunden, eindeutig und widerrufbar sein. Sie darf nicht unnötig an eine Leistung gekoppelt werden. Für zwingend notwendige Vertragsverarbeitung ist häufig Vertragserfüllung statt Einwilligung die passendere Rechtsgrundlage.
+Passwörter speichern
+Richtig
+Falsch
+langsamer, geeigneter Passwort-Hash wie Argon2id, bcrypt oder scrypt
+Klartext oder reversible Verschlüsselung
+zufälliger individueller Salt pro Passwort
+ein gemeinsamer fester Salt
+Kostenparameter regelmäßig prüfen und Hash bei Login aktualisieren
+schneller Hash wie MD5 oder SHA-256 allein
+Zugriff beschränken, TLS bei Übertragung, Rate Limiting und MFA erwägen
+Passwort per E-Mail versenden oder protokollieren
+
+Wichtig: Salting verhindert gleiche Hashes bei gleichen Passwörtern und erschwert vorberechnete Tabellen. Es ersetzt keinen langsamen Passwort-Hash. Ein Pepper kann zusätzlich getrennt vom Datenbestand als Geheimnis gehalten werden.
+
+Übung 12
+Ein Registrierungsformular verlangt Geburtsdatum, Telefonnummer und Zustimmung zu Werbung, obwohl nur ein Supportkonto benötigt wird. Analysiere Datenminimierung, Kopplung und Widerruf. Beschreibe anschließend eine sichere Passwortspeicherung.
+MODUL 13  |  75 Minuten
+Qualitätssichernde Maßnahmen
+Lernziel: Mindestens drei Maßnahmen benennen, deren Durchführung beschreiben und den konkreten Qualitätsnutzen erklären.
+
+Maßnahme
+Durchführung
+Nutzen
+Code Review
+zweite Person prüft Änderung anhand Checkliste/Pull Request
+Fehler, Verständlichkeit, Standards und Wissensaustausch
+Unit-Test
+kleine Einheit isoliert mit Eingaben und erwarteten Ergebnissen testen
+schnelles Feedback, sichere Regression
+Integrationstest
+Zusammenspiel mehrerer Komponenten und Schnittstellen prüfen
+Vertrags- und Datenflussfehler finden
+System-/End-to-End-Test
+vollständiges System gegen Anforderungen testen
+Nutzerszenarien und Gesamtablauf absichern
+Statische Analyse
+Code ohne Ausführung automatisiert auf Regeln/Schwachstellen prüfen
+frühe, reproduzierbare Fehlererkennung
+Usability-Test
+repräsentative Nutzer bearbeiten Aufgaben; Beobachtung und Kennzahlen
+Bedienprobleme vor Produktivsetzung erkennen
+
+Testfall-Schablone
+ID
+Vorbedingung
+Eingabe/Aktion
+Erwartetes Ergebnis
+T-LOGIN-01
+aktiver Benutzer existiert
+korrekte E-Mail + Passwort
+Anmeldung erfolgreich; Dashboard sichtbar
+T-LOGIN-02
+Benutzer existiert
+falsches Passwort
+generische Fehlermeldung; kein Login; Versuch protokolliert
+
+Antwortqualität: Nur „Tests durchführen“ ist zu ungenau. Nenne Testart, Prüfobjekt, Ablauf und erwarteten Qualitätsnutzen.
+
+Übung 13
+Wähle drei QS-Maßnahmen für eine neue REST-Schnittstelle. Beschreibe jeweils Durchführung und welches Fehlerbild die Maßnahme besonders gut findet.
+MODUL 14  |  90 Minuten
+Sicherheitstechnische Anforderungen
+Lernziel: Anforderungen messbar formulieren und Schutzbedarf, Bedrohung sowie technische Maßnahme miteinander verbinden.
+
+Schutzziel
+Anforderung
+Beispielmaßnahme
+Vertraulichkeit
+Nur berechtigte Rollen dürfen Tickets ihrer Organisation lesen.
+RBAC, serverseitige Autorisierung, TLS
+Integrität
+Statusänderungen müssen manipulationsgeschützt und nachvollziehbar sein.
+Validierung, Transaktionen, Audit-Log
+Verfügbarkeit
+Der Dienst soll vereinbarte Ausfallzeiten und Wiederanlaufziele einhalten.
+Redundanz, Monitoring, Backup/Restore-Test
+Authentizität
+Identität eines Benutzers muss verlässlich geprüft werden.
+MFA, sichere Sitzung, starke Authentisierung
+Nachvollziehbarkeit
+Sicherheitsrelevante Änderungen müssen einem Akteur zugeordnet werden.
+unveränderbares Logging, Zeitstempel, Schutz der Logs
+
+Konkrete Anforderungen statt Schlagwörter
+„Sicheres Login“ ist nicht prüfbar. Besser: Nach fünf Fehlversuchen wird das Konto für 15 Minuten begrenzt; Ereignisse werden protokolliert.
+Eingaben werden serverseitig validiert; Datenbankzugriffe verwenden parametrisierte Abfragen.
+Sitzungstoken werden nur über TLS übertragen, kurzlebig gehalten und bei Abmeldung serverseitig ungültig gemacht.
+Backups werden verschlüsselt, getrennt gespeichert und monatlich durch Restore-Test verifiziert.
+Least Privilege: Konten und Dienste erhalten nur die minimal nötigen Rechte.
+Übung 14
+Formuliere drei testbare Sicherheitsanforderungen für HelpDesk Pro: eine zur Autorisierung, eine zur Verfügbarkeit und eine zur Protokollierung. Ergänze je ein Akzeptanzkriterium.
+MODUL 15  |  105 Minuten
+Entwurfsmuster
+Lernziel: Factory Method, MVC, Singleton und Observer an Problem, Struktur, Nutzen und Nachteilen erkennen und auswählen.
+
+Muster
+Problem/Lösung
+Typisches Beispiel
+Risiko
+Factory Method
+Erzeugung kapseln; Unterklassen/Factory entscheiden konkrete Klasse
+NotificationFactory erzeugt EmailNotification oder PushNotification
+zusätzliche Klassen/Abstraktion
+MVC
+Model, View und Controller trennen
+Controller verarbeitet Request, Model enthält Fachlogik, View präsentiert
+falsche Zuständigkeiten führen zu „fat controller“
+Singleton
+genau eine Instanz mit globalem Zugriffspunkt
+zentraler Konfigurationsdienst (sparsam einsetzen)
+globaler Zustand, Kopplung, schlechte Testbarkeit
+Observer
+Abonnenten bei Zustandsänderung benachrichtigen
+TicketStatusChanged informiert E-Mail, Audit und Analytics
+Reihenfolge, Fehlerbehandlung, schwerer Datenfluss
+
+Mini-Beispiele
+INTERFACE Notification    METHOD send(message)CLASS NotificationFactory    METHOD create(channel): Notification        IF channel = "EMAIL" RETURN NEW EmailNotification()        IF channel = "PUSH" RETURN NEW PushNotification()        THROW UnsupportedChannel    END
+
+CLASS Ticket SUBJECT    observers <- []    METHOD attach(observer)        observers.ADD(observer)    METHOD setStatus(status)        this.status <- status        FOR EACH observer IN observers            observer.update(this)        END FOR
+
+Auswahlfragen
+Variiert primär die Objekterzeugung? → Factory Method.
+Müssen Darstellung, Eingabesteuerung und Fachzustand getrennt werden? → MVC.
+Wird wirklich exakt eine Instanz benötigt – oder genügt Dependency Injection mit normalem Lebenszyklus? → Singleton kritisch prüfen.
+Sollen mehrere lose gekoppelte Reaktionen auf ein Ereignis folgen? → Observer.
+Übung 15
+Für Statusänderungen sollen E-Mail, Audit-Log und Kennzahlenmodul unabhängig reagieren. Wähle ein Muster, skizziere Beteiligte und nenne zwei Vorteile sowie einen Nachteil. Erkläre außerdem, warum Singleton hierfür keine passende Hauptlösung ist.
+
+TEIL 2
+Datenbanken, Algorithmen, Tests und OOP
+Schwerpunkt: SQL-Abfragen und DML sicher schreiben, Kontrollflüsse systematisch testen, Algorithmen nachvollziehen sowie OOP-, Kryptografie- und Migrationsthemen fallbezogen begründen.
+
+Für alle SQL-Beispiele gilt das Schema der Fallstudie: KUNDE(kunden_id, name, email), TICKET(ticket_id, kunden_id, bearbeiter_id, status, prioritaet, erstellt_am), MITARBEITER(mitarbeiter_id, name, team_id), KOMMENTAR(kommentar_id, ticket_id, autor_id, text, erstellt_am).
+MODUL 16  |  120 Minuten
+SQL-Abfragen mit JOIN, GROUP BY und Aggregaten
+Lernziel: Mehrere Tabellen korrekt verbinden, gruppieren, filtern und sortieren – einschließlich COUNT, SUM, AVG, MIN und MAX.
+
+Logische Reihenfolge
+SELECT ...FROM ...JOIN ... ON ...WHERE ...GROUP BY ...HAVING ...ORDER BY ...
+
+Gedanklich werden FROM/JOIN und WHERE vor GROUP BY/HAVING und SELECT ausgewertet. Deshalb filtert WHERE einzelne Zeilen vor der Gruppierung; HAVING filtert Gruppen nach der Aggregation.
+JOIN
+Ergebnis
+Typischer Einsatz
+INNER JOIN
+nur passende Datensätze beider Seiten
+Tickets mit vorhandenem Kunden
+LEFT JOIN
+alle Datensätze links; rechts ggf. NULL
+auch Kunden ohne Tickets anzeigen
+RIGHT JOIN
+alle Datensätze rechts; links ggf. NULL
+selten; meist als LEFT JOIN umformulierbar
+FULL OUTER JOIN
+alle Datensätze beider Seiten
+Abgleich zweier Bestände; nicht jedes DBMS
+
+SELECT k.kunden_id, k.name, COUNT(t.ticket_id) AS anzahl_offenFROM kunde kLEFT JOIN ticket t  ON t.kunden_id = k.kunden_id AND t.status NOT IN ('GELOEST', 'GESCHLOSSEN')GROUP BY k.kunden_id, k.nameHAVING COUNT(t.ticket_id) >= 2ORDER BY anzahl_offen DESC, k.name ASC;
+
+Wichtiger JOIN-Fall: Bei LEFT JOIN kann eine Bedingung über die rechte Tabelle in WHERE unbeabsichtigt Kunden ohne Tickets entfernen. Liegt die Bedingung im ON-Teil, bleiben diese Kunden erhalten.
+
+COUNT korrekt wählen
+COUNT(*) zählt Ergebniszeilen.
+COUNT(spalte) zählt nur Werte ungleich NULL.
+COUNT(DISTINCT spalte) zählt unterschiedliche Werte ungleich NULL.
+Jede nicht aggregierte SELECT-Spalte gehört grundsätzlich in GROUP BY.
+NULL wird mit IS NULL/IS NOT NULL geprüft, nicht mit = NULL.
+Übung 16
+Gib pro Mitarbeiter Name, Anzahl zugewiesener Tickets und durchschnittliche Bearbeitungsdauer aus. Zeige in der Grundabfrage auch Mitarbeiter ohne Tickets und sortiere absteigend nach Anzahl. Formuliere anschließend eine zweite Variante, die mit HAVING nur Mitarbeiter mit mindestens fünf Tickets zeigt.
+MODUL 17  |  90 Minuten
+SQL-DML: INSERT, UPDATE und DELETE
+Lernziel: Daten sicher anlegen, ändern und löschen; WHERE-Bedingungen, Constraints und Transaktionen berücksichtigen.
+
+INSERT INTO ticket (ticket_id, kunden_id, status, prioritaet, erstellt_am)VALUES (42, 7, 'NEU', 'HOCH', CURRENT_TIMESTAMP);UPDATE ticketSET status = 'GESCHLOSSEN', geschlossen_am = CURRENT_TIMESTAMPWHERE ticket_id = 42 AND status = 'GELOEST';DELETE FROM ticketWHERE status = 'STORNIERT'  AND erstellt_am < CURRENT_DATE - INTERVAL '365' DAY;
+
+Befehl
+Risiko
+Sichere Vorgehensweise
+INSERT
+Pflichtwert fehlt, Schlüssel doppelt, FK ungültig
+Spalten explizit nennen; Constraints prüfen
+UPDATE
+fehlendes WHERE ändert alle Zeilen
+Bedingung zuerst als SELECT prüfen; Transaktion
+DELETE
+Referenzverletzung oder zu große Löschung
+Abhängigkeiten, Archivierung und Backup prüfen
+Transaktion
+Teiländerungen bleiben inkonsistent
+BEGIN; Änderungen; prüfen; COMMIT oder ROLLBACK
+
+BEGIN;UPDATE ticket SET bearbeiter_id = 15 WHERE ticket_id = 42;INSERT INTO ticket_historie(ticket_id, ereignis) VALUES (42, 'ZUGEWIESEN');-- fachlich prüfenCOMMIT;  -- bei Fehler: ROLLBACK
+
+Prüfungstipp: Bei UPDATE und DELETE ist eine fehlende oder zu breite WHERE-Klausel der Klassiker. Nenne als Schutz: SELECT mit identischer Bedingung, Transaktion, Backup und minimale Berechtigung.
+
+Übung 17
+Schreibe INSERT für einen Kommentar, UPDATE zum Erhöhen aller niedrigen Prioritäten offener Tickets eines Kunden und DELETE für verwaiste temporäre Importdatensätze. Nenne je ein mögliches Constraint-Problem.
+MODUL 18  |  90 Minuten
+Pseudocode: Filtern, Zählen und Sortieren
+Lernziel: Listen in einem Durchlauf filtern und zählen, NULL-/Randfälle behandeln und die Laufzeit begründen.
+
+METHOD filterHighPriority(tickets: List<Ticket>): List<Ticket>    result <- EMPTY LIST    IF tickets IS NULL THEN RETURN result    FOR EACH ticket IN tickets        IF ticket IS NOT NULL           AND ticket.status != GESCHLOSSEN           AND ticket.prioritaet = HOCH THEN            result.ADD(ticket)        ENDIF    END FOR    RETURN resultENDMETHOD
+
+Der Algorithmus besucht jedes Element einmal: Zeit O(n). Die Ergebnisliste benötigt im schlechtesten Fall O(n) zusätzlichen Speicher. Ein Zähler statt einer Ergebnisliste benötigt O(1) Zusatzspeicher.
+Typische Randfälle
+Liste ist NULL oder leer.
+Liste enthält NULL-Elemente.
+Kein oder jedes Element erfüllt die Bedingung.
+Grenzwerte sind inklusiv oder exklusiv.
+Sortierung muss stabil sein oder eine Zweitsortierung verwenden.
+Übung 18
+Implementiere countCommentsAfter(comments, date): Integer. Ignoriere NULL, zähle nur Kommentare mit erstelltAm > date und behandle ein fehlendes Datum als ungültige Eingabe. Gib Laufzeit und zwei Testfälle an.
+MODUL 19  |  105 Minuten
+Sortieralgorithmus mit Vergleichsfunktion
+Lernziel: Einen Sortieralgorithmus in Pseudocode mit einer vorgegebenen compare(a,b)-Funktion korrekt umsetzen.
+
+
+Bubble Sort: Ein vollständiger Durchlauf verschiebt das größte Element nach hinten
+METHOD bubbleSort(items, compare)    IF items IS NULL THEN RETURN    n <- LENGTH(items)    REPEAT        swapped <- FALSE        FOR i <- 0 TO n - 2            IF compare(items[i], items[i + 1]) > 0 THEN                SWAP(items[i], items[i + 1])                swapped <- TRUE            ENDIF        END FOR        n <- n - 1    UNTIL swapped = FALSE OR n <= 1ENDMETHOD
+
+Konvention: compare(a,b) < 0 bedeutet a steht vor b; = 0 gleichwertig; > 0 a steht nach b. Bei Vertauschung nur für > 0 bleibt Bubble Sort stabil. Laufzeit: durchschnittlich/schlechtestenfalls O(n²), mit Abbruch im besten Fall O(n).
+Algorithmus
+Zeit typisch
+Stabil?
+Hinweis
+Bubble Sort
+O(n²)
+ja, bei > 0
+leicht zu erklären; selten produktiv
+Selection Sort
+O(n²)
+meist nein
+wenige Vertauschungen
+Insertion Sort
+O(n²), gut bei fast sortiert
+ja
+einfach, adaptiv
+Merge Sort
+O(n log n)
+ja
+zusätzlicher Speicher O(n)
+Quick Sort
+Ø O(n log n), worst O(n²)
+meist nein
+Pivot-Wahl entscheidend
+
+Übung 19
+Passe den Algorithmus an: Tickets werden zuerst nach Priorität absteigend und bei gleicher Priorität nach erstelltAm aufsteigend sortiert. Formuliere die Vergleichsfunktion.
+MODUL 20  |  75 Minuten
+Whitebox- und Blackbox-Tests
+Lernziel: Testansätze nach Wissensbasis, Entwurfstechnik, Stärken und Grenzen unterscheiden.
+
+Aspekt
+Whitebox
+Blackbox
+Kenntnis
+interner Code/Kontrollfluss bekannt
+nur Spezifikation und Schnittstelle
+Techniken
+Anweisungs-, Zweig-, Bedingungs-, Pfadtests
+Äquivalenzklassen, Grenzwertanalyse, Entscheidungstabellen
+Stärke
+toter Code und ungetestete Zweige sichtbar
+prüft Anforderungen unabhängig von Implementierung
+Schwäche
+fehlende Anforderungen werden kaum erkannt; wartungsnah
+interne Lücken bleiben unsichtbar
+Geeignet
+Unit-/Komponententest durch Entwickler
+System-, Abnahme- und API-Test
+
+Kombination: Hohe Code Coverage beweist nicht, dass die richtigen Anforderungen umgesetzt wurden. Blackbox-Techniken ergänzen strukturelle Whitebox-Tests.
+
+Übung 20
+Entwirf für calculateFee(amount, customerType) je zwei Whitebox- und Blackbox-Testideen. Ordne jede Idee einer Technik zu und nenne ihren Nutzen.
+MODUL 21  |  105 Minuten
+Coverage-Metriken und ihre Verkettung
+Lernziel: Anweisungs-, Zweig-/Entscheidungs- und Pfadüberdeckung berechnen und die Stärke der Kriterien vergleichen.
+
+
+Kontrollflussgraph mit Entscheidungen B2/B3, Aktionen A1–A4 und Beispielpfaden
+Metrik
+Berechnung
+Aussage
+Anweisungsüberdeckung C0
+ausgeführte Anweisungen / alle Anweisungen
+jede Anweisung mindestens einmal
+Zweig-/Entscheidungsüberdeckung C1
+durchlaufene Zweige / alle Zweige
+jede Entscheidung mindestens true und false
+Bedingungsüberdeckung
+erreichte Wahrheitswerte atomarer Bedingungen
+jede Teilbedingung true/false; nicht automatisch jeder Entscheidungszweig
+Pfadüberdeckung
+durchlaufene vollständige Pfade / relevante Pfade
+stark, aber bei Schleifen oft unendlich viele Pfade
+
+Verkettung: Bei Kurzschlussauswertung von A AND B wird B nur ausgewertet, wenn A=true; bei A OR B nur, wenn A=false. Für Bedingungsüberdeckung müssen Testdaten die einzelnen Wahrheitswerte tatsächlich erreichbar machen.
+Hierarchie: 100 % Pfadüberdeckung (bei endlicher Pfadmenge) impliziert Zweig- und Anweisungsüberdeckung. 100 % Zweigüberdeckung impliziert üblicherweise Anweisungsüberdeckung; umgekehrt gilt das nicht.
+
+Übung 21
+Ein Programm hat 12 Anweisungen und zwei binäre Entscheidungen. Test T1 führt 9 Anweisungen und je den true-Zweig aus; T2 führt 10 Anweisungen und bei Entscheidung 1 false, bei Entscheidung 2 true aus. Bestimme gemeinsam C0 und C1, wenn insgesamt 11 unterschiedliche Anweisungen und drei von vier Zweigen erreicht werden.
+MODUL 22  |  75 Minuten
+Pfade für Pfadüberdeckung aufzählen
+Lernziel: Kontrollflussgraphen systematisch lesen und vollständige Start-Ende-Pfade ohne Auslassungen notieren.
+
+Vorgehen: Knoten eindeutig benennen, jede Entscheidung mit ausgehenden Kanten markieren, vom Start aus jeweils eine Kante verfolgen und erst am Ende den vollständigen Pfad notieren. Danach an der letzten noch nicht variierten Entscheidung zurückgehen.
+P1: B1 – A1 – B2(T) – A2 – B3(T) – A4 – EP2: B1 – A1 – B2(T) – A2 – B3(F) – EP3: B1 – A1 – B2(F) – A3 – B3(T) – A4 – EP4: B1 – A1 – B2(F) – A3 – B3(F) – E
+
+Bei zwei unabhängigen binären Entscheidungen entstehen maximal 2² = 4 Kombinationen. Abhängige Guards oder frühzeitige Returns können Kombinationen unerreichbar machen. Schleifen werden für begrenzte Pfadtests häufig mit 0, 1 und mehreren Durchläufen betrachtet.
+Typischer Fehler: Eine Folge wie B1–B2–B3 ist nur dann ein Pfad, wenn die Kanten im Graphen wirklich existieren. Aktionen zwischen Entscheidungen dürfen nicht weggelassen werden, wenn Knoten vollständig aufzulisten sind.
+
+Übung 22
+Erweitere den Graphen: Nach A4 folgt B4 „Grenzwert überschritten?“, bei true A5, sonst direkt E. Liste alle vollständigen Pfade auf und markiere ein minimales Testset für Zweigüberdeckung.
+MODUL 23  |  90 Minuten
+Unit-Tests und Regressionstests
+Lernziel: Unit-Tests nach Arrange–Act–Assert beschreiben, Abhängigkeiten isolieren und Regressionstests begründen.
+
+TEST closeTicket_whenStatusSolved_setsClosed    // Arrange    ticket <- Ticket(status = GELOEST)    // Act    result <- ticket.close()    // Assert    ASSERT_TRUE(result)    ASSERT_EQUALS(GESCHLOSSEN, ticket.status)ENDTEST
+
+Merkmal
+Beschreibung
+Unit
+kleinste sinnvoll testbare Einheit, meist Methode/Klasse
+Isolation
+Doubles wie Stub, Fake oder Mock ersetzen langsame/externe Abhängigkeiten
+Determinismus
+gleiches Setup liefert reproduzierbares Ergebnis
+Schnelligkeit
+viele Tests laufen häufig in CI
+Regressionstest
+wird nach Fehlerbehebung/Änderung erneut ausgeführt und verhindert Wiederauftreten bekannter Fehler
+
+Ein guter Regressionstest reproduziert zuerst den Fehler, schlägt vor dem Fix fehl und besteht nach dem Fix. Er bleibt dauerhaft in der Testsuite, damit spätere Änderungen das Verhalten nicht unbemerkt zurückbringen.
+Übung 23
+Beschreibe einen Unit-Test für statusAendern(NEU → GESCHLOSSEN), der einen unzulässigen Übergang prüft. Nenne Arrange, Act, Assert und begründe, warum der Test als Regressionstest erhalten bleiben sollte.
+MODUL 24  |  105 Minuten
+Semantische Fehler im Code finden
+Lernziel: Code, der syntaktisch gültig ist, aber fachlich falsch arbeitet, durch Trace, Invarianten und Randfälle analysieren.
+
+FUNCTION average(values)    sum <- 0    FOR i <- 0 TO LENGTH(values)        sum <- sum + values[i]    END FOR    RETURN sum / (LENGTH(values) - 1)END FUNCTION
+
+Fehler
+Warum semantisch?
+Korrektur
+Schleife bis LENGTH inklusive
+Index LENGTH liegt außerhalb
+0 TO LENGTH-1
+Division durch LENGTH-1
+falscher Mittelwert; bei Länge 1 Division durch 0
+durch gültige Anzahl teilen
+leere/NULL-Liste nicht behandelt
+Fehler oder Division durch 0
+Vorbedingung/definierten Rückgabewert
+ungültige Werte nicht gefiltert
+Fachregel verletzt
+validieren und count separat führen
+
+Suchstrategie
+Sollverhalten aus Aufgabe als Invarianten/Grenzen notieren.
+Mit kleinstem Gegenbeispiel tracen: leer, 1 Element, Grenze, Duplikat.
+Indexbereiche, Initialisierung, Vergleichsoperatoren und Rückgaben prüfen.
+Mutation und Seiteneffekte prüfen: wird falsches Objekt/falsche Variable geändert?
+Korrektur mit einem Test belegen.
+Übung 24
+Finde mindestens drei semantische Fehler in einer Funktion, die offene Tickets zählt, aber count mit 1 initialisiert, status = GESCHLOSSEN prüft und bei erstem Treffer RETURN ausführt. Formuliere die korrigierte Version.
+MODUL 25  |  105 Minuten
+OOP: abstrakte Klasse, Interface, Vererbung und Polymorphie
+Lernziel: OOP-Konzepte unterscheiden und für erweiterbare Implementierungen gezielt einsetzen.
+
+Konzept
+Kernidee
+Beispiel
+Abstrakte Klasse
+nicht direkt instanziierbar; gemeinsamer Zustand und implementierte/abstrakte Methoden
+AbstractNotification mit sender und validate()
+Interface
+Vertrag/Fähigkeit ohne gemeinsamen Instanzzustand; mehrere Interfaces implementierbar
+Sendable.send(message)
+Vererbung
+Unterklasse übernimmt und spezialisiert Oberklasse; is-a-Beziehung
+EmailNotification extends AbstractNotification
+Polymorphie
+Aufruf über Obertyp; konkrete Implementierung wird dynamisch gewählt
+List<Notification>; n.send()
+Überschreiben
+Unterklasse liefert spezifische Implementierung gleicher Signatur
+EmailNotification.send()
+Überladen
+gleicher Name, andere Parameterliste; compile-time Auswahl
+send(String), send(Message)
+
+INTERFACE Notification    METHOD send(message): ResultCLASS EmailNotification IMPLEMENTS Notification    METHOD send(message): Result ...CLASS PushNotification IMPLEMENTS Notification    METHOD send(message): Result ...FOR EACH n IN notifications    n.send(message)  // polymorpher AufrufEND FOR
+
+Entscheidung: Interface für austauschbare Fähigkeiten und geringe Kopplung; abstrakte Klasse, wenn Unterklassen echten gemeinsamen Zustand oder wiederverwendbare Basislogik teilen. Komposition ist oft flexibler als tiefe Vererbung.
+
+Übung 25
+Entwirf EmailSender und SmsSender hinter einem MessageSender-Interface. Ergänze eine abstrakte Basisklasse nur, falls gemeinsames Rate-Limit und Logging geteilt werden. Erkläre den polymorphen Aufruf.
+MODUL 26  |  105 Minuten
+Verschlüsselung, TLS und Hashing
+Lernziel: Vertraulichkeit, Authentizität und Integrität den passenden kryptografischen Verfahren zuordnen.
+
+Verfahren
+Schlüssel/Eigenschaft
+Stärke
+Einsatz
+Symmetrische Verschlüsselung
+gleicher geheimer Schlüssel für Ver- und Entschlüsselung
+sehr schnell; Schlüsselverteilung schwierig
+große Datenmengen, Sitzungsschlüssel
+Asymmetrische Verschlüsselung
+öffentlich/privates Schlüsselpaar
+Schlüsselaustausch und Signaturen; langsamer
+Identität, Schlüsselaustausch
+Hashing
+Einwegfunktion, kein Entschlüsselungsschlüssel
+Integritätsvergleich; allein keine Authentizität
+Prüfsumme, Passwort-Hash mit Spezialverfahren
+Digitale Signatur
+privat signieren, öffentlich prüfen
+Authentizität, Integrität, Nichtabstreitbarkeit im Kontext
+Softwarepakete, Zertifikate
+
+TLS vereinfacht
+Client verbindet sich und sendet unterstützte Parameter.
+Server weist sich mit Zertifikat und Signatur nach; Client prüft Kette, Namen und Gültigkeit.
+Beide handeln Schlüsselmaterial aus, typischerweise mit (EC)DHE.
+Aus dem gemeinsamen Geheimnis entstehen symmetrische Sitzungsschlüssel.
+Anwendungsdaten werden schnell symmetrisch verschlüsselt und authentifiziert übertragen.
+TLS ist ein hybrides Verfahren: asymmetrische Kryptografie/Signaturen für Authentisierung und Schlüsselaushandlung, symmetrische AEAD-Verfahren für die Nutzdaten. Hashing ist keine Verschlüsselung; Passwörter benötigen langsame Passwort-Hashverfahren mit Salt.
+Abgrenzung: Verschlüsselung schützt Vertraulichkeit und ist reversibel mit Schlüssel. Hashing ist nicht zum Entschlüsseln gedacht. Eine bloße Prüfsumme schützt nicht vor gezielter Manipulation; dafür braucht man MAC oder Signatur.
+
+Übung 26
+Ordne zu und begründe: Datenbank-Backup schützen, Passwort speichern, Softwareupdate verifizieren, HTTPS-Verbindung etablieren. Nenne jeweils Verfahren und geschütztes Ziel.
+MODUL 27  |  120 Minuten
+Normalisierung bis zur 3. Normalform und Anomalien
+Lernziel: Funktionale Abhängigkeiten erkennen, Tabellen schrittweise bis 3. NF zerlegen und Insert-/Update-/Delete-Anomalien erklären.
+
+
+Normalisierung: von wiederholenden Gruppen zu getrennten Entitäten
+Stufe
+Bedingung
+Entfernt typischerweise
+1. NF
+atomare Werte, keine Wiederholungsgruppen
+produkt_1, produkt_2 oder Listen in einer Zelle
+2. NF
+1. NF + jedes Nichtschlüsselattribut hängt vom gesamten zusammengesetzten Schlüssel ab
+Teilabhängigkeiten
+3. NF
+2. NF + keine transitive Abhängigkeit eines Nichtschlüsselattributs von einem Schlüssel
+Nichtschlüssel → Nichtschlüssel
+
+AUFTRAG_POSITION(auftrag_id, produkt_id, kunden_name, produkt_name, menge)PK = (auftrag_id, produkt_id)auftrag_id -> kunden_idkunden_id -> kunden_nameprodukt_id -> produkt_name(auftrag_id, produkt_id) -> menge
+
+Zerlegung: AUFTRAG(auftrag_id, kunden_id), KUNDE(kunden_id, kunden_name), PRODUKT(produkt_id, produkt_name), AUFTRAG_POSITION(auftrag_id, produkt_id, menge).
+Anomalie
+Problem im unnormalisierten Bestand
+Insert
+neues Produkt kann ohne Auftrag nicht gespeichert werden
+Update
+Kundenname steht mehrfach und wird nur teilweise geändert
+Delete
+Löschen der letzten Position entfernt versehentlich Produktinformationen
+
+Übung 27
+Normalisiere SUPPORT(ticket_id, kunde_id, kunde_name, kunde_ort, kategorie_id, kategorie_name, tag_id, tag_name) bis 3. NF. Nenne Schlüssel, funktionale Abhängigkeiten und je eine behobene Anomalie.
+MODUL 28  |  75 Minuten
+GRANT und Datenbankberechtigungen
+Lernziel: Tabellenrechte nach Least Privilege vergeben, Rollen nutzen und Berechtigungen gezielt entziehen.
+
+GRANT SELECT ON ticket TO reporting_role;GRANT SELECT, INSERT, UPDATE ON kommentar TO support_role;GRANT UPDATE (status, bearbeiter_id) ON ticket TO support_role;REVOKE DELETE ON ticket FROM support_role;
+
+Recht
+Erlaubt
+Prüfungsaspekt
+SELECT
+lesen
+ggf. auf Views statt Basistabellen
+INSERT
+neue Zeilen
+Spalten-/Constraint-Regeln bleiben aktiv
+UPDATE
+ändern
+wenn DBMS unterstützt auf Spalten beschränken
+DELETE
+löschen
+besonders restriktiv vergeben
+REFERENCES
+Fremdschlüssel auf Tabelle/Spalte anlegen
+Schemaänderung, nicht Datenzugriff
+EXECUTE
+Prozedur/Funktion ausführen
+Zugriff über kontrollierte API
+
+Rechte an Rollen vergeben, Benutzer Rollen zuordnen.
+WITH GRANT OPTION erlaubt Weitergabe und ist sparsam einzusetzen.
+Views können Zeilen/Spalten verbergen.
+Anwendungs- und Migrationskonto trennen; produktive Anwendung benötigt meist kein DDL.
+Berechtigungen regelmäßig rezertifizieren und protokollieren.
+Übung 28
+Reporting darf Tickets und Kundennamen lesen, aber keine E-Mail-Adressen. Support darf Status und Bearbeiter ändern, jedoch keine Tickets löschen. Formuliere ein Rollen-/View-Konzept und passende GRANT/REVOKE-Befehle.
+MODUL 29  |  105 Minuten
+Datenmigration und Datenimport
+Lernziel: Hindernisse systematisch erkennen und einen sicheren, prüfbaren Import mit Mapping, Validierung und Rollback planen.
+
+
+ETL-Ablauf mit Qualitätskontrollen und Freigabe
+Hindernis
+Beispiel
+Lösung
+Format/Encoding
+Datum DD.MM.YYYY, UTF-8 vs. Windows-1252
+Format erkennen, konvertieren, Testdatei
+Datenqualität
+fehlende Pflichtwerte, Duplikate, ungültige E-Mails
+Profiling, Bereinigung, Quarantäneliste
+Semantik/Mapping
+alte Statuscodes passen nicht zum Ziel
+Mappingtabelle mit Fachbereich freigeben
+Referentielle Integrität
+Ticket verweist auf unbekannten Kunden
+Reihenfolge, Staging, FK-Prüfung
+Volumen/Performance
+lange Sperren, Timeouts
+Batches, Indizes geplant behandeln, Wartungsfenster
+Datenschutz
+unnötige Altdaten oder ungeschützter Export
+Datenminimierung, Verschlüsselung, Löschkonzept
+Betriebsrisiko
+Teilimport oder Ausfall
+Backup, idempotente Jobs, Protokoll, Rollback
+
+Migrationsplan
+Scope, Verantwortliche und Akzeptanzkriterien festlegen.
+Quelldaten profilieren und Datenwörterbuch erstellen.
+Mapping- und Bereinigungsregeln fachlich freigeben.
+Staging-Import und Dry Run durchführen.
+Technisch und fachlich validieren: Counts, Summen, Stichproben, Constraints.
+Produktivmigration mit Backup, Monitoring und Rollback-Entscheidungspunkt.
+Abnahme, Protokollierung und sichere Löschung temporärer Daten.
+Prüfungstipp: Nenne nicht nur „unterschiedliche Formate“. Verknüpfe Hindernis, konkrete Auswirkung und passende Gegenmaßnahme – idealerweise plus Validierung.
+
+Übung 29
+Plane den Import von 500.000 Tickets aus CSV. Es gibt doppelte Kunden, drei Datumsformate, unbekannte Statuscodes und fehlende Fremdschlüssel. Nenne mindestens fünf Risiken, Lösungen und Prüfungen nach dem Import.
+
+TEIL 3 – WISO
+Wirtschafts- und Sozialkunde
+Prüfungsformat: Typisch sind 30 gebundene Aufgaben in 60 Minuten. Rechne mit durchschnittlich zwei Minuten pro Aufgabe und reserviere fünf bis zehn Minuten für Kontrolle und Übertragung.
+
+Stand des Rechts- und Zahlenchecks: September 2026. Gesetzliche Beträge können sich ändern; die Prüfung nennt erforderliche Werte meist im Aufgabentext oder erwartet das Grundprinzip.
+MC-Strategie
+Aufgabenhinweis prüfen: genau eine oder mehrere Antworten?
+Zuerst sichere Antworten markieren; Rechen- und Zweifelsfragen zurückstellen.
+Absolute Wörter wie immer, ausschließlich oder niemals kritisch prüfen.
+Bei Rechtsfragen Person, Zeitpunkt und Ausnahme genau beachten.
+Am Ende jede Zeile auf vollständige Markierung kontrollieren.
+MODUL 30  |  30 Minuten
+Probezeit im Ausbildungsvertrag
+Kernregel: Die Probezeit muss mindestens einen Monat und darf höchstens vier Monate dauern (§ 20 BBiG).
+
+Während der Probezeit
+Folge
+Kündigung durch beide Seiten
+jederzeit ohne Kündigungsfrist möglich
+Form
+schriftlich; elektronische Form reicht nicht
+Zweck
+Eignung, Erwartungen und Zusammenarbeit praktisch prüfen
+Grenze
+eine vereinbarte Probezeit von sechs Monaten ist im Ausbildungsverhältnis unwirksam
+
+MC-Falle: Die sechsmonatige Probezeit aus normalen Arbeitsverhältnissen nicht auf den Ausbildungsvertrag übertragen.
+
+MODUL 31  |  45 Minuten
+Kündigung des Ausbildungsvertrags
+Zeitpunkt/Person
+Grund
+Frist
+Probezeit, beide Seiten
+kein besonderer Grund erforderlich
+keine Frist
+nach Probezeit, beide Seiten
+wichtiger Grund
+fristlos
+nach Probezeit, Auszubildende
+Ausbildung aufgeben oder für anderen Beruf ausbilden lassen
+vier Wochen
+nach Probezeit, Betrieb
+ordentliche Kündigung nicht vorgesehen
+nur wichtiger Grund fristlos
+
+Nach der Probezeit muss die Kündigung schriftlich und unter Angabe der Gründe erfolgen. Bei wichtigem Grund gilt grundsätzlich eine Zwei-Wochen-Frist ab Kenntnis der maßgeblichen Tatsachen.
+MC-Falle: „Vier Wochen ohne Grund“ ist falsch. Diese Frist gilt für Auszubildende nur beim Aufgeben der Ausbildung oder Wechsel in eine andere Berufsausbildung.
+
+MODUL 32  |  35 Minuten
+Ende des Ausbildungsverhältnisses
+Situation
+Ende/Folge
+regulärer Verlauf
+mit Ablauf der vereinbarten Ausbildungsdauer
+Prüfung vor Ablauf bestanden
+mit Bekanntgabe des Ergebnisses durch den Prüfungsausschuss
+Prüfung nicht bestanden
+auf Verlangen Verlängerung bis zur nächsten Wiederholungsprüfung, höchstens ein Jahr
+Weiterarbeit nach Ende ohne neue Vereinbarung
+kann ein unbefristetes Arbeitsverhältnis begründen
+
+Merksatz: Nicht der Tag der Zeugnisübergabe, sondern die Bekanntgabe des Bestehens beendet bei vorzeitig bestandener Prüfung das Ausbildungsverhältnis.
+
+MODUL 33  |  45 Minuten
+Befristung von Arbeitsverträgen
+Art
+Grundregel
+mit Sachgrund
+z. B. Vertretung, vorübergehender Bedarf, Erprobung; Dauer folgt dem Grund
+ohne Sachgrund
+grundsätzlich bis zwei Jahre; innerhalb dieser Gesamtdauer höchstens dreimal verlängern
+Vorbeschäftigung
+sachgrundlose Befristung bei demselben Arbeitgeber grundsätzlich problematisch/unzulässig; Ausnahmen durch Rechtsprechung beachten
+Form
+Befristungsabrede muss vor Arbeitsbeginn schriftlich vereinbart sein
+Fristablauf
+endet grundsätzlich automatisch; ordentliche Kündigung nur wenn vereinbart oder tariflich vorgesehen
+
+Prüfungstipp: Sachgrund und sachgrundlose Befristung getrennt prüfen. Die Zwei-Jahres-/Dreimal-Regel gehört zur sachgrundlosen Befristung.
+
+MODUL 34  |  45 Minuten
+Tarifvertrag
+Tarifparteien: Gewerkschaft auf Arbeitnehmerseite und Arbeitgeberverband oder einzelner Arbeitgeber auf Arbeitgeberseite.
+
+Tarifvertragsart
+Typische Inhalte
+Lohn-/Gehalts-/Entgelttarifvertrag
+Höhe der Vergütung, Entgeltgruppen; meist kürzere Laufzeit
+Manteltarifvertrag
+allgemeine Arbeitsbedingungen wie Arbeitszeit, Urlaub, Zuschläge, Kündigungsfristen
+Rahmentarifvertrag
+Tätigkeitsmerkmale und Eingruppierung
+Flächen-/Verbandstarifvertrag
+Branche und Region; Gewerkschaft mit Arbeitgeberverband
+Haus-/Firmentarifvertrag
+Gewerkschaft mit einem einzelnen Arbeitgeber
+
+Tarifbindung besteht typischerweise, wenn beide Seiten tarifgebunden sind, ein Haustarifvertrag gilt oder der Tarifvertrag allgemeinverbindlich ist. Das Günstigkeitsprinzip erlaubt einzelvertraglich günstigere Regelungen.
+MODUL 35  |  50 Minuten
+Betriebsrat und Mitbestimmung
+Rechtsgrundlage: Das Betriebsverfassungsgesetz (BetrVG) regelt Interessenvertretung und Beteiligungsrechte im Betrieb.
+
+Beteiligungsstufe
+Beispiel
+Information
+wirtschaftliche/organisatorische Planungen bekanntgeben
+Anhörung/Beratung
+Betriebsrat vor jeder Kündigung anhören; ohne Anhörung ist die Kündigung unwirksam
+Mitwirkung
+Betriebsrat kann Vorschläge machen oder widersprechen
+Mitbestimmung
+Entscheidung benötigt Einigung; ggf. Einigungsstelle
+
+Mitbestimmung u. a. bei Beginn/Ende der täglichen Arbeitszeit und Pausen.
+Vorübergehende Kurz- oder Mehrarbeit.
+Urlaubsgrundsätze und Urlaubsplan.
+Technische Einrichtungen zur Verhaltens- oder Leistungsüberwachung.
+Regelungen zu Gesundheitsschutz und Unfallverhütung.
+Abgrenzung: Betriebsrat vertritt Beschäftigte im Betrieb; Gewerkschaft schließt Tarifverträge. Das sind unterschiedliche Rollen.
+
+MODUL 36  |  45 Minuten
+Die fünf Säulen der Sozialversicherung
+
+Kranken-, Renten-, Arbeitslosen-, Pflege- und Unfallversicherung
+Zweig
+Träger/Finanzierung vereinfacht
+Leistung/Risiko
+KV
+Krankenkassen; Beiträge von AG/AN
+Behandlung, Krankengeld
+RV
+Rentenversicherung; AG/AN + Bundeszuschuss
+Alter, Erwerbsminderung, Reha
+AV
+Bundesagentur für Arbeit; AG/AN
+Arbeitslosengeld, Vermittlung
+PV
+Pflegekassen; AG/AN, Besonderheiten möglich
+Pflegebedürftigkeit
+UV
+Berufsgenossenschaften/Unfallkassen; Beitrag grundsätzlich Arbeitgeber
+Arbeitsunfall, Wegeunfall, Berufskrankheit
+
+MC-Falle: Die gesetzliche Unfallversicherung wird grundsätzlich allein vom Arbeitgeber finanziert; bei den übrigen Säulen teilen sich Arbeitgeber und Arbeitnehmer die Beiträge typischerweise.
+
+MODUL 37  |  35 Minuten
+Beitragsbemessungsgrenze
+Die Beitragsbemessungsgrenze (BBG) ist die Einkommensgrenze, bis zu der Beiträge berechnet werden. Einkommen oberhalb der BBG erhöht den Beitrag nicht weiter. Sie ist nicht mit der Versicherungspflichtgrenze/Jahresarbeitsentgeltgrenze der Krankenversicherung zu verwechseln.
+2026 – Orientierung
+Monat
+Jahr
+BBG Kranken-/Pflegeversicherung
+5.812,50 €
+69.750 €
+BBG allgemeine Renten-/Arbeitslosenversicherung
+8.450 €
+101.400 €
+
+Rechenidee: Beitrag = min(beitragspflichtiges Einkommen, BBG) × Beitragssatz. Prüfungstexte liefern normalerweise Satz und relevante Grenze.
+
+MODUL 38  |  35 Minuten
+Generationenvertrag und Umlageverfahren
+Im Umlageverfahren werden laufende Beiträge und Bundeszuschüsse im Wesentlichen für laufende Rentenzahlungen verwendet. Die arbeitende Generation finanziert die aktuelle Rentnergeneration und erwirbt Ansprüche, die später von der nächsten Beitragsgeneration getragen werden.
+Umlageverfahren
+Kapitaldeckungsverfahren
+laufende Einnahmen finanzieren laufende Leistungen
+Beiträge bilden individuellen/kollektiven Kapitalstock
+sensibel für Demografie, Beschäftigung und Löhne
+sensibel für Kapitalmarkt, Zinsen und Inflation
+geringere direkte Kapitalmarktabhängigkeit
+Renditechancen, aber Kurs-/Anlagerisiko
+
+Merksatz: „Generationenvertrag“ ist kein einzelner unterschriebener Vertrag, sondern ein gesellschaftliches Finanzierungsprinzip.
+
+MODUL 39  |  45 Minuten
+Mutterschutz
+Korrektur zur Themenliste: Nach der Entbindung gelten grundsätzlich 8 Wochen; bei Früh- und Mehrlingsgeburten 12 Wochen – nicht 14. Vor der Entbindung gelten grundsätzlich 6 Wochen.
+
+Zeitraum
+Regel
+6 Wochen vor Geburt
+Beschäftigung grundsätzlich verboten, aber freiwillige ausdrückliche Weiterarbeit widerruflich möglich
+8 Wochen nach Geburt
+absolutes Beschäftigungsverbot im Arbeitsverhältnis
+12 Wochen nach Geburt
+bei Frühgeburt, Mehrlingsgeburt sowie auf Antrag bei festgestellter Behinderung des Kindes
+Kündigungsschutz
+während Schwangerschaft und grundsätzlich bis Ende der Schutzfrist, mindestens vier Monate nach Entbindung; gesetzliche Voraussetzungen beachten
+
+MODUL 40  |  40 Minuten
+Allgemeines Gleichbehandlungsgesetz (AGG)
+Das AGG schützt vor Benachteiligung aus bestimmten Gründen, besonders im Beschäftigungs- und Zivilrechtsbereich.
+Geschützte Merkmale nach § 1 AGG
+Nicht automatisch AGG-Merkmal
+Rasse oder ethnische Herkunft; Geschlecht; Religion oder Weltanschauung; Behinderung; Alter; sexuelle Identität
+z. B. Familienstand, Körpergewicht, allgemeine Sympathie oder politische Meinung als solche – andere Schutzregeln können dennoch greifen
+
+Unmittelbare Benachteiligung: schlechtere Behandlung direkt wegen eines Merkmals.
+Mittelbare Benachteiligung: scheinbar neutrale Regel benachteiligt eine Gruppe besonders und ist nicht gerechtfertigt.
+Belästigung und sexuelle Belästigung sind ebenfalls erfasst.
+Zulässige unterschiedliche Behandlung braucht eine gesetzliche Rechtfertigung; bloße Kundenwünsche genügen nicht.
+MODUL 41  |  45 Minuten
+Arbeitsschutz und Arbeitsschutzausschuss
+Der Arbeitgeber beurteilt Gefährdungen, legt Schutzmaßnahmen fest, unterweist Beschäftigte und überprüft die Wirksamkeit. Technische Maßnahmen haben typischerweise Vorrang vor organisatorischen und persönlichen Maßnahmen (TOP-Prinzip).
+Arbeitsschutzausschuss (ASA)
+Regel
+Pflicht
+in Betrieben mit mehr als 20 Beschäftigten
+Mitglieder
+Arbeitgeber/Beauftragter, zwei Betriebsratsmitglieder, Betriebsarzt, Fachkraft für Arbeitssicherheit, Sicherheitsbeauftragte
+Aufgabe
+Anliegen von Arbeitsschutz und Unfallverhütung beraten
+Sitzung
+mindestens einmal vierteljährlich
+
+MC-Falle: > 20 bedeutet ab 21; Teilzeitbeschäftigte werden für diese Schwelle gesetzlich gewichtet.
+
+MODUL 42  |  40 Minuten
+Sicherheits-, Rettungs- und Brandschutzzeichen
+
+Farben und Formen wichtiger Sicherheitszeichen
+Zeichen
+Farbe/Form
+Bedeutung
+Verbotszeichen
+rund, weiß mit rotem Rand/Schrägbalken
+bestimmtes Verhalten verboten
+Warnzeichen
+dreieckig, gelb/schwarz
+warnt vor Gefahr
+Gebotszeichen
+rund, blau/weiß
+vorgeschriebene Handlung/PSA
+Rettungszeichen
+rechteckig/quadratisch, grün/weiß
+Fluchtweg, Notausgang, Erste Hilfe
+Brandschutzzeichen
+rechteckig/quadratisch, rot/weiß
+Feuerlöscher, Brandmelder
+
+Merksatz: Rot ist nicht pauschal „Gefahr“: Rot/weiß kennzeichnet auch Brandschutz; gelb/schwarz warnt vor Gefahr; grün/weiß zeigt Rettung.
+
+MODUL 43  |  35 Minuten
+Brandschutz: Verhalten im Brandfall
+Grundsatz: Menschenrettung geht vor Sachwerten und Löschversuchen.
+
+Ruhe bewahren und Brand melden: interne Meldestelle/112, Ort, Art, Betroffene, Rückfragen abwarten.
+Gefährdete warnen und in Sicherheit bringen; hilfsbedürftige Personen unterstützen.
+Gekennzeichneten Fluchtwegen folgen, Aufzüge nicht benutzen, Türen schließen.
+Sammelstelle aufsuchen und Vollzähligkeit melden.
+Nur ohne Eigengefährdung und mit geeignetem Löschmittel einen Löschversuch unternehmen.
+Feuerwehr einweisen; nicht in den Gefahrenbereich zurückkehren.
+MC-Falle: Ein Löschversuch ist nicht der erste Schritt und niemals wichtiger als Alarmierung und Evakuierung.
+
+MODUL 44  |  70 Minuten
+Unternehmensformen
+Form
+Haftung
+Leitung/Vertretung
+Prüfungsmerkmal
+Einzelunternehmen
+Inhaber persönlich und unbeschränkt
+Inhaber
+einfache Gründung; kein gesetzliches Mindestkapital
+GbR
+Gesellschafter grundsätzlich persönlich
+gemeinschaftlich nach Vertrag
+mindestens zwei Personen; kein Handelsgewerbe nötig
+OHG
+Gesellschafter persönlich, unmittelbar und unbeschränkt
+grundsätzlich jeder Gesellschafter
+Personenhandelsgesellschaft; HRA
+KG
+Komplementär unbeschränkt; Kommanditist grundsätzlich bis Haftsumme
+Komplementär
+Personenhandelsgesellschaft; HRA
+GmbH
+Gesellschaftsvermögen; Sonderfälle persönlicher Haftung möglich
+Geschäftsführer
+Kapitalgesellschaft; HRB
+UG (haftungsbeschränkt)
+wie GmbH-Grundprinzip
+Geschäftsführer
+GmbH-Variante mit Rücklagenpflicht; HRB
+AG
+Gesellschaftsvermögen
+Vorstand; Kontrolle durch Aufsichtsrat
+Aktien, Hauptversammlung; HRB
+
+Entscheidungslogik: Haftung, Kapitalbedarf, Leitungsbefugnis, Publizität und Finanzierung gemeinsam betrachten – nicht nur das Mindestkapital.
+
+MODUL 45  |  35 Minuten
+Stamm- und Grundkapital
+Rechtsform
+Mindestkapital
+Wichtige Ergänzung
+GmbH
+25.000 € Stammkapital
+bei Bargründung müssen vor Anmeldung grundsätzlich mindestens 12.500 € und je Geschäftsanteil mindestens ein Viertel eingezahlt sein
+AG
+50.000 € Grundkapital
+Kapital ist in Aktien zerlegt
+UG (haftungsbeschränkt)
+theoretisch ab 1 €
+vor Anmeldung vollständig in bar; Sacheinlagen ausgeschlossen; ein Viertel des Jahresüberschusses in gesetzliche Rücklage
+
+MC-Falle: 1 € ist kein eigenes gesetzliches „Stammkapital der UG“, sondern die praktisch mögliche Untergrenze. Die UG ist eine Variante der GmbH und muss „haftungsbeschränkt“ führen.
+
+MODUL 46  |  35 Minuten
+Handelsregister A und B
+Abteilung
+Typische Einträge
+Beispiele
+HRA
+Einzelkaufleute und Personenhandelsgesellschaften
+e.K., OHG, KG
+HRB
+Kapitalgesellschaften
+GmbH, UG (haftungsbeschränkt), AG
+
+Das Handelsregister schafft Publizität über rechtlich wichtige Tatsachen, etwa Firma, Sitz, Rechtsform und Vertretungsbefugnis. Eintragung kann je nach Fall rechtsbegründend (konstitutiv) oder nur bestätigend (deklaratorisch) wirken.
+Merksatz: A wie Einzelkaufleute/Personengesellschaften; B wie Kapitalgesellschaften. Eine KG steht trotz Kommanditist in HRA.
+
+MODUL 47  |  30 Minuten
+Wirtschaftssektoren
+Sektor
+Tätigkeit
+Beispiele
+primär
+Gewinnung von Rohstoffen
+Landwirtschaft, Fischerei, Bergbau
+sekundär
+Verarbeitung und Produktion
+Industrie, Handwerk, Bau
+tertiär
+Dienstleistungen
+Handel, Banken, Verkehr, IT-Service
+
+Anwendung: Softwareentwicklung und IT-Beratung gehören grundsätzlich zum tertiären Sektor; die Fertigung von Hardware zum sekundären.
+
+MODUL 48  |  55 Minuten
+Wirtschaftlichkeit und Rentabilität
+Kennzahl
+Formel
+Aussage
+Wirtschaftlichkeit
+Ertrag ÷ Aufwand; als Prozent × 100
+Verhältnis von wertmäßigem Ergebnis zu Mitteleinsatz; > 1 bzw. > 100 % wirtschaftlich
+Rentabilität
+Gewinn ÷ eingesetztes Kapital × 100
+Verzinsung des eingesetzten Kapitals
+
+Beispiel: Ertrag 120.000 €, Aufwand 100.000 €, Kapital 200.000 €. Gewinn = 20.000 €. Wirtschaftlichkeit = 1,2 bzw. 120 %. Rentabilität = 10 %.
+Korrektur zur Themenliste: Ertrag ÷ Aufwand × 100 ist die Wirtschaftlichkeit in Prozent. Rentabilität verwendet Gewinn im Zähler und Kapital im Nenner.
+
+MODUL 49  |  40 Minuten
+Marktformen
+Anbieter/Nachfrager
+viele Nachfrager
+wenige Nachfrager
+ein Nachfrager
+viele Anbieter
+Polypol
+Nachfrageoligopol
+Nachfragemonopol
+wenige Anbieter
+Angebotsoligopol
+bilaterales Oligopol
+beschränktes Nachfragemonopol
+ein Anbieter
+Angebotsmonopol
+beschränktes Angebotsmonopol
+bilaterales Monopol
+
+In vielen Aufgaben genügt die Angebotsseite: viele Anbieter = Polypol, wenige = Oligopol, einer = Monopol. Je geringer der Wettbewerb, desto größer typischerweise der Preisspielraum – begrenzt durch Nachfrage, Regulierung und Substitute.
+MODUL 50  |  40 Minuten
+Kartelle und Wettbewerbsbeschränkungen
+Kartelle sind Absprachen oder abgestimmte Verhaltensweisen zwischen Unternehmen, die Wettbewerb beschränken. Das Kartellverbot erfasst insbesondere Preis-, Gebiets-, Kunden- und Mengenabsprachen; Ausnahmen bedürfen enger Voraussetzungen.
+Kartellart
+Absprache/Wirkung
+Preiskartell
+gemeinsame Mindest-, Höchst- oder Festpreise
+Quotenkartell
+Produktions- oder Absatzmengen werden verteilt
+Gebiets-/Kundenkartell
+Märkte oder Kundengruppen werden aufgeteilt
+Normen-/Typenkartell
+einheitliche Normen/Typen; kann zulässig sein, wenn Wettbewerb nicht unzulässig beschränkt wird
+Konditionenkartell
+gemeinsame Geschäfts-, Liefer- oder Zahlungsbedingungen
+
+MC-Falle: Nicht jede technische Norm ist automatisch ein verbotenes Kartell. Entscheidend sind Wettbewerbsbeschränkung und gesetzliche Freistellung – Preisabsprachen sind besonders kritisch.
+
+MODUL 51  |  55 Minuten
+Mahnverfahren und Zahlungsverzug
+Verzug setzt grundsätzlich einen fälligen und durchsetzbaren Anspruch sowie eine Mahnung nach Fälligkeit voraus. Eine Mahnung ist unter anderem entbehrlich, wenn ein kalendermäßiger Zahlungstermin bestimmt ist oder der Schuldner die Leistung ernsthaft verweigert.
+Begriff
+Kernpunkt
+Mahnung
+eindeutige Aufforderung, die fällige Leistung zu erbringen; keine besondere Form vorgeschrieben, Nachweis aber wichtig
+30-Tage-Regel
+Verzug spätestens 30 Tage nach Fälligkeit und Zugang von Rechnung/Zahlungsaufstellung; bei Verbrauchern nur mit besonderem Hinweis
+Folgen
+Verzugszinsen und Ersatz des durch Verzug entstandenen Schadens
+gerichtliches Mahnverfahren
+Mahnbescheid → ggf. Widerspruch; ohne Widerspruch Vollstreckungsbescheid → ggf. Einspruch
+
+Abgrenzung: Eine kaufmännische Zahlungserinnerung/Mahnung ist nicht dasselbe wie der gerichtliche Mahnbescheid.
+
+MODUL 52  |  65 Minuten
+Kaufvertrag und Mängel
+Der Kaufvertrag verpflichtet den Verkäufer zur Übergabe und Eigentumsverschaffung einer mangelfreien Sache; der Käufer muss den Kaufpreis zahlen und die Sache abnehmen. Ein Sachmangel liegt vor, wenn die Sache bei Gefahrübergang nicht den vereinbarten sowie den objektiv und nach Umständen geschuldeten Anforderungen entspricht.
+Recht des Käufers
+Voraussetzung/Logik
+Nacherfüllung
+vorrangig: Nachbesserung oder Ersatzlieferung; Verkäufer trägt erforderliche Kosten
+Rücktritt oder Minderung
+typischerweise nach erfolgloser/entbehrlicher Nacherfüllung; Rücktritt bei unerheblichem Mangel eingeschränkt
+Schadensersatz
+zusätzliche Voraussetzungen, insbesondere Pflichtverletzung und Vertretenmüssen
+Lieferverzug
+verspätete Leistung; von Sachmangel und Falschlieferung sauber unterscheiden
+
+Prüfungsreihenfolge: Mangel und Gefahrübergang → Nacherfüllung → Frist/Entbehrlichkeit → Rücktritt, Minderung oder Schadensersatz.
+
+MODUL 53  |  45 Minuten
+Steuern im Überblick
+Steuer
+Steuerträger/Objekt vereinfacht
+Prüfungspunkt
+Umsatzsteuer (USt)
+Endverbraucher trägt; Unternehmen führen ab
+indirekte Steuer; Vorsteuerabzug kann Zahllast mindern
+Lohnsteuer (LSt)
+Arbeitnehmer; Arbeitgeber behält ein
+Erhebungsform der Einkommensteuer
+Einkommensteuer (ESt)
+natürliche Personen auf Einkommen
+progressiver Tarif; persönliche Steuer
+Körperschaftsteuer (KSt)
+juristische Personen, besonders Kapitalgesellschaften
+Steuer auf deren Einkommen
+
+Umsatzsteuerzahllast vereinfacht = vereinnahmte/geschuldete Umsatzsteuer minus abzugsfähige Vorsteuer. Brutto = Netto × (1 + Steuersatz).
+MODUL 54  |  55 Minuten
+Inflation, EZB und Leitzinsen
+Inflation ist ein anhaltender Anstieg des allgemeinen Preisniveaus; die Kaufkraft des Geldes sinkt. Die EZB strebt für den Euroraum mittelfristig 2 % Inflation an und nutzt insbesondere Leitzinsen sowie weitere geldpolitische Instrumente.
+Maßnahme
+Typische Wirkungskette – vereinfacht
+Leitzinsen erhöhen
+Kredite tendenziell teurer → Nachfrage/Investitionen schwächer → Preisdruck sinkt; Wechselkurs kann steigen
+Leitzinsen senken
+Finanzierung tendenziell günstiger → Nachfrage/Investitionen steigen → Konjunktur und Preisdruck können zunehmen
+
+MC-Falle: Die Wirkung ist weder sofort noch garantiert. Erwartungen, Banken, Weltwirtschaft und Angebotsschocks beeinflussen Stärke und Verzögerung.
+
+MODUL 55  |  45 Minuten
+Nachhaltigkeit und Verursacherprinzip
+Nachhaltigkeit verbindet ökologische, ökonomische und soziale Ziele. Entscheidungen sollen heutige Bedürfnisse erfüllen, ohne künftige Handlungsmöglichkeiten unnötig zu schädigen.
+Prinzip
+Bedeutung
+IT-Beispiel
+Verursacherprinzip
+wer Umweltbelastung verursacht, trägt möglichst deren Kosten
+Hersteller finanziert Rücknahme/Entsorgung von Altgeräten
+Vorsorgeprinzip
+Gefahren vorbeugen, bevor Schäden eintreten
+energieeffiziente Architektur und langlebige Hardware
+Gemeinlastprinzip
+Allgemeinheit trägt Kosten, wenn Verursacher nicht bestimmbar/leistungsfähig
+öffentliche Sanierung historischer Belastungen
+
+Green IT: energieeffiziente Geräte, Auslastung, Kühlung und erneuerbare Energie.
+Green by IT: digitale Lösungen senken Ressourcenverbrauch anderer Prozesse.
+Rebound-Effekt: Effizienzgewinn kann durch stärkere Nutzung teilweise aufgehoben werden.
+MODUL 56  |  55 Minuten
+Businessplan und Existenzgründung
+Baustein
+Leitfrage
+Executive Summary
+Was ist Idee, Nutzen, Ziel und Kapitalbedarf?
+Produkt/Dienstleistung
+Welches Problem wird wie gelöst?
+Markt und Wettbewerb
+Wer sind Zielkunden, Wettbewerber und Markteintrittsbarrieren?
+Marketing und Vertrieb
+Wie werden Kunden erreicht und Umsätze erzielt?
+Team und Organisation
+Welche Kompetenzen, Rollen und Rechtsform sind nötig?
+Chancen und Risiken
+Welche Annahmen sind kritisch; wie wird reagiert?
+Finanzplanung
+Kapitalbedarf, Finanzierung, Umsatz, Kosten, Liquidität und Rentabilität
+
+Prüfungstipp: Gewinn und Liquidität trennen: Ein rentables Unternehmen kann zahlungsunfähig werden, wenn Einzahlungen zu spät kommen.
+
+MODUL 57  |  55 Minuten
+Leitungssysteme
+
+Einlinien-, Mehrlinien-, Stabslinien- und Matrixorganisation
+System
+Vorteil
+Nachteil
+Einlinie
+klare Weisungs- und Verantwortungswege
+lange Wege, Überlastung der Leitung
+Mehrlinie
+kurze Fachwege, Spezialisierung
+mehrere Weisungsgeber; Konflikte
+Stabslinie
+Linie erhält Fachberatung ohne zusätzliche Weisung
+Stab kann informellen Einfluss ausüben; Umsetzung durch Linie
+Matrix
+mehrdimensionale Sicht, z. B. Funktion und Projekt
+Kompetenzkonflikte und hoher Abstimmungsbedarf
+
+
+WiSo-Probeklausur: 30 MC-Aufgaben
+Zeit und Regel: 60 Minuten. Bei jeder Aufgabe ist genau eine Antwort richtig. Löse zuerst ohne Lösungsschlüssel; plane etwa 50 Minuten Bearbeitung und 10 Minuten Kontrolle.
+
+1. Welche Probezeit ist im Ausbildungsvertrag zulässig?
+A) 2 Wochen
+B) 1 bis 4 Monate
+C) immer 6 Monate
+D) 4 bis 12 Monate
+2. Welche Aussage zur Kündigung nach der Probezeit ist richtig?
+A) Der Betrieb kann stets mit vier Wochen kündigen.
+B) Beide Seiten können mündlich kündigen.
+C) Auszubildende können mit vier Wochen kündigen, wenn sie die Berufsausbildung aufgeben oder einen anderen Beruf erlernen wollen.
+D) Ein wichtiger Grund erlaubt nur eine ordentliche Kündigung.
+3. Wann endet die Ausbildung bei vorzeitig bestandener Abschlussprüfung?
+A) Am Tag der Zeugnisfeier
+B) Mit Bekanntgabe des Ergebnisses
+C) Immer am Vertragsende
+D) Vier Wochen nach der Prüfung
+4. Wie lange ist eine sachgrundlose Befristung grundsätzlich möglich?
+A) 1 Jahr ohne Verlängerung
+B) 2 Jahre mit höchstens drei Verlängerungen innerhalb der Gesamtdauer
+C) 4 Jahre beliebig verlängerbar
+D) Unbegrenzt bei Schriftform
+5. Wer schließt typischerweise einen Flächentarifvertrag?
+A) Betriebsrat und Geschäftsführung
+B) IHK und Arbeitnehmer
+C) Gewerkschaft und Arbeitgeberverband
+D) Bundesregierung und Gewerkschaft
+6. Wobei hat der Betriebsrat typischerweise Mitbestimmung?
+A) Wahl der Produktstrategie
+B) Beginn und Ende der täglichen Arbeitszeit
+C) Höhe des gesetzlichen Steuersatzes
+D) Ernennung des Vorstands einer AG
+7. Welche Sozialversicherung finanziert grundsätzlich allein der Arbeitgeber?
+A) Krankenversicherung
+B) Rentenversicherung
+C) Arbeitslosenversicherung
+D) gesetzliche Unfallversicherung
+8. Was bedeutet die Beitragsbemessungsgrenze?
+A) Oberhalb davon entfällt jede Versicherungspflicht.
+B) Nur Einkommen bis zu dieser Grenze wird zur Beitragsberechnung herangezogen.
+C) Sie ist der Mindestlohn der Branche.
+D) Sie begrenzt Versicherungsleistungen.
+9. Was beschreibt das Umlageverfahren der Rentenversicherung?
+A) Jeder spart ausschließlich sein eigenes Kapital.
+B) Laufende Einnahmen finanzieren im Wesentlichen laufende Renten.
+C) Nur Steuern finanzieren die Renten.
+D) Renten hängen ausschließlich von Aktienkursen ab.
+10. Wie lange gilt die Schutzfrist nach einer Mehrlingsgeburt grundsätzlich?
+A) 6 Wochen
+B) 8 Wochen
+C) 12 Wochen
+D) 14 Wochen
+11. Welches Merkmal nennt § 1 AGG ausdrücklich?
+A) Familienstand
+B) Körpergröße
+C) sexuelle Identität
+D) Einkommen
+12. Ab welcher Größe ist grundsätzlich ein Arbeitsschutzausschuss zu bilden?
+A) mehr als 10 Beschäftigte
+B) mindestens 20 Beschäftigte
+C) mehr als 20 Beschäftigte
+D) erst ab 100 Beschäftigten
+13. Welche Gestaltung kennzeichnet ein Rettungszeichen?
+A) gelbes Dreieck
+B) grünes Rechteck/Quadrat
+C) blauer Kreis
+D) weißer Kreis mit rotem Rand
+14. Was hat im Brandfall Vorrang?
+A) Daten sichern
+B) Brandursache ermitteln
+C) Menschen warnen/retten und Brand melden
+D) Fenster öffnen
+15. Wer haftet bei einer KG grundsätzlich unbeschränkt?
+A) jeder Kommanditist
+B) nur der Prokurist
+C) der Komplementär
+D) niemand
+16. Wie hoch ist das gesetzliche Mindeststammkapital einer GmbH?
+A) 1 €
+B) 12.500 €
+C) 25.000 €
+D) 50.000 €
+17. Wo wird eine UG (haftungsbeschränkt) eingetragen?
+A) HRA
+B) HRB
+C) Vereinsregister
+D) Partnerschaftsregister
+18. Zu welchem Wirtschaftssektor gehört IT-Beratung?
+A) primär
+B) sekundär
+C) tertiär
+D) quartär ist die einzige zulässige Antwort
+19. Ertrag 150.000 €, Aufwand 120.000 €. Wie hoch ist die Wirtschaftlichkeit?
+A) 20 %
+B) 25 %
+C) 80 %
+D) 125 %
+20. Ein Markt hat wenige Anbieter und viele Nachfrager. Welche Marktform liegt vor?
+A) Angebotsoligopol
+B) Angebotsmonopol
+C) Polypol
+D) Nachfragemonopol
+21. Welche Absprache ist ein Quotenkartell?
+A) gemeinsame Qualitätsnorm
+B) Aufteilung der Produktionsmengen
+C) gemeinsamer Messestand
+D) gemeinsame Forschung ohne Marktabstimmung
+22. Wann ist eine Mahnung für den Verzug typischerweise entbehrlich?
+A) Wenn die Rechnung verloren ging
+B) Wenn die Leistung kalendermäßig bestimmt ist
+C) Bei jedem Verbrauchergeschäft sofort
+D) Nur nach einem Gerichtsurteil
+23. Welches Recht steht bei einem Sachmangel grundsätzlich zuerst im Vordergrund?
+A) Nacherfüllung
+B) sofortiger Schadensersatz ohne Voraussetzungen
+C) automatische Vertragsstrafe
+D) Strafanzeige
+24. Welche Aussage zur Lohnsteuer ist richtig?
+A) Sie ist eine eigene Steuer nur für Unternehmen.
+B) Sie ist eine Erhebungsform der Einkommensteuer.
+C) Sie entspricht der Körperschaftsteuer.
+D) Sie wird vom Kunden bezahlt.
+25. Welche Wirkung soll eine Leitzinserhöhung typischerweise haben?
+A) Kredite verbilligen und Nachfrage erhöhen
+B) Preisdruck durch tendenziell teurere Finanzierung dämpfen
+C) Umsatzsteuer abschaffen
+D) Geldmenge immer sofort verdoppeln
+26. Was bedeutet Verursacherprinzip?
+A) Umweltkosten trägt immer der Staat.
+B) Der Geschädigte trägt alle Kosten.
+C) Der Verursacher soll die Kosten seiner Umweltbelastung tragen.
+D) Kosten werden zufällig verteilt.
+27. Welcher Teil gehört in einen Businessplan?
+A) nur das Logo
+B) Markt-, Risiko- und Finanzplanung
+C) ausschließlich technische Details
+D) nur der gewünschte Gewinn
+28. Welches Leitungssystem hat einen Stab ohne eigene Weisungsbefugnis?
+A) Mehrliniensystem
+B) Matrixorganisation
+C) Stabsliniensystem
+D) reines Einliniensystem ohne Stab
+29. Kapital 400.000 €, Gewinn 20.000 €. Wie hoch ist die Rentabilität?
+A) 5 %
+B) 20 %
+C) 50 %
+D) 200 %
+30. Welche Kombination ist korrekt?
+A) AG – HRA – 25.000 €
+B) OHG – HRB – beschränkte Haftung
+C) GmbH – HRB – 25.000 € Stammkapital
+D) KG – HRB – nur beschränkte Haftung
+
+Lösungsschlüssel zur WiSo-Probeklausur
+Nr.
+Lösung
+Kurzbegründung
+1
+B
+§ 20 BBiG: mindestens ein, höchstens vier Monate.
+2
+C
+Die Vier-Wochen-Regel ist an diesen Zweck gebunden.
+3
+B
+Das Ergebnis des Prüfungsausschusses ist maßgeblich.
+4
+B
+Grundregel des § 14 Abs. 2 TzBfG.
+5
+C
+Betriebsräte schließen keine Tarifverträge.
+6
+B
+Arbeitszeitlage ist ein sozialer Mitbestimmungstatbestand.
+7
+D
+Beiträge zur gesetzlichen Unfallversicherung trägt grundsätzlich der Arbeitgeber.
+8
+B
+Einkommen darüber erhöht den Beitrag nicht weiter.
+9
+B
+Das ist der Kern des Generationenvertrags.
+10
+C
+Bei Mehrlings- und Frühgeburten sind es grundsätzlich zwölf Wochen.
+11
+C
+Die sechs Merkmalsgruppen sind abschließend im § 1 genannt.
+12
+C
+> 20 bedeutet ab 21; Teilzeit wird gewichtet.
+13
+B
+Grün/weiß markiert Fluchtweg, Notausgang und Erste Hilfe.
+14
+C
+Menschenrettung und Alarmierung gehen vor Sachwerten.
+15
+C
+Der Komplementär ist der Vollhafter.
+16
+C
+12.500 € betrifft eine mögliche Mindesteinzahlung bei Bargründung, nicht das Stammkapital.
+17
+B
+Die UG ist eine Kapitalgesellschaft/GmbH-Variante.
+18
+C
+IT-Beratung ist eine Dienstleistung.
+19
+D
+150.000 ÷ 120.000 × 100 = 125 %.
+20
+A
+Wenige Anbieter kennzeichnen das Angebotsoligopol.
+21
+B
+Quoten begrenzen oder verteilen Produktion/Absatz.
+22
+B
+Ein konkreter Kalendertermin setzt den Schuldner ohne Mahnung in Verzug.
+23
+A
+Nachbesserung oder Ersatzlieferung sind vorrangig.
+24
+B
+Der Arbeitgeber behält sie für den Arbeitnehmer ein.
+25
+B
+Die Wirkungskette ist vereinfacht und zeitverzögert.
+26
+C
+Umweltkosten sollen dem Verursacher zugerechnet werden.
+27
+B
+Ein Businessplan verbindet Markt, Organisation, Risiken und Finanzierung.
+28
+C
+Der Stab berät; die Linie entscheidet und weist an.
+29
+A
+20.000 ÷ 400.000 × 100 = 5 %.
+30
+C
+Die drei Merkmale passen zur GmbH.
+
+Auswertung: Zähle einen Punkt je richtiger Antwort. Ordne Fehler anschließend einem Themenmodul zu und wiederhole gezielt. Als Trainingsziel sind zunächst 24/30, später mindestens 27/30 sinnvoll.
+
+Rechts- und Quellenhinweise (Stand September 2026)
+BBiG §§ 20–22 und 21: gesetze-im-internet.de/bbig_2005/
+TzBfG § 14: gesetze-im-internet.de/tzbfg/
+MuSchG § 3: gesetze-im-internet.de/muschg_2018/
+AGG § 1: gesetze-im-internet.de/agg/
+BetrVG § 87: gesetze-im-internet.de/betrvg/
+ASiG § 11: gesetze-im-internet.de/asig/
+BGB §§ 286, 433–441: gesetze-im-internet.de/bgb/
+GmbHG §§ 5, 5a und AktG § 7: gesetze-im-internet.de/
+Sozialversicherungsrechengrößen 2026: Bundesministerium für Arbeit und Soziales, bmas.de
+Geldpolitische Strategie und 2-%-Ziel: Europäische Zentralbank, ecb.europa.eu
+
+Musterlösungen
+Hinweis: Die Lösungen sind beispielhaft. In der Prüfung sind andere fachlich konsistente Varianten möglich, wenn Notation und Begründung stimmen.
+
+1 – Stakeholder
+Auftraggeber: erwartet kürzere Bearbeitungszeit; befürchtet Budgetüberschreitung; Maßnahme: Sprint-Review/Kostenstatus.
+Endnutzer: erwarten einfache Erfassung; befürchten Mehraufwand; Maßnahme: Prototyp und Usability-Test.
+Datenschutzbeauftragte: erwartet Datenminimierung; befürchtet unzulässige Freitexte; Maßnahme: Löschkonzept und Datenschutzhinweis.
+Supportteam: erwartet Priorisierung; befürchtet Benachrichtigungsflut; Maßnahme: konfigurierbare Regeln. Hohes Risiko: Auftraggeber wegen hoher Macht und hohem Interesse.
+2 – Klassendiagramm
+Kategorie 1 — 0..* Ticket; jedes Ticket hat genau 1 Kategorie.
+Ticket 1 — 0..* Kommentar; jeder Kommentar gehört genau 1 Ticket.
+Benutzer 1 — 0..* Kommentar; jeder Kommentar hat genau 1 Autor.
+Komposition Ticket–Kommentar ist vertretbar, wenn Kommentare ohne Ticket keinen fachlichen Sinn besitzen und mit ihm gelöscht werden. Aggregation wäre bei unabhängiger Archivierung vertretbar; Begründung entscheidet.
+3 – Use Case
+Akteure: Gast; Angemeldeter Kunde als Spezialisierung des Gasts.
+Use Cases: Wissensdatenbank durchsuchen, Ticket anlegen, Eingaben validieren, Datei anhängen.
+Ticket anlegen <<include>> Eingaben validieren. Datei anhängen <<extend>> Ticket anlegen.
+4 – Aktivität
+Nach Ticket speichern Fork in zwei Zweige: E-Mail senden und Push senden.
+Vor Prozessende Join beider Zweige. Decision vor dem Fork oder im E-Mail-Zweig: [E-Mail gültig] senden, [ungültig] Zweig überspringen/mergen. Der Join darf nur auf tatsächlich aktivierte Token warten; daher Modellierung sauber zusammenführen.
+5 – Sequenz
+Kunde → WebApp: submit(form); WebApp → AuthService: authorize(token). alt [nicht berechtigt]: AuthService --→ WebApp: false; WebApp --→ Kunde: HTTP 403. else [berechtigt]: AuthService --→ WebApp: true; WebApp → TicketService: createTicket(dto); Fortsetzung wie Beispiel.
+6 – Zustand
+Neu → Storniert: stornieren [actor=Kunde]. Zugewiesen → Storniert: stornieren [actor=Kunde]. In Bearbeitung → Storniert: stornieren [rolle=Mitarbeiter]. Von anderen Zuständen kein Übergang oder Guard verweigert.
+7 – ER
+TICKET_TAG(ticket_id PK/FK, tag_id PK/FK) löst Ticket n:m Tag auf.
+BEOBACHTUNG(ticket_id PK/FK, mitarbeiter_id PK/FK, abonniert_am) löst Mitarbeiter n:m Ticket und trägt das Beziehungsattribut.
+8 – Mockup
+Schwacher Kontrast → Text schwer lesbar → Kontrast erhöhen.
+Button „OK“ → Ergebnis unklar → „Ticket erstellen“.
+Fehler nur rot → Bedeutung nicht barrierefrei → Text + Icon + Fokus; konkrete Meldung am Feld.
+Symbolnavigation → unbekannte Bedeutung → Beschriftungen/Tooltips und sichtbaren aktiven Bereich ergänzen.
+9 – REST
+GET /api/tickets/42, Accept: application/json → 200 + JSON oder 404.
+PATCH /api/tickets/42, Content-Type: application/json, Body {"priority":"HIGH"} → 200/204.
+DELETE /api/tickets/42 → 204; erneutes Löschen je API-Konvention 204 oder 404.
+Unbekanntes Ticket bearbeiten → 404 Not Found; ungültiger Statusübergang kann 409 Conflict sein.
+10 – Pseudocode
+count ← 0; IF tickets IS NULL RETURN 0; FOR EACH ticket IN tickets: IF ticket IS NOT NULL AND ticket.status IN [NEU,ZUGEWIESEN,IN_BEARBEITUNG,WARTET] THEN count ← count+1; ENDIF; END FOR; RETURN count.
+Test 1: [NEU, GELOEST, NULL, WARTET] → 2. Test 2: leere Liste → 0.
+11 – Vorgehensmodelle
+Behörde: V-Modell, weil verbindliche Spezifikation, zugeordnete Test-/Abnahmestufen und hoher Nachweisbedarf.
+Kundenportal: Scrum, weil Bedürfnisse unklar sind und frühes Nutzerfeedback in kurzen Sprints Fehlentwicklungen reduziert.
+12 – DSGVO
+Geburtsdatum und Telefon sind ohne nachgewiesene Erforderlichkeit zu entfernen; das verletzt sonst Datenminimierung.
+Werbeeinwilligung separat, freiwillig, nicht vorangekreuzt, zweckklar und widerrufbar gestalten.
+Passwort mit Argon2id/bcrypt/scrypt plus individuellem Salt hashen; kein Klartext, keine reversible Speicherung; TLS, Zugriffsschutz und angemessene Parameter ergänzen.
+13 – Qualitätssicherung
+Unit-Tests prüfen Validierung und Mapping isoliert.
+Integrationstests prüfen Controller, Service, Datenbank und Authentifizierung gemeinsam, idealerweise gegen testnahe Infrastruktur.
+Contract/API-Tests prüfen Statuscodes, Header und JSON-Schema; Regressionen werden in CI automatisch erkannt.
+14 – Sicherheit
+Autorisierung: Ein Kunde kann nur Tickets seiner Organisation lesen; Akzeptanztest: fremde Ticket-ID liefert 403/404 ohne Datenleck.
+Verfügbarkeit: Wiederanlaufzeit höchstens 60 Minuten; quartalsweiser Restore-Test belegt das Ziel.
+Logging: Statusänderung speichert Benutzer-ID, Zeitpunkt, alte/neue Werte; Log ist für normale Nutzer nicht änderbar.
+15 – Entwurfsmuster
+Observer: Ticket ist Subject/Publisher; EmailListener, AuditListener und MetricsListener sind Observer/Subscribers.
+Vorteile: lose Kopplung und einfache Erweiterbarkeit. Nachteil: Ablauf/Reihenfolge und Fehler sind schwerer nachzuverfolgen.
+Singleton regelt nur Instanzanzahl/globalen Zugriff; er modelliert keine Benachrichtigung mehrerer Empfänger und erhöht Kopplung.
+16 – SQL SELECT
+Grundabfrage: SELECT m.name, COUNT(t.ticket_id) AS anzahl, AVG(t.bearbeitungsdauer) AS durchschnitt FROM mitarbeiter m LEFT JOIN ticket t ON t.bearbeiter_id=m.mitarbeiter_id GROUP BY m.mitarbeiter_id,m.name ORDER BY anzahl DESC;
+HAVING-Variante: vor ORDER BY HAVING COUNT(t.ticket_id)>=5 ergänzen. Der LEFT JOIN erhält in der Grundabfrage Mitarbeiter ohne Tickets; die HAVING-Variante entfernt Gruppen unter fünf anschließend bewusst.
+17 – SQL-DML
+INSERT INTO kommentar(kommentar_id,ticket_id,autor_id,text,erstellt_am) VALUES (100,42,7,'Nachfrage',CURRENT_TIMESTAMP).
+UPDATE ticket SET prioritaet='MITTEL' WHERE kunden_id=7 AND prioritaet='NIEDRIG' AND status NOT IN ('GESCHLOSSEN','GELOEST').
+DELETE FROM import_ticket i WHERE i.ticket_id IS NULL; mögliche Probleme: FK, NOT NULL, UNIQUE/PK oder CHECK. Vor UPDATE/DELETE identisches SELECT und Transaktion verwenden.
+18 – Filtern/Zählen
+IF comments IS NULL OR date IS NULL THEN RETURN 0; count←0; FOR EACH c IN comments: IF c IS NOT NULL AND c.erstelltAm > date THEN count←count+1; ENDIF; END FOR; RETURN count.
+Laufzeit O(n), Zusatzspeicher O(1). Tests: [vorher,nachher,NULL] → 1; date=NULL → 0 oder definierter Fehler laut Vertrag.
+19 – Sortieren
+compare(a,b): Prioritätsrang höher soll zuerst stehen. Wenn rank(a.priority) != rank(b.priority), RETURN rank(b)-rank(a). Sonst RETURN compareDate(a.erstelltAm,b.erstelltAm).
+Bubble Sort vertauscht nur bei compare > 0; dadurch bleibt die Sortierung bei compare=0 stabil.
+20 – Whitebox/Blackbox
+Whitebox: jeden Zweig der Gebührenlogik sowie Schleifengrenzen ausführen; findet ungetesteten Code.
+Blackbox: Äquivalenzklassen für customerType und Grenzwerte um Gebührenstufen; prüft Spezifikation unabhängig vom Code.
+21 – Coverage
+Gemeinsame Anweisungsüberdeckung: 11/12 = 91,7 %. Gemeinsame Zweigüberdeckung: 3/4 = 75 %.
+Die Prozentwerte werden über unterschiedliche erreichte Elemente gebildet, nicht durch Addition der Einzelwerte.
+22 – Pfade
+Mit B4 entstehen aus jedem bisherigen Pfad, der A4 erreicht, zwei Varianten: ...–A4–B4(T)–A5–E und ...–A4–B4(F)–E. Pfade über B3(F) erreichen B4 nicht.
+Ein minimales Set für Zweigüberdeckung muss B2 T/F, B3 T/F und – sofern B3(T) – B4 T/F enthalten; mindestens vier passend kombinierte Pfade sind eine naheliegende Lösung.
+23 – Unit/Regression
+Arrange: Ticket im Zustand NEU. Act: result←statusAendern(GESCHLOSSEN). Assert: result=false und status=NEU.
+Als Regressionstest verhindert er, dass eine spätere Änderung die Zustandsregel wieder umgeht; er läuft automatisiert bei jeder relevanten Änderung.
+24 – Bug finden
+Fehler: count startet bei 1 (Off-by-one), Bedingung zählt GESCHLOSSEN statt offene Zustände, RETURN im Schleifenkörper beendet beim ersten Treffer.
+Korrektur: count←0; gesamte Liste durchlaufen; bei status in [NEU,ZUGEWIESEN,IN_BEARBEITUNG,WARTET] erhöhen; erst nach der Schleife zurückgeben.
+25 – OOP
+MessageSender definiert send(message):Result. EmailSender und SmsSender implementieren das Interface.
+Eine abstrakte BaseSender-Klasse ist sinnvoll, wenn gemeinsames Rate-Limit/Logging echten Zustand und Basislogik teilt. Der Aufrufer arbeitet mit MessageSender; zur Laufzeit wird die konkrete send-Implementierung dynamisch gewählt.
+26 – Kryptografie
+Backup: symmetrisch verschlüsseln, Schlüssel getrennt schützen → Vertraulichkeit.
+Passwort: Argon2id/bcrypt/scrypt + individueller Salt → erschwerte Offline-Angriffe.
+Softwareupdate: digitale Signatur prüfen → Authentizität und Integrität. HTTPS: TLS mit Zertifikat/(EC)DHE und symmetrischen Sitzungsschlüsseln.
+27 – Normalisierung
+KUNDE(kunde_id PK,kunde_name,kunde_ort); KATEGORIE(kategorie_id PK,kategorie_name); TAG(tag_id PK,tag_name); TICKET(ticket_id PK,kunde_id FK,kategorie_id FK); TICKET_TAG(ticket_id PK/FK,tag_id PK/FK).
+Abhängigkeiten kunde_id→Kundendaten, kategorie_id→kategorie_name, tag_id→tag_name werden ausgelagert. Dadurch verschwinden redundante Updates; Tags können ohne Ticket angelegt und letzte Zuordnungen ohne Informationsverlust gelöscht werden.
+28 – GRANT
+CREATE VIEW reporting_ticket AS SELECT t.ticket_id,t.status,k.kunden_id,k.name FROM ticket t JOIN kunde k ON k.kunden_id=t.kunden_id; GRANT SELECT ON reporting_ticket TO reporting_role.
+GRANT SELECT ON ticket TO support_role; GRANT UPDATE(status,bearbeiter_id) ON ticket TO support_role; REVOKE DELETE ON ticket FROM support_role. Syntax/Spaltenrechte hängen vom DBMS ab.
+29 – Migration
+Risiken: Dubletten, Datumsformate, Statusmapping, verwaiste FKs, Encoding, Volumen und Datenschutz.
+Lösungen: Staging, Deduplizierungsregel, kanonisches Datum, freigegebene Mappingtabelle, Quarantäne für Fehler, Batch-Import, Backup/Rollback.
+Prüfung: Quell-/Ziel-Counts, Summen je Status, FK-/Constraint-Prüfung, Fehlerquote, Stichproben und fachliche Abnahme.
+
+90-Minuten-Probeklausur
+Fall: HelpDesk Pro erhält eine Wissensdatenbank. Artikel werden von Redakteuren erstellt, geprüft und veröffentlicht. Kunden können veröffentlichte Artikel bewerten. Beim Veröffentlichen werden Suche und Benachrigungsdienst aktualisiert.
+Teil
+Punkte
+Aufgabe
+A
+10
+Nenne vier Stakeholder. Formuliere je eine Erwartung oder Befürchtung und priorisiere zwei.
+B
+14
+Erstelle ein Klassendiagramm für Artikel, Redakteur, Bewertung und Kategorie mit Attributen, Methoden und Multiplizitäten.
+C
+10
+Erstelle ein Zustandsdiagramm für Artikel: Entwurf, In Prüfung, Abgelehnt, Veröffentlicht, Archiviert.
+D
+12
+Skizziere ein Sequenzdiagramm für „Artikel veröffentlichen“ einschließlich synchroner Speicherung und asynchroner Aktualisierung von Suche und Benachrichtigung.
+E
+10
+Entwirf REST-Endpunkte zum Erstellen, Veröffentlichen und Bewerten. Gib Statuscodes und JSON-Beispiel an.
+F
+10
+Implementiere averageRating(ratings) in Pseudocode; leere Liste liefert 0, ungültige Werte außerhalb 1..5 werden ignoriert.
+G
+8
+Nenne drei QS-Maßnahmen und beschreibe deren konkreten Einsatz.
+H
+6
+Formuliere zwei Sicherheitsanforderungen mit Akzeptanzkriterium.
+
+Auswertung: 80 Punkte gesamt. Markiere nach der Bearbeitung nicht nur falsche Antworten, sondern die Fehlerart: Fachwissen, Notation, Aufgabenoperator, Zeit oder Flüchtigkeit.
+
+
+90-Minuten-Probeklausur – Teil 2
+Fall: Für das Management soll eine Auswertung offener Tickets entstehen. Gleichzeitig werden Altdaten importiert und die Statuslogik wird durch automatisierte Tests abgesichert.
+Teil
+Punkte
+Aufgabe
+A
+16
+Formuliere eine SQL-Abfrage: je Kunde Name und Anzahl offener Tickets; auch Kunden ohne Tickets; nur Kunden mit höchstens zehn offenen Tickets; absteigend nach Anzahl.
+B
+10
+Schreibe INSERT für ein Ticket, UPDATE zum Schließen gelöster Tickets älter als 30 Tage und DELETE für bestätigte Importfehler. Nenne Schutzmaßnahmen.
+C
+10
+Implementiere filterAndSort(tickets): nur offene Tickets; Sortierung Priorität absteigend, Datum aufsteigend.
+D
+10
+Berechne für einen gegebenen Kontrollfluss Anweisungs- und Zweigüberdeckung und liste alle vier Pfade auf.
+E
+8
+Beschreibe einen Unit-/Regressionstest für einen früheren Off-by-one-Fehler.
+F
+8
+Erkläre abstrakte Klasse, Interface und Polymorphie am Benachrichtigungsbeispiel.
+G
+8
+Normalisiere eine Tabelle mit Ticket-, Kunden- und Kategoriedaten bis 3. NF und nenne zwei Anomalien.
+H
+6
+Entwirf minimale GRANTs für Reporting und Support.
+I
+4
+Nenne vier Importhindernisse und je eine passende Gegenmaßnahme.
+
+Auswertung: 80 Punkte gesamt. Bei SQL besonders JOIN-Bedingung, NULL-Verhalten, GROUP BY/HAVING und die Reichweite von UPDATE/DELETE kontrollieren.
+
+Letzte Checkliste vor der Prüfung
+Operator, Punktzahl und geforderten Umfang zuerst lesen.
+In allen Diagrammen konsistente Namen verwenden.
+Beziehungen, Guards, Multiplizitäten und Rückgaben vollständig beschriften.
+Authentifizierung (401) und Autorisierung (403) trennen.
+Entscheidungen mit Projektmerkmal und Auswirkung begründen.
+Maßnahmen konkret und testbar formulieren.
+Letzte 10 Minuten für Vollständigkeit und Lesbarkeit reservieren.
+Schlussgedanke: Fachbegriff nennen, am Fall anwenden und die Wirkung begründen – genau diese Dreierfolge bringt Punkte.
+
+

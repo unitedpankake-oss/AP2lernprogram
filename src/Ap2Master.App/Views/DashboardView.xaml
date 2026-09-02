@@ -1,0 +1,229 @@
+<UserControl x:Class="Ap2Master.App.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:Ap2Master.App.Views"
+             xmlns:loc="clr-namespace:Ap2Master.App.Localization">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Greeting + readiness -->
+            <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource Card}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid Width="150" Height="150" Margin="0,0,16,0">
+                        <Ellipse Width="150" Height="150" Stroke="{DynamicResource AppBorderBrush}" StrokeThickness="12" Fill="Transparent" />
+                        <Ellipse Width="150" Height="150" Stroke="{DynamicResource PrimaryBrush}" StrokeThickness="12" Fill="Transparent"
+                                 StrokeDashCap="Round"
+                                 StrokeDashArray="{Binding Snapshot.Readiness.Score, Converter={x:Static views:RingDashConverter.Instance}, ConverterParameter='150,12'}"
+                                 RenderTransformOrigin="0.5,0.5">
+                            <Ellipse.RenderTransform>
+                                <RotateTransform Angle="-90" />
+                            </Ellipse.RenderTransform>
+                        </Ellipse>
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Style="{StaticResource Metric}" HorizontalAlignment="Center" Text="{Binding Snapshot.Readiness.Score}" />
+                            <TextBlock Style="{StaticResource Muted}" HorizontalAlignment="Center" Text="{loc:Loc Dash.Readiness}" />
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Style="{StaticResource H1}" Text="{Binding Greeting}" />
+                        <TextBlock Style="{StaticResource Muted}" Margin="0,4,0,12" Text="{Binding GreetingSub}" />
+                        <TextBlock Text="{loc:Loc Dash.ReadinessHint}" Style="{StaticResource Muted}" />
+                        <Button Style="{StaticResource GhostButton}" Margin="0,12,0,0" HorizontalAlignment="Left"
+                                Content="{loc:Loc Dash.Details}" Command="{Binding OpenStatsCommand}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Heute lernen -->
+            <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource Card}" BorderBrush="{DynamicResource PrimaryBrush}">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Style="{StaticResource H2}" Margin="0,0,0,12" Text="{loc:Loc Dash.TodayLearn}" />
+                    <Button DockPanel.Dock="Bottom" Content="{loc:Loc Dash.Start}" Command="{Binding StartTrainingCommand}" Margin="0,12,0,0" />
+                    <ItemsControl ItemsSource="{Binding TodayItems}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel Margin="0,0,0,10">
+                                    <TextBlock DockPanel.Dock="Right" Style="{StaticResource Muted}" Text="{Binding EstimatedMinutes, StringFormat={}{0} min}" />
+                                    <TextBlock FontWeight="SemiBold">
+                                        <TextBlock.Text>
+                                            <MultiBinding Converter="{x:Static loc:LocContentConverter.Instance}">
+                                                <Binding Path="Title" />
+                                                <Binding Path="Language" Source="{x:Static loc:Loc.Current}" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Style="{StaticResource Muted}" Text="{loc:Loc Dash.EmptyToday}"
+                               Visibility="{Binding TodayItems.Count, Converter={x:Static views:EmptyCountToVisConverter.Instance}}" />
+                </DockPanel>
+            </Border>
+
+            <!-- Teil cards -->
+            <ItemsControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Snapshot.Parts}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="3" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <DockPanel>
+                                    <Border Width="6" Height="18" CornerRadius="3" Margin="0,0,8,0"
+                                            Background="{Binding Part, Converter={x:Static views:ExamPartBrushConverter.Instance}}" />
+                                    <TextBlock Style="{StaticResource H3}" Text="{Binding Part}" />
+                                </DockPanel>
+                                <TextBlock Style="{StaticResource Metric}" Margin="0,8,0,0">
+                                    <Run Text="{Binding Percent, Mode=OneWay}" /><Run Text=" %" />
+                                </TextBlock>
+                                <TextBlock Style="{StaticResource Muted}">
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{x:Static loc:LocFormatConverter.Instance}" ConverterParameter="Dash.PointsOf">
+                                            <Binding Path="Awarded" />
+                                            <Binding Path="Possible" />
+                                            <Binding Path="Language" Source="{x:Static loc:Loc.Current}" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <Button Style="{StaticResource GhostButton}" Margin="0,8,0,0" HorizontalAlignment="Left"
+                                        Content="{loc:Loc Dash.Details}"
+                                        Command="{Binding DataContext.OpenCatalogCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <StackPanel Grid.Row="1" Grid.Column="2">
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource H3}" Text="{loc:Loc Dash.DueCards}" />
+                        <TextBlock Style="{StaticResource Metric}" Text="{Binding Snapshot.DueFlashcards}" />
+                        <TextBlock Style="{StaticResource Muted}">
+                            <TextBlock.Text>
+                                <MultiBinding Converter="{x:Static loc:LocFormatConverter.Instance}" ConverterParameter="Dash.DueToday">
+                                    <Binding Path="Snapshot.DueFlashcards" />
+                                    <Binding Path="Language" Source="{x:Static loc:Loc.Current}" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                        <Button Style="{StaticResource GhostButton}" Margin="0,8,0,0" HorizontalAlignment="Left"
+                                Content="{loc:Loc Dash.ReviewNow}" Command="{Binding OpenCardsCommand}" />
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource H3}" Text="{loc:Loc Dash.Streak}" />
+                        <TextBlock Style="{StaticResource Metric}">
+                            <TextBlock.Text>
+                                <MultiBinding Converter="{x:Static loc:LocFormatConverter.Instance}" ConverterParameter="Dash.StreakDays">
+                                    <Binding Path="Snapshot.StreakDays" />
+                                    <Binding Path="Language" Source="{x:Static loc:Loc.Current}" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                        <Button Style="{StaticResource GhostButton}" Margin="0,8,0,0" HorizontalAlignment="Left"
+                                Content="{loc:Loc Dash.StreakView}" Command="{Binding OpenStatsCommand}" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- Week bars -->
+            <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource Card}">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Style="{StaticResource H3}" Text="{loc:Loc Dash.WeekTime}" />
+                    <TextBlock DockPanel.Dock="Top" Style="{StaticResource Metric}" Text="{Binding Snapshot.WeeklyMinutes, StringFormat={}{0} min}" />
+                    <ItemsControl ItemsSource="{Binding Snapshot.WeekBars}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="7" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel VerticalAlignment="Bottom" Margin="4,12,4,0">
+                                    <Border Height="{Binding Ratio, Converter={x:Static views:RatioToHeightConverter.Instance}, ConverterParameter=88}"
+                                            CornerRadius="6" Background="{DynamicResource PrimaryBrush}" />
+                                    <TextBlock HorizontalAlignment="Center" Style="{StaticResource Muted}" Margin="0,6,0,0" Text="{Binding Label}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DockPanel>
+            </Border>
+
+            <!-- Heatmap -->
+            <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource Card}">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Style="{StaticResource H3}" Margin="0,0,0,8" Text="{loc:Loc Dash.Heat}" />
+                    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,8,0,0">
+                        <TextBlock Style="{StaticResource Muted}" Margin="0,0,12,0" Text="{loc:Loc Dash.HeatWeak}" />
+                        <TextBlock Style="{StaticResource Muted}" Margin="0,0,12,0" Text="{loc:Loc Dash.HeatMid}" />
+                        <TextBlock Style="{StaticResource Muted}" Text="{loc:Loc Dash.HeatStrong}" />
+                    </StackPanel>
+                    <ItemsControl ItemsSource="{Binding Snapshot.Heatmap}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource DeckButton}" Command="{Binding DataContext.OpenTopicCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}">
+                                    <DockPanel Margin="0,0,0,8">
+                                        <Border DockPanel.Dock="Right" Width="18" Height="18" CornerRadius="4" Margin="8,0,0,0"
+                                                Background="{Binding Mastery, Converter={x:Static views:MasteryBrushConverter.Instance}}"
+                                                ToolTip="{Binding Mastery, Converter={x:Static views:PercentTextConverter.Instance}}" />
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding Converter="{x:Static loc:LocContentConverter.Instance}">
+                                                    <Binding Path="Title" />
+                                                    <Binding Path="Language" Source="{x:Static loc:Loc.Current}" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DockPanel>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Style="{StaticResource Muted}" Text="{loc:Loc Dash.EmptyHeat}"
+                               Visibility="{Binding Snapshot.Heatmap.Count, Converter={x:Static views:EmptyCountToVisConverter.Instance}}" />
+                </DockPanel>
+            </Border>
+
+            <!-- Next -->
+            <Border Grid.Row="2" Grid.Column="2" Style="{StaticResource Card}" BorderBrush="{DynamicResource Teil2Brush}">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Style="{StaticResource H3}" Text="{loc:Loc Dash.Next}" />
+                    <Button DockPanel.Dock="Bottom" Content="{loc:Loc Dash.NextLearn}" Command="{Binding StartTrainingCommand}" Margin="0,12,0,0" />
+                    <TextBlock Margin="0,8,0,0" TextWrapping="Wrap">
+                        <TextBlock.Text>
+                            <MultiBinding Converter="{x:Static loc:LocContentConverter.Instance}">
+                                <Binding Path="Snapshot.RecommendedActivity" />
+                                <Binding Path="Language" Source="{x:Static loc:Loc.Current}" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DockPanel>
+            </Border>
+
+            <TextBlock Grid.Row="3" Grid.ColumnSpan="3" Style="{StaticResource Muted}" Margin="4,0,0,8" Text="{Binding Status}" />
+        </Grid>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,36 @@
+## Build
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+*.user
+*.suo
+*.cache
+project.lock.json
+artifacts/
+
+## Visual Studio / Cursor
+.vs/
+.idea/
+*.rsuser
+*.sln.docstates
+
+## Tests / coverage
+TestResults/
+coverage/
+*.coverage
+coverlet*
+
+## Local models and engines (too large, not source)
+Models/
+*.engine
+*.onnx
+*.pth
+*.pt
+*.gguf
+*.ggml
+
+## OS
+Thumbs.db
+Desktop.ini
+.DS_Store

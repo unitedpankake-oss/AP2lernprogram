@@ -1,0 +1,26 @@
+<UserControl x:Class="Ap2Master.App.Views.StatistikView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+             xmlns:loc="clr-namespace:Ap2Master.App.Localization">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <TextBlock Style="{StaticResource H1}" Margin="0,0,0,12" Text="{loc:Loc Stat.Title}" />
+            <Border Style="{StaticResource CardFlush}" Padding="16" Margin="0,0,0,12">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource H2}" Margin="0,0,0,8" Text="{loc:Loc Stat.Exams}" />
+                    <lvc:CartesianChart Height="220" Series="{Binding ExamSeries}" XAxes="{Binding ExamXAxes}" YAxes="{Binding ExamYAxes}" />
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource CardFlush}" Padding="16" Margin="0,0,0,12">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource H2}" Margin="0,0,0,8" Text="{loc:Loc Stat.Mastery}" />
+                    <lvc:CartesianChart Height="240" Series="{Binding MasterySeries}" XAxes="{Binding MasteryXAxes}" YAxes="{Binding MasteryYAxes}" />
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource CardFlush}" Padding="16">
+                <TextBox Text="{Binding Text}" IsReadOnly="True" Height="240" FontFamily="Cascadia Mono, Consolas" VerticalScrollBarVisibility="Auto" />
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Ap2Master.App/Ap2Master.App.csproj" />
+    <Project Path="src/Ap2Master.Application/Ap2Master.Application.csproj" />
+    <Project Path="src/Ap2Master.Content/Ap2Master.Content.csproj" />
+    <Project Path="src/Ap2Master.Domain/Ap2Master.Domain.csproj" />
+    <Project Path="src/Ap2Master.ExamEngine/Ap2Master.ExamEngine.csproj" />
+    <Project Path="src/Ap2Master.Generators/Ap2Master.Generators.csproj" />
+    <Project Path="src/Ap2Master.Infrastructure/Ap2Master.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Ap2Master.Application.Tests/Ap2Master.Application.Tests.csproj" />
+    <Project Path="tests/Ap2Master.Content.Tests/Ap2Master.Content.Tests.csproj" />
+    <Project Path="tests/Ap2Master.Domain.Tests/Ap2Master.Domain.Tests.csproj" />
+    <Project Path="tests/Ap2Master.Generators.Tests/Ap2Master.Generators.Tests.csproj" />
+    <Project Path="tests/Ap2Master.Infrastructure.Tests/Ap2Master.Infrastructure.Tests.csproj" />
+    <Project Path="tests/Ap2Master.Ui.Tests/Ap2Master.Ui.Tests.csproj" />
+  </Folder>
+</Solution>

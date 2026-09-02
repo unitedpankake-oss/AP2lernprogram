@@ -1,0 +1,147 @@
+<UserControl x:Class="Ap2Master.App.Views.ExamView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:Ap2Master.App.Views"
+             xmlns:loc="clr-namespace:Ap2Master.App.Localization">
+    <DockPanel>
+        <Border DockPanel.Dock="Top" Style="{StaticResource CardFlush}" Padding="12,10" Margin="0,0,0,12">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                    <Border Style="{StaticResource Pill}">
+                        <TextBlock FontWeight="SemiBold" Text="{Binding Remaining}" />
+                    </Border>
+                    <Border Style="{StaticResource Pill}">
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding Converter="{x:Static loc:LocFormatConverter.Instance}" ConverterParameter="Exam.MinutesPill">
+                                    <Binding Path="DurationMinutes" />
+                                    <Binding Path="Language" Source="{x:Static loc:Loc.Current}" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Border>
+                    <Border Style="{StaticResource Pill}">
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding Converter="{x:Static loc:LocFormatConverter.Instance}" ConverterParameter="Exam.TasksPill">
+                                    <Binding Path="QuestionCount" />
+                                    <Binding Path="Language" Source="{x:Static loc:Loc.Current}" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Border>
+                    <Border Style="{StaticResource Pill}">
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding Converter="{x:Static loc:LocFormatConverter.Instance}" ConverterParameter="Exam.Progress">
+                                    <Binding Path="ProgressPercent" />
+                                    <Binding Path="Language" Source="{x:Static loc:Loc.Current}" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Border>
+                    <Border Style="{StaticResource Pill}">
+                        <TextBlock Style="{StaticResource Muted}" Text="{Binding Autosave}" />
+                    </Border>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox Width="220" ItemsSource="{Binding ExamChoices}" DisplayMemberPath="Title"
+                              SelectedValuePath="Id" SelectedValue="{Binding ExamId}"
+                              Visibility="{Binding ShowExamPicker, Converter={x:Static views:BoolVisConverter.Instance}}" />
+                    <Button Content="{loc:Loc Exam.Start}" Command="{Binding StartCommand}" />
+                    <Button Style="{StaticResource GhostButton}" Content="{loc:Loc Exam.Resume}" Command="{Binding RestoreCommand}" />
+                    <TextBlock VerticalAlignment="Center" Margin="12,0,0,0" FontWeight="SemiBold" Text="{Binding ExamTitle}" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <DockPanel DockPanel.Dock="Bottom" Margin="0,12,0,0">
+            <Button DockPanel.Dock="Right" Style="{StaticResource DangerButton}" Content="{loc:Loc Exam.Submit}" Command="{Binding SubmitCommand}" />
+            <Button DockPanel.Dock="Right" Content="{loc:Loc Exam.Next}" Command="{Binding NextCommand}" />
+            <Button DockPanel.Dock="Left" Style="{StaticResource GhostButton}" Content="{loc:Loc Exam.Prev}" Command="{Binding PrevCommand}" />
+            <Button DockPanel.Dock="Left" Style="{StaticResource GhostButton}" Content="{loc:Loc Exam.MarkReview}" Command="{Binding MarkCommand}" />
+            <TextBlock VerticalAlignment="Center" Margin="12,0" Style="{StaticResource Muted}" Text="{Binding MarkedInfo}" />
+        </DockPanel>
+
+        <TextBlock DockPanel.Dock="Bottom" Text="{Binding Result}" Margin="0,8,0,0"
+                   Visibility="{Binding Result, Converter={x:Static views:NotEmptyToVisConverter.Instance}}" />
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="240" />
+            </Grid.ColumnDefinitions>
+            <ScrollViewer>
+                <StackPanel>
+                    <TextBlock Style="{StaticResource Metric}" FontSize="36" HorizontalAlignment="Left" Text="{Binding Remaining}"
+                               Visibility="{Binding HasActiveExam, Converter={x:Static views:BoolVisConverter.Instance}}" />
+                    <TextBlock Style="{StaticResource H2}" Margin="0,8,0,8">
+                        <TextBlock.Text>
+                            <MultiBinding Converter="{x:Static loc:LocContentConverter.Instance}">
+                                <Binding Path="CurrentQuestion.Title" />
+                                <Binding Path="Language" Source="{x:Static loc:Loc.Current}" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock Margin="0,0,0,16" FontSize="16">
+                        <TextBlock.Text>
+                            <MultiBinding Converter="{x:Static loc:LocContentConverter.Instance}">
+                                <Binding Path="CurrentQuestion.Question" />
+                                <Binding Path="Language" Source="{x:Static loc:Loc.Current}" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <ItemsControl ItemsSource="{Binding Options}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton Style="{StaticResource OptionCard}" GroupName="examopt"
+                                             Tag="{Binding Letter}"
+                                             IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                             Command="{Binding DataContext.SelectOptionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                             CommandParameter="{Binding}">
+                                    <RadioButton.Content>
+                                        <MultiBinding Converter="{x:Static loc:LocContentConverter.Instance}">
+                                            <Binding Path="GermanText" />
+                                            <Binding Path="Language" Source="{x:Static loc:Loc.Current}" />
+                                        </MultiBinding>
+                                    </RadioButton.Content>
+                                </RadioButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Text="{loc:Loc Exam.Freetext}" Margin="0,12,0,0" />
+                    <TextBox Text="{Binding Answer, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" Height="80" />
+                    <TextBlock Style="{StaticResource Muted}" Text="{loc:Loc Exam.Hint}" />
+                </StackPanel>
+            </ScrollViewer>
+            <Border Grid.Column="1" Style="{StaticResource CardFlush}" Margin="12,0,0,0" Padding="12">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Style="{StaticResource H3}" Margin="0,0,0,8" Text="{loc:Loc Exam.Navigator}" />
+                    <ItemsControl ItemsSource="{Binding NavCells}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource ExamNavButton}" Tag="{Binding KindKey}"
+                                        Command="{Binding DataContext.JumpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
+                                        ToolTip="{Binding KindKey}">
+                                    <Grid Width="36" Height="36">
+                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                   FontWeight="SemiBold" Text="{Binding Number}" />
+                                        <TextBlock HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                                   FontFamily="Segoe MDL2 Assets" FontSize="10" Margin="0,0,2,2"
+                                                   Text="{Binding Glyph}" />
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DockPanel>
+            </Border>
+        </Grid>
+    </DockPanel>
+</UserControl>

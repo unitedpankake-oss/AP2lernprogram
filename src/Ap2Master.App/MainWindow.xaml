@@ -1,0 +1,247 @@
+﻿<Window x:Class="Ap2Master.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        xmlns:vm="clr-namespace:Ap2Master.App.ViewModels"
+        xmlns:views="clr-namespace:Ap2Master.App.Views"
+        xmlns:dom="clr-namespace:Ap2Master.Domain;assembly=Ap2Master.Domain"
+        xmlns:loc="clr-namespace:Ap2Master.App.Localization"
+        Title="{Binding Title}" Height="900" Width="1440"
+        MinHeight="720" MinWidth="1280"
+        WindowStyle="None" ResizeMode="CanResize"
+        Background="{DynamicResource AppBackgroundBrush}"
+        Foreground="{DynamicResource TextPrimaryBrush}">
+    <Window.InputBindings>
+        <KeyBinding Key="K" Modifiers="Ctrl" Command="{Binding FocusSearchCommand}" />
+        <KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding ToggleSidebarCommand}" />
+        <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding NavigateSectionCommand}" CommandParameter="{x:Static dom:AppSection.Dashboard}" />
+    </Window.InputBindings>
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="0" ResizeBorderThickness="6" GlassFrameThickness="0" CornerRadius="0" />
+    </shell:WindowChrome.WindowChrome>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Caption -->
+        <Border Grid.Row="0" Background="{DynamicResource SidebarBrush}" BorderBrush="{DynamicResource AppBorderBrush}"
+                BorderThickness="0,0,0,1" MouseLeftButtonDown="TitleDrag">
+            <Grid Margin="12,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="248" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock FontFamily="{StaticResource IconFont}" FontSize="18" Foreground="{DynamicResource PrimaryBrush}"
+                               Text="&#xE7BE;" VerticalAlignment="Center" Margin="0,0,8,0" />
+                    <TextBlock FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Text="{loc:Loc App.Brand}" />
+                </StackPanel>
+                <Border Grid.Column="1" MaxWidth="520" Height="34" CornerRadius="18" Margin="16,0"
+                        Background="{DynamicResource SurfaceSecondaryBrush}" BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="1"
+                        VerticalAlignment="Center">
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Left" FontFamily="{StaticResource IconFont}" Margin="12,0,0,0"
+                                   VerticalAlignment="Center" Foreground="{DynamicResource TextSecondaryBrush}" Text="&#xE721;" />
+                        <TextBox BorderThickness="0" Background="Transparent" VerticalAlignment="Center" Margin="8,0,12,0"
+                                 Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
+                                 shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                            <TextBox.Style>
+                                <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Setter Property="Margin" Value="0" />
+                                    <Setter Property="Padding" Value="0" />
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                    </DockPanel>
+                </Border>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="8,0">
+                    <Border Style="{StaticResource Pill}" shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="{StaticResource IconFont}" Text="&#xE787;" Margin="0,0,8,0" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource WarningBrush}" />
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Countdown}" />
+                        </StackPanel>
+                    </Border>
+                    <Button Style="{StaticResource IconButton}" Command="{Binding ToggleInboxCommand}"
+                            ToolTip="{loc:Loc Shell.Inbox}" shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                        <Grid>
+                            <TextBlock FontFamily="{StaticResource IconFont}" FontSize="16" Text="&#xEA8F;" />
+                            <Border Width="16" Height="16" CornerRadius="8" Background="{DynamicResource PrimaryBrush}"
+                                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,-4,-6,0"
+                                    Visibility="{Binding InboxCount, Converter={x:Static views:PositiveToVisConverter.Instance}}">
+                                <TextBlock FontSize="10" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Text="{Binding InboxCount}" />
+                            </Border>
+                        </Grid>
+                    </Button>
+                    <Button Style="{StaticResource GhostButton}" Command="{Binding OpenSettingsCommand}" Padding="8,4" Margin="4,0,0,0"
+                            shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="28" Height="28" CornerRadius="14" Background="{DynamicResource PrimaryBrush}" Margin="0,0,8,0">
+                                <TextBlock Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Text="{Binding Initials}" />
+                            </Border>
+                            <TextBlock VerticalAlignment="Center" Text="{Binding DisplayName}" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Style="{StaticResource IconButton}" Click="MinimizeClick" ToolTip="{loc:Loc Shell.Minimize}"
+                            Content="&#xE921;" FontFamily="{StaticResource IconFont}" shell:WindowChrome.IsHitTestVisibleInChrome="True" />
+                    <Button Style="{StaticResource IconButton}" Click="MaxClick" ToolTip="{loc:Loc Shell.Maximize}"
+                            Content="&#xE922;" FontFamily="{StaticResource IconFont}" shell:WindowChrome.IsHitTestVisibleInChrome="True" />
+                    <Button Style="{StaticResource IconButton}" Click="CloseClick" ToolTip="{loc:Loc Shell.Close}"
+                            Content="&#xE8BB;" FontFamily="{StaticResource IconFont}" shell:WindowChrome.IsHitTestVisibleInChrome="True" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Background="{DynamicResource SidebarBrush}" Width="{Binding SidebarCollapsed, Converter={x:Static views:BoolToWidthConverter.Instance}}"
+                    BorderBrush="{DynamicResource AppBorderBrush}" BorderThickness="0,0,1,0">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Bottom" Margin="10,8">
+                        <Button Style="{StaticResource GhostButton}" Command="{Binding ToggleThemeCommand}"
+                                ToolTip="{loc:Loc Shell.Theme}" HorizontalAlignment="Stretch" Margin="0,0,0,8">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="{StaticResource IconFont}" Text="&#xE706;" Margin="0,0,8,0" />
+                                <TextBlock Text="{loc:Loc Shell.Theme}"
+                                           Visibility="{Binding SidebarCollapsed, Converter={x:Static views:InverseBoolToVisConverter.Instance}}" />
+                            </StackPanel>
+                        </Button>
+                        <TextBlock Style="{StaticResource Muted}" Text="{loc:Loc Shell.Db}"
+                                   Visibility="{Binding SidebarCollapsed, Converter={x:Static views:InverseBoolToVisConverter.Instance}}" />
+                        <TextBlock Style="{StaticResource Muted}" Text="{Binding Autosave}" Margin="0,4,0,8"
+                                   Visibility="{Binding SidebarCollapsed, Converter={x:Static views:InverseBoolToVisConverter.Instance}}" />
+                        <Button Style="{StaticResource GhostButton}" Command="{Binding ToggleSidebarCommand}"
+                                ToolTip="{loc:Loc Nav.ToggleSidebar}" HorizontalAlignment="Stretch">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="{StaticResource IconFont}" Text="&#xE700;" Margin="0,0,8,0" />
+                                <TextBlock Text="{loc:Loc Nav.ToggleSidebar}"
+                                           Visibility="{Binding SidebarCollapsed, Converter={x:Static views:InverseBoolToVisConverter.Instance}}" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="6">
+                        <ItemsControl ItemsSource="{Binding Groups}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="0,0,0,10">
+                                        <TextBlock Style="{StaticResource Muted}" Margin="12,8,8,4" FontWeight="SemiBold" Text="{Binding Title}"
+                                                   Visibility="{Binding DataContext.SidebarCollapsed, RelativeSource={RelativeSource AncestorType=Window}, Converter={x:Static views:InverseBoolToVisConverter.Instance}}" />
+                                        <ItemsControl ItemsSource="{Binding Items}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <RadioButton Style="{StaticResource NavButton}" GroupName="shellnav"
+                                                                 IsChecked="{Binding IsSelected}"
+                                                                 Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                 CommandParameter="{Binding}"
+                                                                 ToolTip="{Binding Title}">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Width="22" FontFamily="{StaticResource IconFont}" FontSize="15"
+                                                                       Text="{Binding Glyph}" VerticalAlignment="Center" />
+                                                            <TextBlock Text="{Binding Title}" VerticalAlignment="Center"
+                                                                       Visibility="{Binding DataContext.SidebarCollapsed, RelativeSource={RelativeSource AncestorType=Window}, Converter={x:Static views:InverseBoolToVisConverter.Instance}}" />
+                                                        </StackPanel>
+                                                    </RadioButton>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
+
+            <Grid Grid.Column="1" Margin="20,16,20,16">
+                <ContentControl Content="{Binding Current}">
+                    <ContentControl.Resources>
+                        <DataTemplate DataType="{x:Type vm:DashboardViewModel}"><views:DashboardView /></DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:LernplanViewModel}"><views:LernplanView /></DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:KatalogViewModel}"><views:KatalogView /></DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:LernkartenViewModel}"><views:LernkartenView /></DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:AufgabenViewModel}"><views:AufgabenView /></DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:SqlLabViewModel}"><views:SqlLabView /></DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:PseudocodeViewModel}"><views:PseudocodeView /></DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:UmlViewModel}"><views:UmlView /></DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:ProjektViewModel}"><views:ProjektView /></DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:CoverageViewModel}"><views:CoverageView /></DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:NetzSecurityViewModel}"><views:NetzView /></DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:WiSoViewModel}"><views:ExamView /></DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:ProbeklausurViewModel}"><views:ExamView /></DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:FehlerbuchViewModel}"><views:FehlerbuchView /></DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:StatistikViewModel}"><views:StatistikView /></DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:InhalteViewModel}"><views:InhalteView /></DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:EinstellungenViewModel}"><views:EinstellungenView /></DataTemplate>
+                    </ContentControl.Resources>
+                </ContentControl>
+            </Grid>
+        </Grid>
+
+        <!-- Search overlay -->
+        <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="520" Margin="0,8,0,0"
+                Style="{StaticResource CardFlush}" Visibility="{Binding SearchOpen, Converter={x:Static views:BoolToVisConverter.Instance}}">
+            <ItemsControl ItemsSource="{Binding SearchHits}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Style="{StaticResource GhostButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                                Command="{Binding DataContext.OpenHitCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                CommandParameter="{Binding}">
+                            <StackPanel>
+                                <TextBlock FontWeight="SemiBold" Text="{Binding Title}" />
+                                <TextBlock Style="{StaticResource Muted}" Text="{Binding Subtitle}" />
+                            </StackPanel>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
+
+        <!-- Inbox overlay -->
+        <Border Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="340" Margin="0,8,24,0"
+                Style="{StaticResource CardFlush}" Visibility="{Binding InboxOpen, Converter={x:Static views:BoolToVisConverter.Instance}}">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Top" Style="{StaticResource H3}" Margin="0,0,0,8" Text="{loc:Loc Shell.Inbox}" />
+                <ItemsControl ItemsSource="{Binding Inbox}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource GhostButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,0,0,8"
+                                    Command="{Binding DataContext.OpenInboxItemCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                    CommandParameter="{Binding}">
+                                <StackPanel>
+                                    <TextBlock FontWeight="SemiBold">
+                                        <TextBlock.Text>
+                                            <MultiBinding Converter="{x:Static loc:LocContentConverter.Instance}">
+                                                <Binding Path="Title" />
+                                                <Binding Path="Language" Source="{x:Static loc:Loc.Current}" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource Muted}">
+                                        <TextBlock.Text>
+                                            <MultiBinding Converter="{x:Static loc:LocContentConverter.Instance}">
+                                                <Binding Path="Detail" />
+                                                <Binding Path="Language" Source="{x:Static loc:Loc.Current}" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </DockPanel>
+        </Border>
+    </Grid>
+</Window>

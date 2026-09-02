@@ -1,0 +1,1855 @@
+﻿
+AP2 Lernzettel – 4-Tage-Sprint zur Note 1
+Fachinformatiker Anwendungsentwicklung · Neue VO · IHK Regensburg
+Eigene Zusammenstellung
+Stand: April 2026
+Table of Contents
+TOC \o "1-2" \h \z \u
+Über diesen Lernzettel
+Dieser Lernzettel ist auf die schriftliche AP2 (Teile 1, 2, 3) für Fachinformatiker Anwendungsentwicklung nach der neuen Verordnung (seit 2020). Er ist datengestützt: Alle alten Prüfungen, Lösungen und Übungssimulationen aus dem Ordner per OCR analysiert (Sommer 2022 – Winter 2025/26) und nach Häufigkeit der Aufgabentypen sortiert. Was hier steht, kommt mit sehr hoher Wahrscheinlichkeit dran.
+Aufbau:
+Was wirklich drankommt (Häufigkeitsanalyse)
+Teil 1 — Planen eines Softwareproduktes (90 min, 100 P)
+Teil 2 — Entwicklung & Umsetzung von Algorithmen (90 min, 100 P)
+Teil 3 — Wirtschafts- und Sozialkunde (60 min, 100 P)
+Cheatsheets (SQL · UML · Sozialversicherung · Unternehmensformen)
+Prüfungstag — Last-Minute & Strategie
+Was wirklich drankommt — Häufigkeitsanalyse
+Diese Themen erscheinen in jeder oder fast jeder Prüfung der letzten Jahre (Sommer 2022 – Winter 2025/26).
+Teil 1 — fast immer dran
+Stakeholder-/Umfeldanalyse — Erwartung & Befürchtung pro Stakeholder benennen
+UML-Klassendiagramm ergänzen (Multiplizitäten, Aggregation, Vererbung, Methodensignaturen)
+UML-Anwendungsfalldiagramm (Use-Case) erstellen
+UML-Aktivitätsdiagramm ergänzen (Swimlanes, Verzweigungen, Synchronisation)
+UML-Sequenzdiagramm ergänzen (Lifelines, sync/async Calls, return)
+UML-Zustandsdiagramm (states, events, transitions, guards)
+ER-Modell erweitern (Entitäten, Beziehungen, Kardinalitäten, Attribute, Primärschlüssel)
+Mockup bewerten (3 Mängel benennen) und verbessertes Mockup skizzieren
+REST / HTTP / CRUD (HTTP-Methoden, Statuscodes, JSON, Header)
+Pseudocode für Methoden einer gegebenen Klasse implementieren
+Vorgehensmodelle beschreiben (Wasserfall, V-Modell, agil/Scrum)
+Datenschutz/DSGVO (Einwilligung, Speicherung Passwort)
+Qualitätssichernde Maßnahmen (3 nennen + beschreiben)
+Sicherheitstechnische Anforderungen (2–3 nennen)
+Entwurfsmuster (Factory Method, MVC, Singleton, Observer)
+Teil 2 — fast immer dran
+SQL-Abfrage mit JOIN, GROUP BY, Aggregaten, ORDER BY (immer dabei!)
+SQL-DML (INSERT, UPDATE, DELETE) (immer dabei!)
+Pseudocode-Algorithmus (Filtern/Zählen/Sortieren über Array/Liste)
+Sortieralgorithmus in Pseudocode mit gegebener Vergleichsfunktion
+Whitebox vs. Blackbox-Tests (Vor-/Nachteile)
+Coverage-Metriken (Anweisung/Zweig/Pfad — und Verkettung)
+Pfade aufzählen für Pfadüberdeckung (B1, A1, …)
+Unit-Test beschreiben + warum (Regressionstest erklären)
+Bug finden in gegebenem Code (semantische Fehler)
+OOP-Begriffe (abstrakte Klasse vs. Interface, Vererbung, Polymorphie)
+Verschlüsselung symmetrisch vs. asymmetrisch, TLS, Hashing
+Normalisierung 3. NF und Anomalien (Insert/Update/Delete)
+GRANT / Berechtigungen auf Tabellen
+Datenmigration / Datenimport (Hindernisse, Lösungen)
+Teil 3 (WiSo) — fast immer dran
+In WiSo sind es 30 MC-Aufgaben in 60 min. Deckungsgrad mit den hier aufgelisteten Themen typisch >90 %.
+Probezeit Ausbildungsvertrag (1–4 Monate)
+Kündigung Ausbildungsvertrag (Frist 4 Wochen, Gründe)
+Ende Ausbildungsverhältnis (mit Bestehen/Nichtbestehen)
+Befristung Arbeitsvertrag
+Tarifvertrag (Lohn-/Gehalts- vs. Manteltarif, wer schließt ab)
+Betriebsrat / Mitbestimmung (BetrVG, Mitbestimmungsthemen)
+Sozialversicherungen (KV/RV/AV/PV/UV — 5 Säulen!)
+Beitragsbemessungsgrenze
+Generationenvertrag / Umlageverfahren
+Mutterschutz (8 Wochen nach, 14 bei Mehrlingen/Frühgeb.)
+AGG (geschützte Merkmale)
+Arbeitsschutz / Arbeitsschutzausschuss (>20 Mitarbeitende)
+Schilder (Brand, Sicherheit, Rettung)
+Brandschutz (Reihenfolge im Brandfall)
+Unternehmensformen (GmbH, AG, OHG, KG, GbR, UG, Einzelunternehmen)
+Stammkapital (GmbH 25.000 €, AG 50.000 €, UG 1 €)
+Handelsregister (A vs. B)
+Wirtschaftssektoren (primär, sekundär, tertiär)
+Wirtschaftlichkeit / Rentabilität (Ertrag / Aufwand × 100)
+Marktformen (Polypol, Oligopol, Monopol)
+Kartelle (Mindest-/Höchstpreis, Normen, Quoten)
+Mahnverfahren / Verzug
+Kaufvertrag / Sach-/Lieferungsmängel
+Steuern (USt, LSt, ESt, KSt)
+Inflation / EZB / Leitzins
+Nachhaltigkeit / Verursacherprinzip
+Businessplan / Existenzgründung
+Leitungssysteme (Einlinien, Mehrlinien, Stabslinien, Matrix)
+Teil 1 — Planen eines Softwareproduktes
+Format: 90 min · 100 Punkte · 4 Aufgaben · meist 20–30 P pro Aufgabe.
+Strategie: Schau dir IMMER zuerst alle 4 Aufgaben an. Schreibe Pseudocode/UML zuerst auf Konzeptpapier, dann sauber. Punkte fallen meist genau auf Ergänzungen — Multiplizitäten an Beziehungen, Pfeilrichtungen, Methodensignaturen mit Sichtbarkeit.
+1.1 Stakeholder & Anforderungsanalyse
+Stakeholder = Person/Gruppe mit berechtigtem Interesse an Projektergebnis. Häufige Stakeholder bei IT-Projekten:
+Stakeholder
+typische Erwartung
+typische Befürchtung
+Auftraggeber/Geschäftsführung
+Termin- und Kostentreue, ROI
+Budget- oder Zeitüberschreitung, kein Mehrwert
+Endanwender:innen
+Bedienbarkeit, Performance
+Lange Einarbeitung, Datenverlust, Stress
+IT-Abteilung / Admins
+Sicherheit, Wartbarkeit, Doku
+Mehraufwand im Betrieb, Schatten-IT
+Datenschutzbeauftragte:r
+DSGVO-Konformität
+Bußgelder, Datenpannen
+Betriebsrat
+Mitbestimmung, keine Leistungskontrolle
+Überwachung der Mitarbeitenden
+Kund:innen
+Verfügbarkeit, Datenschutz
+Phishing, Account-Verlust
+Lieferanten
+klare Schnittstellen
+Mehrfachimplementierung
+Stakeholderanalyse-Schritte: identifizieren → Erwartung & Befürchtung notieren → Einfluss bewerten → Kommunikationsstrategie ableiten.
+Anforderungsarten:
+Funktionale Anforderungen: was das System tun soll (z. B. „Nutzer kann sich registrieren").
+Nicht-funktionale Anforderungen: wie (Performance, Sicherheit, Usability, Verfügbarkeit, Wartbarkeit).
+Technische Rahmenbedingungen (Plattform, Browser, Standards).
+Rechtliche Rahmenbedingungen (DSGVO, BDSG, GoBD, TKG, BSI).
+Lasten- vs. Pflichtenheft:
+Lastenheft
+Pflichtenheft
+Wer schreibt?
+Auftraggeber
+Auftragnehmer
+Inhalt
+Was soll geliefert werden? Anforderungen aus Sicht der Fachseite
+Wie wird das geliefert? Technische Umsetzung
+Detailgrad
+grob, lösungsneutral
+konkret, technisch
+Reihenfolge
+zuerst
+reagiert auf Lastenheft
+Eselsbrücke: Der Lastenheft-Schreiber lastet die Last auf — der Pflichtenheft-Schreiber muss erfüllen (“Pflicht”).
+1.2 Vorgehensmodelle
+Modell
+Typ
+Stärken
+Schwächen
+Wann nutzen?
+Wasserfall
+klassisch, sequenziell
+klare Phasen, gut planbar
+unflexibel, Fehler teuer
+stabile Anforderungen, regulierte Umgebungen
+V-Modell
+klassisch, mit Test-Spiegelung
+jede Phase hat Testpendant
+starr
+sicherheitskritische Software, Behörden
+Spiralmodell
+iterativ-inkrementell, risikogetrieben
+frühe Risiko-Identifikation
+komplex zu steuern
+Großprojekte mit hohem Risiko
+Prototyping
+iterativ
+frühes UX-Feedback
+Wegwerf-Aufwand
+unklare UI/Anforderungen
+Scrum
+agil
+hohe Flexibilität, Stakeholder-Nähe
+erfordert Disziplin/Rollen
+Anforderungen ändern sich häufig
+Kanban
+agil, Pull-System
+Flow-Optimierung, einfach
+weniger Planung
+Wartung, Ops, kontinuierlicher Zustrom
+DevOps
+agil + Betrieb
+schnelle Releases
+Kulturwandel nötig
+Cloud-/Web-Dienste
+Klassisch vs. agil — wichtige Vergleichstabelle (Kommt fast immer in einer Aufgabe vor):
+Kriterium
+Klassisch (Wasserfall, V)
+Agil (Scrum, Kanban)
+Anforderungen
+vor Projektstart fest
+entwickeln sich iterativ
+Phasen
+linear, sequenziell
+iterativ, inkrementell
+Planung
+komplett im Voraus
+rollierend
+Kundenkontakt
+hauptsächlich Anfang/Ende
+dauerhaft eng
+Doku
+umfangreich
+minimal aber gepflegt
+Reaktion auf Änderungen
+teuer
+erwünscht
+Scrum-Rollen (3): Product Owner, Scrum Master, Entwicklungsteam. Scrum-Artefakte (3): Product Backlog, Sprint Backlog, Increment. Scrum-Events (5): Sprint, Sprint Planning, Daily Scrum, Sprint Review, Sprint Retrospective.
+1.3 Projektmanagement-Werkzeuge
+Netzplan: Knoten/Kanten, FAZ/SAZ/FEZ/SEZ, kritischer Pfad (alle Vorgänge mit Puffer = 0).
+Gantt-Diagramm: Zeit/Aktivität — gut für Stakeholder.
+Meilensteine: punktuelle Ergebnisse mit Datum.
+Magisches Dreieck: Zeit · Kosten · Qualität (·Umfang) — eine Ecke zu ändern verschiebt die anderen.
+Risikoanalyse: Risiko = Eintrittswahrscheinlichkeit × Schadenshöhe; Strategien: vermeiden, vermindern, übertragen, akzeptieren.
+Schätzverfahren: Function Point, Use-Case-Points, Expertenschätzung, Analogiemethode, Story Points (agil).
+1.4 Wirtschaftlichkeit & Make-or-Buy
+Wirtschaftlichkeit = Ertrag / Aufwand. Eine Investition lohnt sich, wenn Ertrag > Aufwand bzw. ROI positiv.
+ROI = Gewinn / investiertes Kapital × 100 %
+Amortisationsdauer = Investition / jährlicher Rückfluss
+Kapitalwert (NPV) = Σ abdiskontierter Cashflows − Investition
+Make-or-Buy-Entscheidung:
+Make (Eigenentwicklung)
+Buy (Standardlösung)
+volle Kontrolle, exakter Fit
+schnelle Verfügbarkeit
+eigenes Know-how baut auf
+geringere Entwicklungskosten
+höhere Anfangskosten
+Lock-in / Lizenzkosten
+längere Entwicklungszeit
+weniger Anpassbarkeit
+Wartungslast intern
+externer Support
+1.5 UML — die fünf wichtigsten Diagramme
+Pflichtwissen: alle 5 unten beherrschen — sie alternieren in den Prüfungen, und mindestens eines pro Prüfung kommt zu 100 % vor (oft 2).
+1.5.1 Klassendiagramm (statisch)
+Aufbau einer Klasse (3 Felder):
++-----------------+|   Klassenname   |+-----------------+| - attribut: Typ |+-----------------+| + methode():Typ |+-----------------+
+Sichtbarkeiten: + public · - private · # protected · ~ package.
+Beziehungen:
+Symbol
+Beziehung
+Bedeutung
+———
+Assoziation
+benutzt/kennt
+——▷
+Vererbung (gen.)
+„ist ein" (Pfeil zur Oberklasse)
+─ ─ ▷
+Realisierung
+implementiert ein Interface
+◇——
+Aggregation
+„hat ein" (Teil kann ohne Ganzes leben)
+◆——
+Komposition
+„besteht aus" (Teil stirbt mit Ganzem)
+─ ─ ▶
+Abhängigkeit
+nutzt zeitweise
+Multiplizitäten:
+Bedeutung
+1
+genau 1
+0..1
+0 oder 1
+* oder 0..*
+beliebig viele
+1..*
+mindestens 1
+n..m
+zwischen n und m
+Beispiel (Notation aus alten IHK-Aufgaben):
+Versammlung                             Versammlungsteilnehmer- eingeladeneTeilnehmer: List<Aktionaer>   - aktionaer: Aktionaer- angemeldeteTeilnehmer: List<VTN>         - code: String+ einladen(a: List<Aktionaer>): void       + Versammlungsteilnehmer(...)+ anmelden(a: Aktionaer): void             + getAktionaer(): Aktionaer- istAngemeldeterTeilnehmer(a):Boolean- erstelleCode(): String
+Häufige Fehler:
+Pfeilspitze bei Vererbung zur Oberklasse (nicht zur abgeleiteten!).
+Sichtbarkeitssymbol vergessen.
+Multiplizitäten an Assoziation fehlen.
+Konstruktor fehlt.
+1.5.2 Anwendungsfalldiagramm (Use-Case)
+Elemente: Akteure (Strichmännchen außerhalb), System-Rahmen (Rechteck), Use Cases (Ellipsen), Beziehungen <<include>> (zwingender Teil), <<extend>> (optionale Erweiterung), Vererbung von Akteuren.
+Vorgehen:
+Aus Anforderungstext alle Verben mit Akteur als Subjekt isolieren („Aktionär kann sich registrieren" → Use-Case “registrieren”).
+Akteure links und rechts vom Systemrahmen, außerhalb.
+Use-Cases ins Rechteck.
+Verbindungen ziehen (Linie ohne Pfeil = Assoziation).
+<<include>>/<<extend>> nur wenn explizit genannt.
+Faustregel zur Punktezahl: Jeder Akteur, jeder Use-Case und jede Beziehung gibt typischerweise 1 Punkt — also nichts vergessen!
+1.5.3 Aktivitätsdiagramm
+Zeigt Ablauf mit Start, Aktivitäten, Verzweigungen, Synchronisationen, Ende.
+Symbole:
+● Startknoten (gefüllter Kreis)
+⏹ Aktivität (abgerundetes Rechteck mit Verb)
+◆ Verzweigung (Raute mit Bedingung in eckigen Klammern [ja]/[nein])
+▬ Synchronisationsbalken (Fork/Join — parallel auseinander/zusammen)
+⏺ Endknoten (Ring um Punkt)
+Swimlanes (Spalten) trennen Akteure/Systemkomponenten.
+Tipp: Verben in Aktivitäten verwenden („Daten erfassen“, „Mail versenden”). Nach jeder Verzweigung müssen die Pfade wieder zusammenführen oder enden.
+1.5.4 Sequenzdiagramm
+Zeigt zeitlichen Ablauf zwischen Objekten.
+Lifelines: vertikale gestrichelte Linien unter Objektnamen :Klasse oder name:Klasse.
+Aktivierungsbalken = Objekt arbeitet gerade.
+Pfeile: durchgezogen + ausgefüllte Spitze = synchroner Aufruf; durchgezogen + offene Spitze = asynchron; gestrichelt = Rückgabe.
+Selbstaufruf: Pfeil schlägt zurück auf eigene Lifeline.
+Bedingungen / Schleifen als loop/alt/opt-Block.
+Häufiger IHK-Stil: Vorgegebene Aktoren App, :WebService, Database. Ergänzen: GET-Anfrage → Cache-Check → ggf. DB-Aufruf → Antwort mit Status 200.
+1.5.5 Zustandsdiagramm
+Modelliert Lebenszyklus eines Objekts: Zustände (abgerundetes Rechteck), Übergänge mit Auslöser/Bedingung/Aktion.
+Beispiel Auslastung:
+Start ●→[ frei ] —"Fahrgast steigt ein"→ [ teilbesetzt ]   [ teilbesetzt ] —"95% Kapazität"→ [ vollbesetzt ]   [ vollbesetzt ] —"Fahrgast steigt aus"→ [ teilbesetzt ]   [ vollbesetzt ] —"Endhaltestelle"→ ⏺
+Übergangs-Notation: Auslöser [Bedingung] / Aktion.
+1.6 ER-Modell und Normalisierung
+Notation (Chen vs. Krähenfuß)
+Chen: Entität (Rechteck), Attribut (Ellipse), Beziehung (Raute) mit Kardinalitäten 1:1, 1:n, n:m.
+Krähenfuß (häufig in IHK):
+Symbol
+Bedeutung
+——|
+genau 1 (Pflicht)
+——○
+optional 0
+——⤙
+viele („Krähenfuß")
+Kombinationen: |⤙ = 1..n, ○⤙ = 0..n
+Regeln:
+Schlüsselattribute unterstreichen (Primärschlüssel).
+n:m wird beim Mapping in Tabellen zur Zwischentabelle mit zwei Fremdschlüsseln.
+Beziehung kann selbst Attribute haben (z. B. „beantwortet" mit Zeitpunkt) — wird zur Beziehungstabelle.
+Normalisierung
+Form
+Bedingung
+1. NF
+nur atomare Werte (keine Listen in einer Zelle)
+2. NF
+1. NF erfüllt und jedes Nicht-Schlüsselattribut hängt voll vom Primärschlüssel ab (relevant bei zusammengesetztem PK)
+3. NF
+2. NF erfüllt und keine transitiven Abhängigkeiten (Nicht-Schlüssel hängt nicht von anderem Nicht-Schlüssel ab)
+Anomalien (typische IHK-Frage):
+Einfügeanomalie: kann neuen Datensatz nicht einfügen, ohne unzusammenhängende Daten mitzugeben.
+Änderungsanomalie: Wert ist redundant gespeichert; Änderung muss an mehreren Stellen erfolgen.
+Löschanomalie: beim Löschen geht ungewollt Information verloren.
+1.7 Datenbank-Architektur & Tabellen
+Vom ER-Modell in Tabellen:
+Jede Entität → eine Tabelle. Primärschlüssel unterstrichen.
+1:1-Beziehung → Fremdschlüssel in eine der Tabellen.
+1:n-Beziehung → Fremdschlüssel auf der n-Seite.
+n:m-Beziehung → Zwischentabelle mit beiden Fremdschlüsseln (zusammen oft Primärschlüssel).
+Mehrwertige Attribute → eigene Tabelle.
+1.8 REST-API · HTTP · CRUD
+CRUD
+HTTP
+Beschreibung
+Create
+POST
+Ressource neu anlegen
+Read
+GET
+Ressource lesen (idempotent, ohne Body)
+Update
+PUT/PATCH
+PUT ersetzt, PATCH ändert Teile
+Delete
+DELETE
+Ressource entfernen
+HTTP-Statuscodes — Klassen:
+Klasse
+Bedeutung
+Beispiele
+1xx
+Information
+100 Continue
+2xx
+Erfolg
+200 OK, 201 Created, 204 No Content
+3xx
+Umleitung
+301 Moved Permanently, 304 Not Modified
+4xx
+Client-Fehler
+400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 409 Conflict
+5xx
+Server-Fehler
+500 Internal Server Error, 502 Bad Gateway, 503 Service Unavailable
+REST-Prinzipien (Pflichtwortschatz):
+Zustandslos (jede Anfrage trägt allen Kontext).
+Ressourcenorientiert (URLs identifizieren Ressourcen, Verben sind HTTP-Methoden).
+Einheitliche Schnittstelle.
+Cacheability (Antworten dürfen cachebar sein).
+Schichten (Client kennt Server, nicht das Backend dahinter).
+Aufbau eines Requests:
+Bestandteil
+Beispiel
+Bedeutung
+URL
+https://amag.com/shareholders
+Ressource
+Methode
+PUT
+gewünschte Operation
+Content-Type
+application/json
+Format des Bodys
+Accept
+application/json
+Format der erwarteten Antwort
+Authorization
+Basic abc… / Bearer xyz…
+Authentifizierung
+Body
+JSON-Daten
+Nutzlast
+JSON-Beispiel:
+{  "name": "Hannah Müller",  "address": [    { "street": "Hauptstr. 12", "PLZ": "76543", "city": "Baden-Baden" }  ],  "id": 25}
+1.9 Mockup · UI/UX
+3 typische Mängel (Punkt für Punkt nennen, je 2 P):
+Kontrast/Lesbarkeit: zu kleine Schrift, geringer Kontrast, Farbblindheit nicht beachtet.
+Konsistenz: Buttons unterschiedlich gestaltet, Navigation springt.
+Affordance: Klickbares sieht nicht klickbar aus, kein Hover.
+Feedback: Nutzer sieht nicht, dass Aktion ausgeführt wurde.
+Fehlermeldungen: unklar, nicht in Nähe des Eingabefelds.
+Effizienz: zu viele Klicks für Hauptaktion.
+Barrierefreiheit: Tastaturbedienung fehlt, kein Alt-Text.
+Mobile / Responsive: Layout zerbricht.
+Nielsen-Heuristiken (10) — Stichworte zum Auswendiglernen: Sichtbarkeit, Realitätsbezug, Nutzerkontrolle, Konsistenz, Fehlervermeidung, Wiedererkennen statt Erinnern, Flexibilität, Ästhetik/Minimalismus, Hilfe bei Fehlern, Hilfe & Doku.
+Verbessertes Mockup zeichnen: Header (Logo + Titel), Navigation, Hauptbereich klar strukturiert, eindeutiger CTA, Footer. Auf wireframe-Niveau zeichnen — keine Farben nötig.
+1.10 Datenschutz · DSGVO · Sicherheit
+DSGVO-Grundsätze (Art. 5):
+Rechtmäßigkeit, Fairness, Transparenz
+Zweckbindung
+Datenminimierung
+Richtigkeit
+Speicherbegrenzung
+Integrität & Vertraulichkeit
+Rechenschaftspflicht
+Rechtsgrundlagen (Art. 6 DSGVO): Einwilligung · Vertragserfüllung · gesetzliche Pflicht · lebenswichtige Interessen · öffentliches Interesse · berechtigtes Interesse.
+Betroffenenrechte: Auskunft (Art. 15) · Berichtigung (16) · Löschung/„Recht auf Vergessen" (17) · Einschränkung (18) · Datenübertragbarkeit (20) · Widerspruch (21).
+TOMs — Technisch-organisatorische Maßnahmen:
+Technisch: Verschlüsselung, Backup, Firewall, Zugriffsschutz, Pseudonymisierung.
+Organisatorisch: Zugriffsberechtigungen, Schulungen, Verträge mit Dienstleistern (AVV).
+Häufige Sicherheitsanforderungen, die du in Aufgaben nennen kannst:
+Authentifizierung (Login, 2FA).
+Autorisierung (Rollen-/Rechtekonzept).
+Verschlüsselte Datenübertragung (HTTPS/TLS).
+Verschlüsselte Speicherung (DB-Verschlüsselung, gehashte Passwörter).
+Schutz vor SQL-Injection (Prepared Statements).
+Schutz vor XSS (Eingabevalidierung, Output-Encoding).
+Logging & Monitoring.
+Backup & DR-Konzept.
+1.11 Architektur & Entwurfsmuster
+Architekturen
+Architektur
+Idee
+Vorteile
+Nachteile
+Monolith
+alles in einer App
+einfach
+schwer skalierbar
+Schichtenarchitektur
+Präsentation · Logik · Daten
+Trennung von Verantwortlichkeiten
+strikte Reihenfolge nötig
+Client-Server
+UI separat von Backend
+Standard-Modell
+Netz-Abhängigkeit
+MVC
+Model · View · Controller
+Trennung Logik/UI
+Einarbeitung
+Microservices
+viele kleine Services
+unabhängig deploybar
+Betrieb komplex
+Event-driven
+reagiert auf Ereignisse
+lose gekoppelt
+schwer zu debuggen
+Entwurfsmuster (drei Kategorien — IHK-Frage 24/25 Winter!)
+Kategorie
+Beispiele
+Merkmal
+Erzeugungsmuster (creational)
+Factory Method, Abstract Factory, Singleton, Builder, Prototype
+regelt Erzeugung von Objekten
+Strukturmuster (structural)
+Adapter, Decorator, Facade, Proxy, Composite
+regelt Aufbau von Objektstrukturen
+Verhaltensmuster (behavioral)
+Observer, Strategy, Iterator, Command, State, Template Method
+regelt Zusammenarbeit der Objekte
+Top 5 zum Erklären-Können (jeweils 1–2 Sätze + Beispiel):
+Singleton: Klasse mit genau einer Instanz. Nutzen: zentrale Konfiguration, Logger.
+Factory Method: Erzeugung wird in Unterklassen ausgelagert; Aufrufer nennt nur Typ-Wunsch.
+Observer: Subjekt informiert registrierte Beobachter automatisch über Änderungen.
+Strategy: Algorithmus austauschbar (z. B. unterschiedliche Sortierfunktionen — IHK 2024 S Aufgabe 2!).
+MVC: Trennung von View (Anzeige), Controller (Eingaben), Model (Daten/Logik).
+Vorteile von Mustern (typische IHK-Frage „Beschreiben Sie 2 Vorteile"):
+Wiederverwendbarkeit / weniger Doppelcode
+Bekannte Lösung für bekanntes Problem
+Bessere Lesbarkeit/Wartbarkeit durch Standardvokabular
+Erleichtert Kommunikation im Team
+Trennung von Belangen / SOLID
+1.12 Lizenzmodelle (Software)
+Lizenz
+Typ
+Kernregel
+Proprietär
+kommerziell
+Nutzung nur lt. Lizenz, kein Quellcode
+GPL
+Copyleft (stark)
+Abgeleitete Werke müssen wieder GPL sein
+LGPL
+Copyleft (schwach)
+Linkable; eigene App muss nicht GPL werden
+MIT
+permissiv
+sehr frei, nur Lizenztext mitliefern
+Apache 2.0
+permissiv
+wie MIT, mit Patentschutz
+BSD
+permissiv
+sehr frei
+Creative Commons
+Inhalte (nicht Code)
+je nach Kürzel BY, NC, SA, ND
+Dual License: Anbieter stellt Software unter zwei Lizenzen (z. B. GPL für OSS-Welt, kommerziell für Firmen).
+1.13 Qualitätssichernde Maßnahmen
+Das ist eine Standardaufgabe (“Beschreiben Sie drei qualitätssichernde Maßnahmen”). Nimm 3 davon mit kurzer Erklärung:
+Code-Reviews / Peer-Reviews — zweite Person prüft Code; findet Fehler früh, verbreitet Wissen.
+Automatisierte Tests (Unit/Integration/E2E) — Regressionsschutz, schnelle Rückmeldung.
+Continuous Integration — bei jedem Commit Build+Tests; Bugs früh sichtbar.
+Statische Code-Analyse (Linter/SonarQube) — Style/Bugs/Sicherheitslücken automatisch.
+Pair Programming — zwei Entwickler:innen, eine Tastatur.
+Refactoring mit Tests im Rücken.
+Dokumentation (API, Architektur, Inline).
+Definition of Done — gemeinsamer Qualitätsmaßstab im Team.
+Abnahme- und Akzeptanztests mit Auftraggeber.
+Teil 2 — Entwicklung & Umsetzung von Algorithmen
+Format: 90 min · 100 Punkte · 4 Aufgaben · jede Prüfung enthält Pseudocode + SQL + Tests in irgendeiner Form.
+Strategie: Für SQL-Aufgaben ist der Anhang mit SQL-Syntax-Auszug offiziell beigefügt – nutze ihn! Für Pseudocode reicht eine klare, sprachneutrale Notation mit if/else, for/while, for each, return. Punkte gehen meistens für vergessene Initialisierung, fehlende Rückgabe oder falsche Schleifengrenze verloren.
+2.1 Pseudocode-Konventionen (IHK-Stil)
+function methodenName(parameter1: Typ, parameter2: Typ) : Rückgabetyp {    // Variablen deklarieren und initialisieren    counter : Integer = 0        // Schleife über Liste    for each element in liste {        if (bedingung) {            counter = counter + 1        }    }        return counter}
+Best Practices für volle Punktzahl:
+Methodenkopf identisch übernehmen, wie in der Aufgabe vorgegeben.
+Variablen oben deklarieren und initialisieren.
+Klammern setzen (auch wenn die Aufgabe es nicht macht — Klarheit!).
+Rückgabe nicht vergessen (return).
+Listenmethoden wie liste.add(x), liste.size(), liste.get(i) darfst du verwenden — werden in der Aufgabe oft genannt.
+Bei einfachen Vergleichsoperatoren ==, !=, <, <=, >= schreiben.
+Edge Cases kurz mitdenken (leere Liste, null).
+Typische Listen-Operationen (IHK):
+list.add(element)           // anhängenlist.add(index, element)    // an Position einfügenlist.size()                 // Anzahllist.get(i)                 // Element holenlist.remove(i)              // entfernenlist.contains(x)            // enthält?
+2.2 OOP — alles, was drankommt
+Begriffe
+Klasse = Bauplan; Objekt = Instanz.
+Attribut (Feld/Property) = Daten; Methode = Verhalten.
+Konstruktor = spezielle Methode ohne Rückgabetyp, gleicher Name wie Klasse, initialisiert Objekt.
+Sichtbarkeit: public (+) · private (−) · protected (#).
+Kapselung (Encapsulation): Felder private, Zugriff über get/set-Methoden.
+Vererbung
+Eine Unterklasse extends eine Oberklasse, erbt öffentliche/protected Member.
+Einfachvererbung in Java/C#; Mehrfachvererbung über Interfaces.
+Pfeil im Klassendiagramm zeigt zur Oberklasse.
+Konstruktoren werden nicht vererbt, aber super(...) aufrufbar.
+Override: Methode in Unterklasse überschreibt — Signatur identisch.
+Polymorphie
+Statisch (Überladung): gleicher Methodenname, unterschiedliche Parameterliste.
+Dynamisch (Überschreibung): Aufruf wird zur Laufzeit auf die tatsächliche Klasse aufgelöst (Liskov-Prinzip).
+Abstrakte Klasse vs. Interface (Top-IHK-Frage 2025 Sommer)
+Merkmal
+Abstrakte Klasse
+Interface
+Instanziierbar?
+nein
+nein
+Methoden mit Rumpf?
+ja, und abstrakte ohne Rumpf
+klassisch nein (in Java 8+ default/static)
+Felder
+ja, beliebige Sichtbarkeit
+nur public static final Konstanten
+Konstruktor
+ja
+nein
+Mehrfach-Erbung
+nein
+ja (Klasse kann mehrere implementsen)
+Verwendung
+Gemeinsame Implementierung + Vorgaben
+reiner Vertrag, keine Implementierung
+Faustregel: „Ist-ein“-Beziehung mit gemeinsamen Code → abstrakte Klasse. „Kann-X”-Vertragsbeziehung → Interface.
+SOLID (Stichworte zum Wiedererkennen)
+Single Responsibility — eine Klasse, ein Grund zur Änderung.
+Open/Closed — offen für Erweiterung, geschlossen für Änderung.
+Liskov-Substitution — Unterklassen müssen ohne Bruch ersetzbar sein.
+Interface Segregation — viele kleine Interfaces statt einem großen.
+Dependency Inversion — abhängig von Abstraktionen, nicht von Implementierungen.
+2.3 Datenstrukturen
+Datenstruktur
+Zugriff
+Einfügen
+Suchen
+typische Verwendung
+Array
+O(1) per Index
+O(n) (verschieben)
+O(n)
+feste Anzahl
+ArrayList / List
+O(1) per Index
+O(1) am Ende, O(n) sonst
+O(n)
+dynamische Liste
+LinkedList
+O(n)
+O(1) wenn Position bekannt
+O(n)
+viele Insert/Remove
+Stack (LIFO)
+top: O(1)
+push: O(1)
+–
+Undo, Funktionsaufrufe
+Queue (FIFO)
+–
+enqueue/dequeue: O(1)
+–
+Drucker, BFS
+HashMap
+–
+O(1) avg
+O(1) avg
+Schlüssel → Wert
+HashSet
+–
+O(1) avg
+O(1) avg
+Eindeutigkeit
+TreeMap / TreeSet
+–
+O(log n)
+O(log n)
+sortierter Zugriff
+Binärbaum
+–
+O(log n) avg, O(n) worst
+O(log n)
+Suchbaum, Heap
+2.4 Sortier- und Suchalgorithmen
+Sortier-Übersicht
+Verfahren
+best
+average
+worst
+Speicher
+stabil?
+Bubble Sort
+O(n)
+O(n²)
+O(n²)
+O(1)
+ja
+Selection Sort
+O(n²)
+O(n²)
+O(n²)
+O(1)
+nein
+Insertion Sort
+O(n)
+O(n²)
+O(n²)
+O(1)
+ja
+Merge Sort
+O(n log n)
+O(n log n)
+O(n log n)
+O(n)
+ja
+Quick Sort
+O(n log n)
+O(n log n)
+O(n²)
+O(log n)
+nein
+Heap Sort
+O(n log n)
+O(n log n)
+O(n log n)
+O(1)
+nein
+Bubble Sort in Pseudocode (kann immer abgefragt werden!):
+function bubbleSort(arr: Element[], vergleiche: Function) : void {    n = arr.size()    for i = 0 to n - 1 {        for j = 0 to n - i - 2 {            if (vergleiche(arr[j], arr[j+1]) > 0) {                tmp     = arr[j]                arr[j]  = arr[j+1]                arr[j+1] = tmp            }        }    }}
+Insertion Sort:
+function insertionSort(arr: Element[], vergleiche: Function) : void {    for i = 1 to arr.size() - 1 {        key = arr[i]        j   = i - 1        while (j >= 0 AND vergleiche(arr[j], key) > 0) {            arr[j+1] = arr[j]            j        = j - 1        }        arr[j+1] = key    }}
+Tipp aus IHK 2024 Sommer Teil 2 Aufgabe 2a: Wenn eine Vergleichsfunktion als Function-Objekt übergeben wird (Strategy Pattern), nicht direkt < benutzen, sondern vergleiche(a, b) > 0-Bedingung verwenden!
+Binäre Suche
+function binaereSuche(arr: Integer[], gesucht: Integer) : Integer {    links  = 0    rechts = arr.size() - 1    while (links <= rechts) {        mitte = (links + rechts) / 2        if (arr[mitte] == gesucht) { return mitte }        if (arr[mitte] < gesucht)  { links = mitte + 1 }        else                       { rechts = mitte - 1 }    }    return -1}
+Voraussetzung: sortierter Array. Komplexität: O(log n).
+Beispielaufgabe (IHK-Stil) — Zähle Elemente, die Bedingung erfüllen
+function notierungPlus(kurse: Tageskurs[]) : Integer {    counter : Integer = 0    for each kurs in kurse {        if (kurs.getAktienVeraenderung() > kurs.getDaxVeraenderung()) {            counter = counter + 1        }    }    return counter}
+Suche kleinstes Element (typische Variante)
+function findeMin(arr: Integer[]) : Integer {    if (arr.size() == 0) { return -1 }      // leeres Array abfangen!    min : Integer = arr[0]                  // Wichtiger Bug-Fix-Hinweis: Init!    for i = 1 to arr.size() - 1 {           // ab 1 starten, NICHT ab 0        if (arr[i] < min) {            min = arr[i]        }    }    return min}
+IHK 2025/26 Winter Aufgabe 3b: Solche Aufgaben fragen oft nach semantischen Fehlern. Häufige Bugs:1) Initialisierung min = 0 (sollte arr[0] sein, sonst werden alle positiven Werte falsch).2) Schleife läuft i = 0 statt i = 1 (vergleicht arr[0] mit sich selbst – ineffizient, aber kein Crash).3) Falsche Vergleichsrichtung (> statt <).4) Off-by-one (i <= arr.size() statt < arr.size() → IndexOutOfBounds).
+2.5 O-Notation / Komplexität
+Notation
+Bedeutung
+O(1)
+konstant
+O(log n)
+logarithmisch (binäre Suche)
+O(n)
+linear (eine Schleife)
+O(n log n)
+linearithmisch (Merge/Quicksort)
+O(n²)
+quadratisch (geschachtelte Schleifen)
+O(2ⁿ)
+exponentiell (rekursive Bäume ohne Memoisierung)
+Hinweis: O-Notation beschreibt worst case im Wachstumsverhalten, nicht die genaue Zeit. Konstanten werden weggelassen.
+2.6 Tests
+Testarten nach Sichtbarkeit
+Art
+Wissen über Code?
+Beispiel
+Whitebox (strukturell)
+ja, kennt Code
+Coverage, Pfadtests
+Greybox
+teilweise
+Integration
+Blackbox (funktional)
+nein, nur Spezifikation
+Äquivalenzklassen, Grenzwerte
+2 Vorteile von Whitebox vs. Blackbox (typische IHK-Frage):
+Erkennt Code-internen Fehler (toten Code, ungenutzte Pfade).
+Erlaubt Coverage-Messung (objektive Metrik).
+Findet Fehler früher, weil Entwickler:in selbst testet.
+2 Vorteile von Blackbox:
+Anwendersicht (Spezifikation getestet, nicht Implementierung).
+Implementierungsunabhängig — Tests bleiben beim Refactoring gültig.
+Testarten nach Granularität (Test-Pyramide)
+        /\       /E2E\        wenig, langsam, teuer      /------\     / Integ. \    mittel    /----------\   /   Unit     \  viele, schnell, billig  /--------------\
+Unit-Test: testet kleinste Einheit (Methode/Klasse) isoliert mit Mocks/Stubs.
+Integrationstest: testet Zusammenspiel mehrerer Komponenten/Module.
+Systemtest / E2E: komplettes System aus Anwendersicht.
+Akzeptanztest: Auftraggeber bestätigt Anforderungen erfüllt.
+Regressionstest: Wiederholung bestehender Tests, um sicherzustellen, dass Änderungen keine alten Funktionen kaputt machen.
+Smoke-Test: schneller Funktionscheck nach Build.
+Lasttest / Performance-Test: Verhalten unter Last.
+Coverage-Metriken (Whitebox)
+Metrik
+Was wird gemessen?
+enthält…
+Anweisungsüberdeckung (statement)
+jede Code-Zeile mind. 1× ausgeführt
+–
+Zweigüberdeckung (branch)
+jede if/else-Verzweigung beide Seiten genommen
+enthält Anweisungsüberdeckung
+Pfadüberdeckung (path)
+jede mögliche Pfad-Kombination durchlaufen
+enthält Zweig-, damit auch Anweisungs
+Beispiel zu Pfadüberdeckung (IHK 2024 Sommer Teil 2 Aufgabe 3c):
+void login(string name, string password) {    if (checkCredentials(name, password)) {     // B1        showStandardMenu();                     // A1        if (checkPremiumMember()) {             // B2            showPremiumMemberMenu();            // A3        }        if (checkStaffMember()) {               // B3            showStaffMemberMenu();              // A4        }    } else {        showErrorMessage();                     // A2    }}
+Vollständige Pfadüberdeckung = alle Pfade aufzählen:
+#
+Pfad
+Bedeutung
+1
+B1=false, A2
+Login fehlgeschlagen
+2
+B1=true, A1, B2=false, B3=false
+Standard-User, kein Staff
+3
+B1=true, A1, B2=true, A3, B3=false
+Premium, kein Staff
+4
+B1=true, A1, B2=false, B3=true, A4
+Staff, kein Premium
+5
+B1=true, A1, B2=true, A3, B3=true, A4
+Premium und Staff
+Notation in der Klausur: B1=true, A1, B2=false, B3=true, A4.
+2.7 SQL — komplette Referenz für AP2
+DDL — Data Definition Language
+CREATE TABLE Person (    pid     INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,    name    VARCHAR(50) NOT NULL,    geboren DATE,    abt_id  INTEGER,    FOREIGN KEY (abt_id) REFERENCES Abteilung(aid));ALTER TABLE Person ADD COLUMN email VARCHAR(100);ALTER TABLE Person DROP COLUMN email;DROP TABLE Person;
+DML — Data Manipulation Language
+-- EinfügenINSERT INTO Kategorie (name) VALUES ('Dessert');INSERT INTO Kategorie (id, name) VALUES (5, 'Dessert');-- AktualisierenUPDATE Person SET name = 'Müller' WHERE pid = 4;-- LöschenDELETE FROM AktienKurs WHERE AK_AktieID = 4;
+DQL — Abfragen
+Aufbau:
+SELECT  spalten | aggregateFROM    tabelle[JOIN   ... ON ...][WHERE  bedingung][GROUP BY spalten][HAVING aggregate-bedingung][ORDER BY spalte ASC|DESC][LIMIT n]
+Beispiele aus IHK-Aufgaben:
+-- Aggregat mit GROUP BY (IHK 2024 Sommer Teil 2 Aufgabe 4b)SELECT  B.BoerseID,        B.Boersenname,        MIN(AK.kurs)  AS Kurstief,        MAX(AK.kurs)  AS Kurshoch,        AVG(AK.kurs)  AS KursDurchschnitt,        COUNT(*)      AS AnzahlTransaktionenFROM    AktienKurs AS AKJOIN    Boerse     AS B  ON AK.AK_BoerseID = B.BoerseIDWHERE   AK.AK_AktieID = 6GROUP BY B.BoerseID, B.BoersennameORDER BY B.BoerseID;-- Daten archivieren (IHK 2024 Sommer Teil 2 Aufgabe 4c)INSERT INTO AktienKursArchivSELECT * FROM AktienKurs WHERE YEAR(AK_DatumZeit) < YEAR(CURDATE());DELETE FROM AktienKurs WHERE YEAR(AK_DatumZeit) < YEAR(CURDATE());-- Zwei Tabellen kombinieren via UNION (Vorjahre + aktuell)SELECT YEAR(AK_DatumZeit) AS Jahr, MIN(kurs), MAX(kurs), COUNT(*)FROM (    SELECT * FROM AktienKurs    UNION ALL    SELECT * FROM AktienKursArchiv) AS AlleWHERE AK_AktieID = 6GROUP BY YEAR(AK_DatumZeit)ORDER BY Jahr DESC;-- Zähle pro Patient die Verschreibungen ≥ 3 (IHK 2025 Sommer Teil 2 Aufg.4e)SELECT  P.PID, P.Nachname, P.Vorname, COUNT(V.VID) AS Anzahl_VerschreibungenFROM    Patient AS PJOIN    Verschreibung AS V ON P.PID = V.Patient_PIDGROUP BY P.PID, P.Nachname, P.VornameHAVING  COUNT(V.VID) >= 3ORDER BY Anzahl_Verschreibungen DESC;
+JOIN-Arten
+JOIN
+Was wird zurückgegeben
+INNER JOIN
+nur Zeilen mit Match in beiden Tabellen
+LEFT JOIN
+alle aus links, NULL wenn rechts kein Match
+RIGHT JOIN
+alle aus rechts, NULL wenn links kein Match
+FULL OUTER JOIN
+alle aus beiden, NULL wo nichts passt
+CROSS JOIN
+kartesisches Produkt
+SELF JOIN
+Tabelle mit sich selbst (über Aliase)
+Aggregatfunktionen
+COUNT(*), COUNT(DISTINCT spalte), SUM(spalte), AVG(spalte), MIN(spalte), MAX(spalte).
+WHERE vs. HAVING
+WHERE filtert vor der Gruppierung.
+HAVING filtert nach Gruppierung (nutzt Aggregatfunktionen).
+Subqueries
+-- in WHERESELECT name FROM MitarbeiterWHERE abt_id = (SELECT id FROM Abteilung WHERE name = 'IT');-- als TabelleSELECT abt_id, AVG(g) FROM (    SELECT abt_id, gehalt AS g FROM Mitarbeiter) AS xGROUP BY abt_id;
+Berechtigungen (GRANT/REVOKE) — IHK 2025 Sommer 4b
+GRANT  SELECT, INSERT, UPDATE  ON apotheke.Verschreibung  TO 'hhorner'@'%';GRANT  ALL PRIVILEGES          ON apotheke.*              TO 'admin'@'%';REVOKE INSERT                   ON apotheke.Verschreibung  FROM 'hhorner'@'%';
+Tipp: Es zählt jede Berechtigung einzeln. Schreib lieber GRANT SELECT, INSERT, UPDATE ... als nur GRANT INSERT, wenn die Aufgabe „Schreibrechte" sagt — Schreibrechte umfassen i. d. R. INSERT und UPDATE.
+Datenmigration / Datenimport (IHK 2024-25 Winter Aufgabe 3b)
+Hindernisse beim manuellen Import:
+abweichende Spaltenformate (Datum/Zahl)
+Encoding-Probleme (UTF-8 vs. Windows-1252)
+doppelte/konflikthafte Schlüssel
+Pflichtfelder fehlen, NULL-Probleme
+Beziehungen (Fremdschlüssel) müssen vorher existieren
+Lösungsansätze:
+ETL-Tool oder Skript schreiben (Python/SQL)
+Staging-Tabelle nutzen, dort cleanen, dann INSERT INTO … SELECT
+Constraints temporär deaktivieren, am Ende prüfen
+Dry-Run mit Testdaten
+2.8 Normalisierung — Praxisanwendung
+Ablauf zur 3. NF (IHK-Standard)
+1. NF: Mehrwertige Spalten in eigene Zeilen oder Tabellen auflösen.
+2. NF: Bei zusammengesetztem Primärschlüssel: Spalten, die nur von einem Teil abhängen, in eigene Tabelle.
+3. NF: Transitiv abhängige Spalten in eigene Tabelle.
+Anomalien-Beispiel (IHK 2025/26 Winter Aufg. 4b):
+Bewertung-Tabelle (unnormalisiert)
+BesuchsID, Datum, GastName, GastEmail, RestaurantName, KochName, Note
+Einfügeanomalie: Du kannst keinen Koch eintragen, ohne Bewertung.
+Änderungsanomalie: Email vom Gast ändert sich → 17 Zeilen anpassen.
+Löschanomalie: Letzte Bewertung des Gastes löschen = Email weg.
+Lösung in 3. NF: Tabellen Gast, Restaurant, Koch, Besuch, Bewertung mit Fremdschlüsseln.
+2.9 IT-Sicherheit
+Verschlüsselung
+Verfahren
+Schlüssel
+Beispiele
+Vorteil
+Nachteil
+Symmetrisch
+1 (Sender = Empfänger)
+AES, DES, 3DES, ChaCha20
+sehr schnell
+Schlüsselaustausch problematisch
+Asymmetrisch
+2 (Public/Private)
+RSA, ECC
+sicherer Schlüsselaustausch
+langsam
+Hybrid
+beides
+TLS, PGP
+Geschwindigkeit + sicherer Austausch
+komplexer
+TLS-Ablauf (vereinfacht — IHK 2025/26 Winter Aufg. 3a):
+Client → Server: ClientHello (unterstützte Verfahren).
+Server → Client: Zertifikat mit Public Key.
+Client erzeugt zufälligen Sitzungsschlüssel, verschlüsselt ihn mit dem Server-Public-Key.
+Server entschlüsselt mit Private Key.
+Ab jetzt symmetrisch mit dem Sitzungsschlüssel.
+Hashing (Einwegfunktion):
+Eingabe → fester Output, nicht umkehrbar.
+Beispiele: SHA-256, SHA-3, bcrypt/argon2/scrypt für Passwörter.
+Eigenschaften: deterministisch, schnell, kollisionsresistent.
+Salt = zufälliger Wert je Passwort, gegen Rainbow Tables.
+MD5/SHA-1: nicht mehr nutzen!
+Passwort sicher speichern (IHK 2025 Sommer Aufg. 2c):
+Niemals Klartext speichern!
+Mit moderner KDF wie bcrypt, argon2, scrypt + zufälligem Salt hashen.
+Bei Login: eingegebenes Passwort mit demselben Salt hashen und mit gespeichertem Hash vergleichen.
+OWASP Top 10 (Auszug — Stichworte)
+Injection (z. B. SQL-Injection)
+Broken Authentication (schwache Sessions/Logins)
+Sensitive Data Exposure (unverschlüsselte Daten)
+XML External Entities (XXE)
+Broken Access Control
+Security Misconfiguration
+XSS (Cross-Site Scripting)
+Insecure Deserialization
+Komponenten mit bekannten Schwachstellen
+Insufficient Logging
+Konkrete Angriffe & Gegenmaßnahmen
+Angriff
+Beschreibung
+Schutz
+SQL-Injection
+bösartige SQL in Eingabefeldern
+Prepared Statements, Whitelist, ORM
+XSS
+JavaScript in Output gespiegelt
+Output-Encoding, CSP
+CSRF
+Browser nutzt fremde Session
+Anti-CSRF-Token, SameSite-Cookies
+Phishing
+Identitätsdiebstahl per Mail
+2FA, Awareness, DKIM/DMARC
+Brute Force
+Passwortdurchprobieren
+Rate Limit, Captcha, MFA
+Man-in-the-Middle
+Lauschen am Netz
+TLS, HSTS, Zertifikatsprüfung
+Risiko bei E-Mail-Versand mit Anhang (IHK 2024 Sommer Teil 2 Aufgabe 1ba)
+Risiko: Phishing/Manipulation des Anhangs durch Dritte; Empfänger lädt manipuliertes Worddokument mit Makros.Alternative (sicherer): Authentifizierter Link auf eine HTTPS-Plattform (E-Service-Portal), Anmeldung mit 2FA, dort Dokument laden — keine ausführbaren Anhänge versenden.
+Sicheres Passwort-Reset (IHK 2024 Sommer Teil 2 Aufgabe 1cb)
+Schwachstelle bei „Link an gespeicherte Mail-Adresse": Mail-Account kompromittiert ⇒ Account-Übernahme; alter Link bleibt evtl. gültig.Sicherer: zeitlich begrenztes Token, einmalig nutzbar, + zweiter Faktor (z. B. SMS-/TOTP-Code) + Sicherheitsfrage + benachrichtigende Mail an Account.
+2.10 Versionsverwaltung Git (IHK-Stichworte)
+Repository: Projektordner mit .git/Historie.
+Commit: Snapshot mit Hash, Autor, Nachricht.
+Branch: parallele Entwicklungslinie. main/master ist Default.
+Merge: Branches zusammenführen. Konflikt entsteht, wenn dieselbe Zeile in beiden Branches geändert wurde — manuell auflösen.
+Pull Request / Merge Request: Code Review-Workflow.
+Rebase: linear neu auf Basis aufsetzen.
+Stash: lokale Änderungen kurz beiseite legen.
+Workflow (Standardfrage):
+git pull
+neuen Branch: git checkout -b feature/x
+Code, dann git add und git commit -m "..."
+git push origin feature/x
+Pull Request, Review, Merge in main.
+2.11 Schnittstellen & Datenformate
+Format
+Stärken
+Schwächen
+Einsatz
+JSON
+leichtgewichtig, web-standard
+keine Kommentare, kein Schema standardmäßig
+REST-APIs
+XML
+Schemas (XSD), Namespaces
+verbose
+SOAP, Konfiguration
+CSV
+sehr einfach
+kein Schema, Encoding-Probleme
+Imports/Exports
+YAML
+menschenlesbar
+Indentation-empfindlich
+Konfiguration (DevOps)
+Protobuf
+binär, schnell, schemaneutral
+nicht menschenlesbar
+gRPC
+REST vs. SOAP:
+Kriterium
+REST
+SOAP
+Format
+meist JSON
+XML
+Transport
+HTTP
+HTTP, SMTP, …
+Definition
+OpenAPI optional
+WSDL pflicht
+Komplexität
+gering
+hoch
+Verwendung heute
+Standard im Web
+Enterprise/Banken
+2.12 Netzwerke (für 24/25-Winter Typ Aufgaben)
+OSI- vs. TCP/IP-Modell
+OSI
+TCP/IP
+Beispiele
+7 Anwendung
+Anwendung
+HTTP, FTP, SMTP, DNS
+6 Darstellung
+Anwendung
+TLS, JPEG
+5 Sitzung
+Anwendung
+RPC
+4 Transport
+Transport
+TCP, UDP
+3 Vermittlung
+Internet
+IP, ICMP
+2 Sicherung
+Netzzugang
+Ethernet, MAC
+1 Bitübertragung
+Netzzugang
+Kabel, Funk
+MAC- vs. IP-Adresse
+MAC: 48 Bit, fest in NIC, Schicht 2, Format AA:BB:CC:DD:EE:FF. Hersteller-Anteil = OUI (3 Byte).
+IPv4: 32 Bit, logisch, vergeben pro Netz, Schicht 3.
+IPv6: 128 Bit, hexadezimal, z. B. 2001:db8::1.
+Wichtige Ports / Protokolle
+Port
+Dienst
+20/21
+FTP
+22
+SSH
+25 / 587
+SMTP / SMTP+TLS
+53
+DNS
+80
+HTTP
+110 / 995
+POP3 / POP3S
+143 / 993
+IMAP / IMAPS
+443
+HTTPS
+3306
+MySQL
+5432
+PostgreSQL
+5900
+VNC
+Netzwerktopologien
+Stern: zentraler Switch — Standard.
+Bus: veraltet, alle an einer Leitung.
+Ring: Token Ring.
+Mesh: redundant, viele Verbindungen — robust, teuer.
+LAN / WAN / WLAN / VPN
+LAN: Local Area Network (Büro).
+WAN: Wide Area Network (Internet).
+WLAN: Wireless LAN (WPA2/WPA3 nutzen).
+VPN: verschlüsselter Tunnel über öffentliches Netz.
+2.13 Cloud-Service-Modelle
+Modell
+Beispiel
+Anbieter verantwortlich für
+IaaS (Infra)
+AWS EC2, Azure VM
+HW, Virtualisierung
+PaaS (Platform)
+Heroku, App Engine
++ OS, Runtime, Middleware
+SaaS (Software)
+Microsoft 365, Salesforce
++ Anwendung
+Pizza-Eselsbrücke: Made at Home (alles selbst) → Take & Bake (PaaS-light) → Pizza Delivery (PaaS) → Dining Out (SaaS).
+Teil 3 — Wirtschafts- und Sozialkunde (WiSo)
+Format: 60 min · 100 Punkte · ca. 30 Multiple-Choice- und Kurzantwort-Aufgaben.
+Strategie: Du bekommst pro Aufgabe 3–4 Punkte. Selbst wenn du 5 Aufgaben falsch hast, sind 85 Punkte = Note 2 drin. Mit den hier gelernten Themen sind 95 Punkte realistisch. Tipp: Aufgaben mit „Tragen Sie zwei zutreffende …" — beide Treffer markieren, sonst null Punkte!
+3.1 Berufsausbildung (BBiG)
+BBiG = Berufsbildungsgesetz, regelt Ausbildung in DE.
+Ausbildungsvertrag
+Schriftform vorgeschrieben (BBiG § 11).
+Bei Minderjährigen zusätzlich: gesetzliche Vertretung muss zustimmen.
+Eintragung ins Verzeichnis der zuständigen Stelle (IHK/HWK).
+Probezeit: mindestens 1 Monat, höchstens 4 Monate (§ 20 BBiG). Während Probezeit: jederzeit fristlos kündbar von beiden Seiten.
+Pflichten
+Auszubildende
+Ausbildende
+Lernpflicht / Sorgfalt
+Ausbildungspflicht (Vermittlung des Berufsbilds)
+Berufsschulbesuch
+Freistellung für Berufsschule
+Weisungspflicht
+Rücksichtnahme auf Reife
+Schweigepflicht
+Bereitstellung Material/Werkzeuge
+Ausbildungsmittel pfleglich
+Charakterliche Förderung
+Berichtsheft führen
+Berichtsheft prüfen + Zeit dafür gewähren
+Ende des Ausbildungsverhältnisses (§ 21 BBiG)
+Mit Ablauf der Ausbildungszeit (Standard).
+Mit Bestehen der Abschlussprüfung — endet vorzeitig am Tag der Prüfung (automatisch, ohne Kündigung!).
+Bei Nichtbestehen kann der Auszubildende auf Verlangen bis zu 1 Jahr verlängern (höchstens einmal).
+Kündigung Ausbildungsvertrag (§ 22 BBiG)
+Phase
+Wer?
+Frist
+Probezeit
+beide Parteien
+fristlos und ohne Grund
+Nach Probezeit
+nur Auszubildender ordentlich
+4 Wochen Kündigungsfrist (z. B. Berufswechsel)
+Nach Probezeit
+beide außerordentlich
+wichtiger Grund + schriftlich
+JArbSchG — Jugendarbeitsschutz (für unter 18)
+Tägliche Arbeitszeit max. 8 h, Woche max. 40 h.
+Pausen: bei 4,5–6 h: 30 min; > 6 h: 60 min.
+Nachtruhe 20–6 Uhr (mit Ausnahmen).
+Mindestens 30 Werktage Urlaub (15 Jahre), 27 (16), 25 (17).
+Berufsschultag mit > 5 Std. Unterricht: einmal pro Woche frei.
+Ärztliche Erst- und Nachuntersuchung Pflicht.
+3.2 Arbeitsrecht (für Erwachsene)
+Arbeitsvertrag
+Schriftform empfohlen, mündlich aber wirksam (Nachweisgesetz: Hauptbedingungen schriftlich).
+Probezeit max. 6 Monate (§ 622 BGB), Kündigung in Probezeit: 2 Wochen Frist.
+Kündigung — gesetzliche Fristen (§ 622 BGB)
+Mindestkündigungsfrist Arbeitnehmer: 4 Wochen zum 15. oder Monatsende.Arbeitgeber gestaffelt nach Beschäftigungsdauer:
+Dauer
+Frist (zum Monatsende)
+< 2 Jahre
+4 Wochen zum 15./Monatsende
+2 J.
+1 Monat
+5 J.
+2 Monate
+8 J.
+3 Monate
+10 J.
+4 Monate
+12 J.
+5 Monate
+15 J.
+6 Monate
+20 J.
+7 Monate
+Kündigungsarten
+Ordentlich (mit Frist).
+Außerordentlich/fristlos (wichtiger Grund, § 626 BGB) — innerhalb 2 Wochen nach Kenntnis.
+Änderungskündigung (mit Angebot zu geänderten Bedingungen).
+Aufhebungsvertrag (einvernehmlich).
+Kündigungsschutz (KSchG)
+Greift bei Betrieben > 10 AN und > 6 Monate Beschäftigung. Gründe: betriebs-, personen- oder verhaltensbedingt.
+Besonderer Kündigungsschutz für:
+Schwangere & Mütter im Mutterschutz
+Eltern in Elternzeit
+Schwerbehinderte (Zustimmung Integrationsamt)
+Betriebsratsmitglieder
+Auszubildende (nach Probezeit)
+WiSo-Falle 24/25 Sommer Aufg. 23: „Mitarbeiter über 45 Jahre" haben keinen besonderen Kündigungsschutz!
+Befristete Arbeitsverträge (TzBfG)
+Endet automatisch zum vereinbarten Datum, ohne Kündigung.
+Mit Sachgrund: unbegrenzt (z. B. Vertretung).
+Ohne Sachgrund: max. 2 Jahre, bis zu 3× Verlängerung.
+3.3 Tarifvertrag und Mitbestimmung
+Tarifverträge
+Geschlossen zwischen Gewerkschaften und Arbeitgeberverbänden (oder Einzelunternehmen).
+Friedenspflicht während Laufzeit — keine Streiks zu im Vertrag geregelten Themen.
+Günstigkeitsprinzip: Bei Konflikten gilt die für AN günstigere Regel.
+Tarifvertragsart
+Inhalte
+Laufzeit
+Lohn-/Gehaltstarifvertrag
+Vergütung, Lohngruppen, Zulagen
+meist 1 Jahr
+Manteltarifvertrag
+Arbeitszeit, Urlaub, Kündigung, Sonderzahlungen
+meist mehrere Jahre
+Rahmentarifvertrag
+Eingruppierung, Tätigkeitsbeschreibungen
+langfristig
+Tarifautonomie
+Recht der Tarifparteien, ohne staatliche Einmischung Tarifverträge auszuhandeln (Art. 9 III GG).
+Arbeitskampf
+Mittel der AN
+Mittel der AG
+Streik (Arbeitsniederlegung)
+Aussperrung
+Warnstreik
+–
+Werkdienst nach Vorschrift
+–
+Voraussetzungen für Streik: Tarifziel, gewerkschaftlich getragen, kein Friedenspflicht-Verstoß, Verhältnismäßigkeit.
+Betriebsrat (BetrVG)
+Wahlberechtigt ab 5 wahlberechtigten Arbeitnehmer:innen. Größe des Betriebsrats wächst mit Belegschaft.
+Vier Mitbestimmungsstufen:
+Information (BR muss informiert werden).
+Anhörung (BR äußert Stellungnahme).
+Mitwirkung/Beratung.
+Mitbestimmung (BR muss zustimmen, sonst Einigungsstelle).
+Echte Mitbestimmung (§ 87 BetrVG) u. a. bei:
+Pausenregelung, Beginn/Ende der täglichen Arbeitszeit
+Urlaubsplan
+Entgeltgrundsätze, Akkord/Prämien
+Maßnahmen zur Arbeitssicherheit/Gesundheitsschutz
+Sozialeinrichtungen
+Technische Überwachung (Zeiterfassung, Kameras)
+Betriebsvereinbarung vs. Tarifvertrag
+Betriebsvereinbarung
+Tarifvertrag
+zwischen Arbeitgeber + Betriebsrat
+zwischen AG-Verband + Gewerkschaft
+nur dieser Betrieb
+ganze Branche oder Region
+Inhalte: Pausen, Urlaubsplan, Arbeitszeit, Datenschutz
+Lohn, Manteltarif
+WiSo-Falle 24 Sommer Aufg. 5: Betriebsvereinbarung darf nicht Themen regeln, die schon im Tarifvertrag stehen (Tarifvorrang) — z. B. Lohnhöhe nicht möglich, Pausenregelung schon.
+3.4 Sozialversicherung — die 5 Säulen
+Säule
+Versichert gegen
+Träger
+Beitragssatz 2025/26 (gesamt, Hälfte AN)
+Krankenversicherung (KV)
+Krankheitskosten
+Gesetzliche Krankenkasse (z. B. AOK, Barmer)
+14,6 % + Zusatzbeitrag (Ø 1,7 %)
+Pflegeversicherung (PV)
+Pflegebedürftigkeit
+Pflegekasse bei der KV
+3,4 % (kinderlos +0,6 %)
+Rentenversicherung (RV)
+Alter, Erwerbsmind., Hinterbliebene
+Deutsche Rentenversicherung
+18,6 %
+Arbeitslosenversicherung (AV)
+Arbeitslosigkeit
+Bundesagentur für Arbeit
+2,6 %
+Unfallversicherung (UV)
+Arbeits-/Wegeunfälle, Berufskrankheiten
+Berufsgenossenschaft
+nur AG, nicht AN!
+Eselsbrücke: „KARPU" = KV, AV, RV, PV, UV.AN-Anteil ungefähr 20 % vom Bruttolohn.
+Beitragsbemessungsgrenze (BBG)
+Betrag, bis zu dem Beiträge berechnet werden. Über der BBG kein weiterer Beitrag — aber auch keine zusätzlichen Ansprüche.
+BBG für RV/AV ist höher als für KV/PV (KV/PV haben eigene, niedrigere Grenze + Versicherungspflichtgrenze JAEG).
+Versicherungspflichtgrenze (JAEG)
+Wer brutto im Jahr darüber liegt, kann die GKV verlassen und in die PKV.
+Generationenvertrag / Umlageverfahren
+Die Beiträge der aktiv Beschäftigten werden direkt zur Auszahlung an die heutigen Rentner verwendet — keine Ansparung. Spätere Generationen finanzieren wiederum die heutige Beitragszahlerschaft.
+Träger der Unfallversicherung
+Berufsgenossenschaft (gewerbliche oder landwirtschaftliche). Beitrag zahlt nur der Arbeitgeber.
+Gesetzlich abgedeckte Fälle:
+Arbeitsunfall im Betrieb
+Wegeunfall (direkter Hin-/Rückweg)
+Dienstreise
+Berufskrankheit (nach BK-Liste)
+Nicht abgedeckt: Freizeitunfälle, Krankheiten, private Umwege, Krankheit eines Kindes.
+3.5 Arbeits- und Gesundheitsschutz
+Arbeitsschutzgesetz (ArbSchG): Pflicht des AG zur Gefährdungsbeurteilung.
+Arbeitsschutzausschuss: Pflicht ab mehr als 20 Beschäftigten (§ 11 ASiG).
+Sicherheitsbeauftragte: ab mehr als 20 Beschäftigten.
+Ergonomie ist Bestandteil der Arbeitssicherheit (Pflicht!).
+Brandschutz: 4 Säulen — Verhüten, Erkennen, Bekämpfen, Räumen.
+Reihenfolge im Brandfall (PRIO)
+Brand melden (Brandmelder oder 112).
+Personen warnen / in Sicherheit bringen.
+Erst löschen, wenn Eigengefährdung ausgeschlossen.
+Sammelpunkt aufsuchen, auf Feuerwehr warten.
+WiSo-Falle 24 Sommer Aufg. 14: Erste Aktion = Brandmelder betätigen.
+Sicherheitskennzeichen
+Form/Farbe
+Bedeutung
+Rotes Quadrat mit weißem Symbol
+Brandschutzzeichen (Feuerlöscher, Brandmelder)
+Grünes Quadrat mit weißem Symbol
+Rettungszeichen (Fluchtweg, Erste Hilfe)
+Rotes rundes Schild mit Querbalken
+Verbotszeichen (z. B. Rauchen verboten)
+Blaues rundes Schild
+Gebotszeichen (Schutzhelm tragen)
+Gelbes Dreieck
+Warnzeichen (Laser, Spannung)
+3.6 AGG — Allgemeines Gleichbehandlungsgesetz
+Geschützte Merkmale (§ 1 AGG):
+Rasse / ethnische Herkunft
+Geschlecht
+Religion / Weltanschauung
+Behinderung
+Alter
+sexuelle Identität
+WiSo-Falle 24 Sommer Aufg. 27: „Dauer der Anstellung" und „Nationalität" stehen nicht im AGG — Trickfrage!
+3.7 Mutterschutz und Elternzeit
+Mutterschutzgesetz (MuSchG): Schutz 6 Wochen vor und 8 Wochen nach Entbindung (bei Mehrlingen/Frühgeburt: 12 Wochen nach).
+Beschäftigungsverbot während Mutterschutzfrist.
+Stillpausen (täglich 2 × 30 min in den ersten 12 Mon.).
+Elternzeit: bis 3. Lebensjahr, max. 24 Monate übertragbar bis 8. Lebensjahr.
+Elterngeld: 65 % vom Nettolohn, max. 1.800 €.
+3.8 Wirtschaftsordnung
+Wirtschaftssektoren (Drei-Sektoren-Modell)
+Sektor
+Inhalt
+Beispiele
+Primär
+Urproduktion
+Landwirtschaft, Bergbau, Forstwirtschaft, Fischerei
+Sekundär
+Verarbeitendes Gewerbe
+Industrie, Bau, Energie
+Tertiär
+Dienstleistungen
+IT-Dienstleister, Banken, Handel, Pflege
+WiSo-Falle 24 Sommer Aufg. 9: GmbH als IT-Dienstleister = tertiärer Sektor + erwerbswirtschaftlicher Betrieb.
+Soziale Marktwirtschaft
+Ludwig Erhard: Marktfreiheit + sozialer Ausgleich. Prinzipien: Eigentum, Vertragsfreiheit, Wettbewerb, Sozialstaatlichkeit, Schutz vor Marktversagen.
+Marktformen
+viele Anbieter
+wenige
+einer
+viele Nachfrager
+Polypol
+Angebotsoligopol
+Angebotsmonopol
+wenige
+Nachfrageoligopol
+bilaterales Oligopol
+beschränktes Angebotsmonopol
+einer
+Nachfragemonopol
+beschr. Nachfragemono.
+bilaterales Monopol
+Beispiele:
+Polypol: Wochenmarkt
+Angebotsoligopol: Tankstellenkonzerne
+Angebotsmonopol: Deutsche Bahn (Schienennetz)
+Nachfragemonopol: Bundeswehr für bestimmte Rüstung
+Preisbildung im Polypol
+Schnittpunkt Angebots- und Nachfragekurve = Gleichgewichtspreis. Höherer Preis → Angebotsüberhang. Niedriger Preis → Nachfrageüberhang.
+Kartelle (GWB)
+Kartell
+Erlaubt?
+Preiskartell (Mindest- / Höchstpreis)
+verboten
+Quotenkartell
+verboten
+Gebietskartell
+verboten
+Konditionenkartell
+grundsätzlich verboten
+Normen- und Typenkartell
+anmeldepflichtig, oft erlaubt
+WiSo-Falle 24 Sommer Aufg. 22: Normen-/Typenkartell ist anmeldepflichtig (Bundeskartellamt) — die anderen sind generell verboten.
+3.9 Unternehmensformen — Pflichtwissen
+Form
+Rechtsform
+Mindestkapital
+Haftung
+Geschäftsf.
+Eintragung
+Einzelunternehmen
+nicht-juristisch
+–
+unbeschränkt mit Privatv.
+Inhaber
+HR Abt. A (wenn Kfm.)
+GbR
+Personenges.
+–
+Gesamtschuldnerisch unbeschränkt
+Gesellschafter
+– (seit 2024 GbR-Register optional)
+OHG
+Personenges.
+–
+unbeschränkt
+alle
+HR Abt. A
+KG
+Personenges.
+–
+Komplementär unbeschränkt, Kommanditist auf Einlage
+Komplementär
+HR Abt. A
+GmbH
+Kapitalges.
+25.000 €
+nur Gesellschaftsvermögen
+Geschäftsführer
+HR Abt. B
+UG (haftungsb.)
+Kapitalges.
+1 € + Rücklagepflicht
+nur Gesellschaftsvermögen
+Geschäftsführer
+HR Abt. B
+AG
+Kapitalges.
+50.000 €
+Aktiengesellschaftsvermögen
+Vorstand (von AR bestellt)
+HR Abt. B
+eG
+Genossenschaft
+–
+meist beschränkt
+Vorstand
+Genossenschaftsregister
+GmbH-Spezifika
+Gründung durch eine oder mehrere Personen.
+Stammkapital min. 25.000 €, davon mind. 12.500 € in bar bei Eintragung eingezahlt.
+Mehrere Geschäftsführer erlaubt.
+Eintragung HR Abteilung B.
+Notarpflichtige Gründung.
+WiSo-Falle 24 Sommer Aufg. 17: „GmbH-Gründung durch eine Person ist möglich" — RICHTIG.
+Personen- vs. Kapitalgesellschaft
+Personengesellschaft
+Kapitalgesellschaft
+Beispiele
+GbR, OHG, KG
+GmbH, AG, UG, KGaA
+Haftung
+persönlich + privatv.
+nur Gesellschaftsvermögen
+Gründer
+min. 2 (außer Einzel)
+1 reicht
+Steuern
+Einkommen/Gewerbe
+Körperschaft- + Gewerbe
+Registereintr.
+HR A
+HR B
+Gewinnverteilung
+nach Kapitalanteil/Vertrag
+nach Geschäftsanteilen / Aktien
+Gewinnverteilung (Rechenaufgabe-Stil)
+Beispiel (IHK 2024 Sommer Aufg. 16): Stammkapital 330.000 €. Müller hält 198.000 € (= 60 %), Simmer hält 132.000 € (= 40 %). Gewinn 87.450 € wird kapitalanteilig ausgeschüttet:
+Simmer: 87.450 € × (132.000 / 330.000) = 87.450 € × 0,4 = 34.980 €.
+Müller: 87.450 € − 34.980 € = 52.470 €.
+3.10 Handelsregister
+Öffentliches Verzeichnis am Amtsgericht.
+Abteilung
+enthält
+A
+Einzelkaufleute, OHG, KG
+B
+Kapitalgesellschaften (GmbH, UG, AG)
+Eintrag beinhaltet u. a.: Firma, Sitz, Kapital, Geschäftsführer, Prokuristen.
+Publizitätswirkung: Was eingetragen ist, gilt als bekannt; Vertrauen ist geschützt.
+3.11 Mitarbeitermotivation & Organisation
+Leitungssysteme
+System
+Beschreibung
+Vor-/Nachteile
+Einliniensystem
+jeder hat genau 1 Vorgesetzten
+klar, langsam
+Mehrliniensystem (Funktionssystem)
+Mitarbeitende haben mehrere Fachvorgesetzte
+hohe Spezialisierung, Konflikt möglich
+Stab-Linien-System
+Linienorga + beratende Stabsstellen
+beratend, nicht weisungsbefugt
+Matrixsystem
+zweidimensional (z. B. Funktion × Projekt)
+flexibel, aber Doppelunterstellung
+Projektorganisation
+Mitarbeitende einem Projekt zugeordnet
+fokussiert, temporär
+Bedürfnispyramide (Maslow) — falls gefragt
+Physiologisch → Sicherheit → Soziales → Anerkennung → Selbstverwirklichung.
+Lohnformen
+Form
+Wie?
+Zeitlohn
+nach Anwesenheit
+Akkordlohn
+nach Stückzahl
+Prämienlohn
+Zeit + Prämie für Mehrleistung
+Provision
+Anteil am Umsatz/Gewinn
+3.12 Kaufvertrag · BGB · HGB
+Voraussetzungen
+Zwei übereinstimmende Willenserklärungen (Antrag + Annahme).
+Volle Geschäftsfähigkeit beider Parteien.
+Zulässiger Vertragsinhalt.
+Kaufvertragsstörungen
+Störung
+Wann?
+Rechte des Käufers
+Sachmangel
+Ware ist mangelhaft
+Nacherfüllung (Reparatur/Ersatz), dann Minderung/Rücktritt/Schadenersatz
+Lieferungsverzug
+Ware kommt nicht/zu spät
+Nachfrist, Rücktritt, Schadenersatz
+Zahlungsverzug
+Käufer zahlt nicht
+Mahnung, Verzugszinsen, Klage
+Annahmeverzug
+Käufer nimmt Ware nicht an
+Hinterlegung, Schadenersatz
+Mängelarten: offener Mangel, versteckter Mangel, arglistig verschwiegener Mangel.
+Mängelrüge: B2B unverzüglich (§ 377 HGB), Verbraucher hat 2 Jahre Gewährleistung (§ 438 BGB).
+Verjährungsfristen (Standard)
+Allgemein: 3 Jahre.
+Kaufvertrag (Sachmangel): 2 Jahre.
+Bei Bauwerken: 5 Jahre.
+Bei vorsätzlicher Täuschung: 10 Jahre.
+Mahnverfahren
+Erste Mahnung (formlos, höflich).
+Zweite Mahnung (Erinnerung mit Frist).
+Letzte Mahnung mit Androhung.
+Gerichtliches Mahnverfahren (Antrag beim Amtsgericht).
+Vollstreckungsbescheid + Zwangsvollstreckung.
+Verzug automatisch 30 Tage nach Rechnung (B2C nur wenn Kunde darauf hingewiesen wurde).
+3.13 Gerichtsbarkeit (Auswahl)
+Gericht
+zuständig für
+Amtsgericht
+Zivilsachen bis 5.000 €, Mahnverfahren
+Landgericht
+Zivilsachen über 5.000 €
+Arbeitsgericht
+Streitigkeiten Arbeitsverhältnis (Kündigung)
+Sozialgericht
+KV/RV/PV/AV/UV-Streitigkeiten
+Finanzgericht
+Steuersachen
+Verwaltungsgericht
+öffentlich-rechtl. Streit (außer Steuer)
+WiSo-Falle 24 Sommer Aufg. 7: Streit über Krankenkasse-Zuzahlung → Sozialgericht.
+3.14 Steuern
+Steuer
+Wer zahlt?
+Berechnungsgrundlage
+Lohnsteuer (LSt)
+AN (AG behält ein)
+Bruttoarbeitslohn
+Einkommensteuer (ESt)
+natürliche Person
+Jahreseinkommen, progressiv 14–45 %
+Solidaritätszuschlag
+i. d. R. nur höhere Einkommen
+5,5 % auf LSt/ESt
+Körperschaftsteuer (KSt)
+jur. Person (GmbH, AG)
+Gewinn, 15 %
+Gewerbesteuer (GewSt)
+gewerbliche Unternehmen
+Gewerbeertrag, je Hebesatz
+Umsatzsteuer (USt/MwSt)
+Endverbraucher (Unternehmen führt ab)
+Umsatz, 19 % / 7 %
+Kfz-Steuer
+Halter
+Hubraum + Emissionen
+Grundsteuer
+Eigentümer
+Einheitswert + Hebesatz
+USt-Mechanik: Vorsteuer (was du an Lieferanten zahlst) – USt (was du Kunden in Rechnung stellst) → Differenz ans Finanzamt.
+3.15 EZB · Geldpolitik · Inflation
+EZB = Europäische Zentralbank, Sitz Frankfurt. Ziel: Preisstabilität (Inflationsziel ~2 %).
+Leitzinsen (Hauptrefinanzierungssatz, Einlagezins): steigen → Kreditkosten steigen → Konsum/Invest. sinken → Inflation sinkt.
+Inflation: allgemeiner Preisanstieg. Gemessen an Verbraucherpreisindex.
+Deflation: allgemeiner Preisrückgang.
+Stagflation: stagnierende Wirtschaft + Inflation.
+Konjunkturphasen: Aufschwung → Hochkonjunktur (Boom) → Abschwung (Rezession) → Tiefphase (Depression).
+Konjunkturpolitik:
+Antizyklisch: Staat investiert in Tiefphase, spart in Hochphase.
+Expansive Geldpolitik: EZB senkt Zinsen.
+Restriktive Geldpolitik: EZB hebt Zinsen.
+3.16 Nachhaltigkeit · Umweltschutz
+Drei Dimensionen: ökologisch · ökonomisch · sozial.
+Verursacherprinzip: Wer Umweltbelastung verursacht, trägt die Kosten der Beseitigung. (WiSo-Falle 24 Sommer Aufg. 30!)
+Vorsorgeprinzip: Frühzeitig handeln, bevor Schäden entstehen.
+Gemeinlastprinzip: Allgemeinheit zahlt (selten, z. B. historische Altlasten).
+Nachhaltige Maßnahmen im Betrieb:
+Recycling
+regionale Lieferanten
+nachwachsende Rohstoffe
+energieeffiziente Hardware
+Homeoffice (weniger Pendeln)
+3.17 Existenzgründung · Businessplan
+Inhalte Businessplan:
+Zusammenfassung
+Gründerprofil
+Geschäftsidee / USP
+Markt- und Wettbewerbsanalyse
+Marketing & Vertrieb
+Organisation & Personal
+Finanzplan (Liquidität, Rentabilität, Investition)
+Risikoanalyse / Chancen
+Anhang
+Finanzbestandteile:
+Investitionsplan (Anschaffungen)
+Liquiditätsplan (Cashflow)
+Rentabilitätsvorschau (Gewinn/Jahr)
+Kapitalbedarf
+WiSo-Falle 24 Sommer Aufg. 19: Businessplan ist nicht im Handelsregister einzutragen, nicht von IHK ausgestellt, nicht nur bei Kapitalgesellschaften nötig — er enthält Finanzkonzept und Unternehmensidee.
+3.18 Wirtschaftlichkeit (Rechenaufgabe-Stil)
+Wirtschaftlichkeit = Ertrag / Aufwand.
+Beispiel (IHK 2024 Sommer Aufg. 20):
+Auftrag
+Aufwand
+Ertrag
+Wirtschaftlichkeit
+1
+600.000
+720.000
+1,20
+2
+320.000
+400.000
+1,25
+3
+160.000
+208.000
+1,30 ← der wirtschaftlichste!
+4
+200.000
+248.000
+1,24
+Rentabilität: Gewinn / eingesetztes Kapital × 100 %.
+Produktivität: Ausbringungsmenge / Einsatzmenge.
+Cheatsheets — kompakter Last-Minute-Stoff
+Diese Seiten sind als Mini-Spickzettel gedacht — am Tag vor der Prüfung in einem Rutsch durchgehen, am Prüfungstag morgens noch einmal.
+CS 1 — UML-Symbole auf einen Blick
+Klassendiagramm-Beziehungen
+A ────────── B    Assoziation (kennt, nutzt)A ─────▷ B        Vererbung (A erbt von B)A ─ ─ ─▷ B        Interface-RealisierungA ◇──── B         Aggregation (A hat B; B kann allein leben)A ◆──── B         Komposition (A besteht aus B; B stirbt mit A)A ─ ─ ─▶ B        Abhängigkeit
+Multiplizitäten
+1 · 0..1 · * · 0..* · 1..* · n..m
+Sichtbarkeit
++ public · − private · # protected · ~ package
+Aktivitätsdiagramm
+   ●         Start   ▼ [ Aktivität ]   ▼   ◆           Verzweigung  / \[ja] [nein]   ▼   ▼   ⏺          Ende
+Sequenzdiagramm
+A         B         C│ msg() →│         ││        │ call()→││        │  ←─────│  (gestrichelt = return)│ ←──────│         │
+Zustandsdiagramm
+●→[ frei ] —"einsteigen"→[ teilbesetzt ] —"voll"→[ vollbesetzt ] →⏺
+CS 2 — SQL Spickzettel
+Statement-Reihenfolge (logisch)
+SELECT       -- 5FROM         -- 1JOIN ... ON  -- 2WHERE        -- 3GROUP BY     -- 4HAVING       -- 6ORDER BY     -- 7LIMIT        -- 8
+Aggregate
+COUNT(*) · SUM(x) · AVG(x) · MIN(x) · MAX(x)
+Datentypen
+INTEGER · DECIMAL(p,s) · VARCHAR(n) · CHAR(n) · TEXT · DATE · DATETIME/TIMESTAMP · BOOLEAN/BIT · BLOB
+Constraints
+PRIMARY KEY · FOREIGN KEY (x) REFERENCES tab(y)NOT NULL · UNIQUE · DEFAULT wert · CHECK (x>0) · AUTO_INCREMENT
+Häufige Patterns
+-- Top-N pro Gruppe (Standard-IHK):SELECT * FROM BestellungORDER BY datum DESCLIMIT 5;-- Filter mit INWHERE land IN ('DE','AT','CH')-- LIKEWHERE name LIKE 'A%'    -- beginnt mit AWHERE name LIKE '%er'   -- endet auf erWHERE name LIKE '_aus%' -- 1 Zeichen, dann aus...-- NULL prüfenWHERE x IS NULL / IS NOT NULL-- CASESELECT name,  CASE WHEN gehalt > 5000 THEN 'hoch'       WHEN gehalt > 3000 THEN 'mittel'       ELSE 'niedrig' END AS stufeFROM mitarbeiter;-- DatumsfunktionenYEAR(datum), MONTH(datum), DAY(datum)NOW(), CURDATE()DATEDIFF(d2, d1)-- COUNT mit Filter (nicht überall verfügbar)COUNT(CASE WHEN aktiv = 1 THEN 1 END)
+Berechtigungen
+GRANT SELECT, INSERT, UPDATE ON db.tabelle TO 'user';REVOKE INSERT ON db.tabelle FROM 'user';
+CS 3 — Pseudocode-Patterns
+Alle gängigen Bausteine
+// Variable + Initcounter : Integer = 0liste   : List<Element> = leereListe()// Schleife mit Indexfor i = 0 to arr.size() - 1 { ... arr[i] ... }// Foreachfor each element in arr { ... }// whilewhile (bedingung) { ... }// if/else if/elseif (a == b) { ... }else if (a > b) { ... }else { ... }// Methode aufrufenergebnis = klasse.methode(arg1, arg2)// Rückgabereturn wert
+Filter & Zähler
+function zaehleAktive(elemente: List<E>) : Integer {    n = 0    for each e in elemente {        if (e.istAktiv()) { n = n + 1 }    }    return n}
+Mapping (neue Liste)
+function namen(personen: List<Person>) : List<String> {    result : List<String> = leereListe()    for each p in personen {        result.add(p.getName())    }    return result}
+Suchen
+function findeNach(items: List<I>, schluessel: String) : I {    for each i in items {        if (i.getId() == schluessel) { return i }    }    return null}
+Min/Max
+function findeMax(arr: Integer[]) : Integer {    if (arr.size() == 0) { return -1 }    max : Integer = arr[0]    for i = 1 to arr.size() - 1 {        if (arr[i] > max) { max = arr[i] }    }    return max}
+Sortieren via Vergleichsfunktion
+function bubbleSortMitVergleich(arr: E[], vergleiche: Function) : void {    n = arr.size()    for i = 0 to n - 1 {        for j = 0 to n - i - 2 {            if (vergleiche(arr[j], arr[j+1]) > 0) {                tmp     = arr[j]                arr[j]  = arr[j+1]                arr[j+1] = tmp            }        }    }}
+CS 4 — HTTP-Statuscodes Mini-Cheat
+Code
+Bedeutung
+Wann?
+200
+OK
+Anfrage erfolgreich
+201
+Created
+nach POST – Ressource angelegt
+204
+No Content
+DELETE/PUT erfolgreich, kein Body
+301
+Moved Permanently
+URL umgezogen
+304
+Not Modified
+Cache verwendbar
+400
+Bad Request
+ungültige Anfrage
+401
+Unauthorized
+nicht eingeloggt
+403
+Forbidden
+Eingeloggt, aber kein Recht
+404
+Not Found
+Ressource fehlt
+409
+Conflict
+Versionskonflikt, Duplikat
+500
+Internal Server Error
+Bug im Server
+502
+Bad Gateway
+Upstream fehlt
+503
+Service Unavailable
+überlastet/gewartet
+CS 5 — Sozialversicherung Cheat
+KARPU = K rankenversicherung        A rbeitslosenversicherung        R entenversicherung        P flegeversicherung        U nfallversicherung
+Säule
+Wer trägt?
+Träger
+KV
+AN + AG
+gesetzliche Krankenkasse
+AV
+AN + AG
+Bundesagentur für Arbeit
+RV
+AN + AG
+Deutsche Rentenversicherung
+PV
+AN + AG (kinderlose +0,6 % AN)
+Pflegekasse
+UV
+nur AG
+Berufsgenossenschaft
+Beitragssätze (gesamt 2025/26 ungefähr): KV 14,6 % + Zusatz · PV 3,4 % · RV 18,6 % · AV 2,6 %.
+Faustregel AN-Anteil ~ 20 % vom Brutto.
+CS 6 — Unternehmensformen Quick
+Form
+Mind.kapital
+Haftung
+HR-Abt.
+Einzelunternehmen
+–
+privat
+A (wenn Kfm.)
+GbR
+–
+privat (gesamtschuldn.)
+–
+OHG
+–
+privat (gesamtschuldn.)
+A
+KG
+–
+Komplementär: privat / Kommanditist: Einlage
+A
+GmbH
+25.000 €
+Gesellschaftsv.
+B
+UG (haftb.)
+1 €
+Gesellschaftsv.
+B
+AG
+50.000 €
+Aktiengesellschaftsv.
+B
+Eselsbrücke „Eine Hose Mit Geld" für Einzel < GmbH < AG Mindestkapital: 0 / 25.000 / 50.000.
+CS 7 — UML-Zeit-Trick
+Bei UML-Aufgaben immer die Punkte am Rand abklappern:
+Häufiger Punktverlust
+Vermeidung
+Multiplizitäten vergessen
+Pro Beziehung 2 Multiplizitäten setzen
+Vererbungspfeil falsche Richtung
+Pfeil zur Oberklasse
+Methodensignatur unvollständig
+Sichtbarkeit + Name + Parameter (Typen!) + Rückgabetyp
+Akteur im System statt außerhalb
+Akteur immer außerhalb des Rechtecks
+Verzweigung ohne [Bedingung]
+Bedingung in eckigen Klammern
+Sequenzdiagramm: kein Return
+gestrichelter Pfeil zurück!
+CS 8 — Top 30 Falsch-Positive in WiSo (Häufige Fallen)
+Probezeit Ausbildungsvertrag = 1–4 Monate (nicht 6).
+Befristeter Vertrag endet ohne Kündigung zum Datum.
+Tarifvertrag: zwischen Gewerkschaft + Arbeitgeberverband, nicht Geschäftsführung + AN.
+Betriebsrat vertritt AN-Interessen, nicht alle.
+Beitragsbemessungsgrenze ≠ Versicherungspflichtgrenze.
+Über BBG: weiter pflichtversichert in RV/AV, kein zusätzlicher Beitrag über der Grenze.
+UV-Träger = Berufsgenossenschaft (nicht Krankenkasse, nicht Bundesagentur).
+Wegeunfall = abgedeckt; Freizeitunfall = NICHT.
+Mutterschutz = 8 Wochen nach Entbindung (Mehrlinge: 12 Wo).
+AGG: Nationalität wird über „Rasse/ethnische Herkunft" abgedeckt; „Dauer der Anstellung" ist KEIN AGG-Merkmal.
+Arbeitsschutzausschuss ab >20 Beschäftigten.
+Brand: Brandmelder zuerst, nicht löschen.
+GmbH = Kapitalgesellschaft, Tertiärsektor möglich, kann durch eine Person gegründet werden.
+GmbH-Stammkapital 25.000 € (nicht 5.000, nicht 50.000).
+Handelsregister: GmbH/AG → Abteilung B.
+Normen-/Typenkartell = anmeldepflichtig (≠ verboten).
+Krankenkassenstreit = Sozialgericht.
+Generationenvertrag = Umlageverfahren (nicht Anspar).
+Businessplan ist kein Behördenakt; enthält Finanzkonzept + Idee.
+Wirtschaftlichkeit = Ertrag / Aufwand → höchster Quotient = wirtschaftlichster Auftrag.
+Verursacherprinzip: Verursacher zahlt, nicht Allgemeinheit.
+EZB-Leitzins hoch → Inflation sinkt; Leitzins niedrig → Konjunktur steigt.
+Im Mahnverfahren: nach 2. Mahnung gerichtliches Mahnverfahren möglich.
+Sachmangel: erst Nacherfüllung, dann Minderung/Rücktritt.
+Mitbestimmung in § 87 BetrVG: Pausen, Urlaubsplan, Akkord, Datenschutz/Überwachung.
+Tarifvorrang: Was Tarifvertrag regelt, darf Betriebsvereinbarung nicht regeln (Lohn ja → BV nein).
+Probezeit Arbeitsvertrag (Erwachsene): max 6 Monate, Kündigungsfrist 2 Wochen.
+UG braucht Rücklagepflicht (25 % Jahresüberschuss bis 25.000 €).
+Kündigungsschutz ab >10 AN + >6 Mon. Beschäftigung.
+Steuern: USt 19 %, ermäßigt 7 %.
+Prüfungstag — Last-Minute Strategie
+Am Vorabend
+8 h Schlaf (echt!). Die letzte halbe Stunde Lernen ist immer schlechter als ausgeschlafen sein.
+Vorbereitung packen: 2 Kugelschreiber blau + Reserve, Bleistift + Radierer, nicht-programmierbarer Taschenrechner, Personalausweis, Einladung, Wasserflasche, Traubenzucker.
+Cheatsheets (Kapitel 6) noch einmal überfliegen — nicht neu lernen!
+Am Prüfungstag morgens (für jeden Teil)
+30 min vorher im Prüfungsraum.
+Zur Tagesform passendes leichtes Frühstück + Kaffee/Wasser.
+Ankommen, hinsetzen, 3× tief atmen (4-7-8: 4 ein, 7 halten, 8 aus).
+Nach Aufgabenausgabe: Erst Deckblatt ausfüllen, dann alle Aufgaben in Ruhe komplett durchlesen, bevor du etwas schreibst.
+In jeder Klausur
+Zeitstrategie
+90-min-Klausur (Teil 1, Teil 2): 4 Aufgaben → Richtwert 20 min/Aufgabe, 10 min Reserve am Ende.
+60-min-Klausur (WiSo): 30 Aufgaben → 2 min/Aufgabe, schwierige zurückstellen.
+Punkte-Effizienz
+Punkte ≈ Anzahl der erwarteten Aspekte. „Beschreiben Sie 4 Vorteile (8 Punkte)" → mindestens 4 nennen, jeden mit kurzer Begründung.
+Anzahl beachten: „2 Aspekte" = nur 2 werden bewertet. Weniger = unvollständig, mehr ≠ besser (nur die ersten zählen).
+Stichworte erlaubt (außer: ganzer Satz/Brief gefordert).
+Sauber & lesbar. Unleserliches = falsch.
+Bei UML/ER-Modellen: leicht mit Bleistift vorzeichnen, dann Kugelschreiber.
+Bei Blackouts
+Nicht in Panik geraten.
+Aufgabe markieren, nächste machen.
+Später wiederkommen — oft fällt es einem dann ein.
+Rechenaufgaben
+Lösungsweg immer kurz hinschreiben (Teilpunkte!).
+Mit gerundetem Zwischenergebnis weiterrechnen, wenn die Aufgabe das vorgibt.
+Einheiten dranschreiben.
+SQL-Aufgaben
+Tabellennamen 1:1 aus Aufgabe übernehmen.
+Aliase verwenden (AS K für Kürze) — und in JOIN ... ON K.id = ... nutzen.
+Prüfen: Ist GROUP BY vollständig? Müssen alle nicht-aggregierten SELECT-Spalten dort stehen!
+Bei „mindestens 3" → HAVING ... >= 3.
+Bei „absteigend nach X" → ORDER BY X DESC.
+Spaltennamen wie verlangt (Aliase setzen mit AS).
+UML-Aufgaben
+Erst Konzept: Wer sind die Akteure / Klassen / Zustände? Aufschreiben.
+Dann zeichnen.
+Multiplizitäten und Sichtbarkeiten immer setzen.
+Methodensignatur komplett: `+ name(parameter: Typ): Rückgabetyp`.
+Pseudocode
+Methodenkopf exakt wie vorgegeben übernehmen.
+Variablen oben deklarieren + initialisieren.
+Klammern, sauber einrücken.
+return nicht vergessen.
+Edge-Cases (leere Liste, null) andeuten — gibt oft Bonuspunkte.
+WiSo-spezifisch
+Aufgaben mit „zwei zutreffende Aussagen" → beide ankreuzen, sonst null Punkte!
+Bei Unsicherheit: Ausschlussverfahren (was kann definitiv nicht sein?).
+Vertraue deinem ersten Eindruck — Forscher zeigen, dass nachträgliche Korrekturen meist verschlechtern.
+Du hast 60 min für 30 Aufgaben → wenn du nach 30 min bei Aufgabe 15 bist, ist das Tempo gut.
+Nach jeder Klausur
+Nicht mit anderen vergleichen — kostet nur Nerven.
+Zwischen den Teilen: kurz Luft holen, etwas essen/trinken, nicht ins Lernheft.
+Bei Pannen: Beste Strategie für den nächsten Teil ist „abhaken".
+Mentale Tricks
+Box-Atmung (4-4-4-4) bei Stress.
+Vor Beginn: Vorstellen, wie du die Prüfung ruhig durchgehst.
+Selbstgespräch: „Ich kenne den Stoff. Ich gehe Schritt für Schritt durch."
+Was du NICHT machen solltest
+Am Prüfungstag morgens panisch neuen Stoff lernen.
+Energy Drinks in Massen — Crash mitten in der Prüfung.
+Mit anderen über Prüfungsfragen diskutieren bevor alle Teile vorbei sind (führt zu Verunsicherung).
+Kurzformel für die Note 1
+70 % Solides Können + 20 % Strukturierte Prüfungsstrategie + 10 % Ruhe und Selbstvertrauen = Note 1.
+Du hast in 4 Tagen alles, was du für 70 % brauchst. Den Rest holst du dir mit den Punkten oben.
+Viel Erfolg! 💪
+
