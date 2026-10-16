@@ -17,13 +17,10 @@ public sealed class SqlLabService : ISqlLabService
     private readonly string _labPath;
     private SqliteConnection? _openTx;
 
-    public SqlLabService(AppDbContext db)
+    public SqlLabService(AppDbContext db, MongoDatabaseOptions mongo)
     {
         _db = db;
-        var dataSource = db.Database.GetDbConnection().DataSource;
-        var dir = Path.GetDirectoryName(dataSource);
-        if (string.IsNullOrWhiteSpace(dir))
-            dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Ap2Master");
+        var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Ap2Master", mongo.DatabaseName);
         Directory.CreateDirectory(dir);
         _labPath = Path.Combine(dir, "helpdesk.db");
     }
@@ -213,7 +210,6 @@ public sealed class ExamEngineService : IExamEngine
     {
         var def = await _db.ExamDefinitions.FirstAsync(e => e.Id == examDefinitionId, cancellationToken);
         var pool = await _db.LearningContents
-            .Include(c => c.Options)
             .Where(c => !c.IsQuarantined && c.VerificationStatus != VerificationStatus.Historical && c.VerificationStatus != VerificationStatus.Quarantined)
             .Where(c => c.ContentType == ContentType.SingleChoice || c.ContentType == ContentType.MultipleChoice || c.ContentType == ContentType.MockExamTask)
             .ToListAsync(cancellationToken);
@@ -274,7 +270,7 @@ public sealed class ExamEngineService : IExamEngine
         session.TimedOut = timedOut;
         session.SubmittedAt = _clock.UtcNow;
         var ids = JsonSerializer.Deserialize<List<string>>(session.QuestionIdsJson) ?? [];
-        var questions = await _db.LearningContents.Include(c => c.Options).Where(c => ids.Contains(c.Id)).ToListAsync(cancellationToken);
+        var questions = await _db.LearningContents.Where(c => ids.Contains(c.Id)).ToListAsync(cancellationToken);
         var ordered = ids.Select(id => questions.First(q => q.Id == id)).ToList();
         var result = _scoring.Score(session, ordered, _clock.UtcNow);
         session.ScorePercent = result.ScorePercent;

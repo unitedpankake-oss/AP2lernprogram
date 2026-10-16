@@ -34,3 +34,9 @@ Models/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+## MongoDB credentials (DPAPI blob and private keys, never commit)
+mongo.protected
+*.secret
+*.pfx
+*.p12

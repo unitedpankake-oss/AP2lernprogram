@@ -42,7 +42,7 @@ public sealed partial class DashboardViewModel : ObservableObject, INavigationAw
                 TodayItems = new ObservableCollection<PlannedActivity>(Snapshot.Upcoming.Take(3));
             Status = Loc.T("Dash.Disclaimer");
         }
-        catch (Exception ex) { Status = Loc.T("Dash.Error", ex.Message); }
+        catch (Exception ex) { Status = Loc.T("Dash.Error", MongoGateway.Redact(ex.Message)); }
     }
 
     [RelayCommand]

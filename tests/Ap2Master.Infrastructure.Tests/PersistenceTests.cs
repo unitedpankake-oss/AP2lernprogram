@@ -15,7 +15,7 @@ public class PersistenceTests
 {
     private static async Task<(ServiceProvider Sp, string Path)> CreateAsync()
     {
-        var path = Path.Combine(Path.GetTempPath(), $"ap2test-{Guid.NewGuid():N}.db");
+        var path = "t" + Guid.NewGuid().ToString("N");
         var sc = new ServiceCollection();
         sc.AddAp2Master(path);
         var sp = sc.BuildServiceProvider();
@@ -23,16 +23,12 @@ public class PersistenceTests
         return (sp, path);
     }
 
-    private static void Release(string path)
+    private static void Release(string databaseName)
     {
         SqliteConnection.ClearAllPools();
-        TryDelete(path);
-        TryDelete(Path.Combine(Path.GetDirectoryName(path)!, "helpdesk.db"));
-    }
-
-    private static void TryDelete(string path)
-    {
-        try { if (File.Exists(path)) File.Delete(path); } catch (IOException) { }
+        MongoGateway.DropDatabase(databaseName);
+        var lab = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Ap2Master", databaseName);
+        try { if (Directory.Exists(lab)) Directory.Delete(lab, true); } catch (IOException) { }
     }
 
     [Fact]

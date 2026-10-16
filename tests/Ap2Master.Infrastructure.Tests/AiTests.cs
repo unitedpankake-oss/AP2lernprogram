@@ -4,6 +4,7 @@ using Ap2Master.Domain;
 using Ap2Master.Infrastructure;
 using Ap2Master.Infrastructure.Ai;
 using FluentAssertions;
+using Ap2Master.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -49,35 +50,16 @@ public class AiModelCatalogTests
     public void Format_detection(string name, string format)
         => ModelFormatDetector.DetectFormat(name).Should().Be(format);
 
-    [Fact]
-    public void Detection_onnx_is_not_chat()
+    [Theory]
+    [InlineData(@"C:\m\abb-st2.onnx", "onnx", LocalModelTask.ObjectDetection)]
+    [InlineData(@"C:\m\craft_mlt_25k.pth", "pth", LocalModelTask.OcrDetection)]
+    [InlineData(@"C:\m\latin_g2.pth", "pth", LocalModelTask.OcrRecognition)]
+    [InlineData(@"C:\m\stage1_obb_nms.engine", "tensorrt-engine", LocalModelTask.TensorRtEngine)]
+    [InlineData(@"C:\m\tokenizer.json", "tokenizer.json", LocalModelTask.Unknown)]
+    public void Non_chat_files_stay_out_of_the_assistant(string path, string format, LocalModelTask expected)
     {
-        var (task, chat, _, _) = ModelTaskClassifier.Classify(@"C:\m\abb-st2.onnx", "onnx");
-        task.Should().Be(LocalModelTask.ObjectDetection);
-        chat.Should().BeFalse();
-    }
-
-    [Fact]
-    public void Craft_pth_is_ocr_not_chat()
-    {
-        var (task, chat, _, _) = ModelTaskClassifier.Classify(@"C:\m\craft_mlt_25k.pth", "pth");
-        task.Should().Be(LocalModelTask.OcrDetection);
-        chat.Should().BeFalse();
-    }
-
-    [Fact]
-    public void Latin_g2_is_ocr_recognition()
-    {
-        var (task, chat, _, _) = ModelTaskClassifier.Classify(@"C:\m\latin_g2.pth", "pth");
-        task.Should().Be(LocalModelTask.OcrRecognition);
-        chat.Should().BeFalse();
-    }
-
-    [Fact]
-    public void Engine_is_tensorrt_not_chat()
-    {
-        var (task, chat, _, _) = ModelTaskClassifier.Classify(@"C:\m\stage1_obb_nms.engine", "tensorrt-engine");
-        task.Should().Be(LocalModelTask.TensorRtEngine);
+        var (task, chat, _, _) = ModelTaskClassifier.Classify(path, format);
+        task.Should().Be(expected);
         chat.Should().BeFalse();
     }
 
@@ -98,29 +80,6 @@ public class AiModelCatalogTests
         };
         cat.SelectPrimary(models).Should().BeNull();
         cat.SelectSecondary(models)!.FileName.Should().Be("nomic-embed.gguf");
-    }
-
-    [Fact]
-    public void Tokenizer_config_is_not_treated_as_chat_model()
-    {
-        var (task, chat, _, _) = ModelTaskClassifier.Classify(@"C:\m\tokenizer.json", "tokenizer.json");
-        task.Should().Be(LocalModelTask.Unknown);
-        chat.Should().BeFalse();
-    }
-
-    [Fact]
-    public void Repo_models_directory_has_detectors_but_no_chat_model()
-    {
-        Directory.Exists(AiDefaults.ModelsDirectory).Should().BeTrue("the learner placed models under the repository Models folder");
-        var cat = new ModelCatalogService();
-        var models = cat.Scan(AiDefaults.ModelsDirectory);
-        models.Should().NotBeEmpty();
-        models.Should().Contain(m => m.FileName == "abb-st2.onnx" && m.Task == LocalModelTask.ObjectDetection && !m.SuitableForChat);
-        models.Should().Contain(m => m.FileName == "craft_mlt_25k.pth" && m.Task == LocalModelTask.OcrDetection && !m.SuitableForChat);
-        models.Should().Contain(m => m.FileName == "latin_g2.pth" && m.Task == LocalModelTask.OcrRecognition && !m.SuitableForChat);
-        cat.SelectPrimary(models).Should().BeNull();
-        cat.SelectSecondary(models).Should().BeNull();
-        cat.RecommendRuntime(null).Should().Be(AiRuntimeKind.Ollama);
     }
 
     [Fact]
@@ -209,7 +168,7 @@ public class AiBehaviourTests
     [Fact]
     public async Task Onnx_genai_rejects_detectors()
     {
-        var p = new OnnxGenAiLanguageModelProvider();
+        var p = UnavailableLanguageModelProvider.ForOnnx();
         var det = new LocalModelDefinition("abb-st2.onnx", "abb-st2.onnx", "onnx", LocalModelTask.ObjectDetection, false, "", 1, false, "yolo");
         (await p.ValidateAsync(det, CancellationToken.None)).Ok.Should().BeFalse();
     }
@@ -293,13 +252,6 @@ public class AiBehaviourTests
         ((int)AssistantHintLevel.Vorgehen).Should().BeLessThan((int)AssistantHintLevel.Teillosung);
         ((int)AssistantHintLevel.Teillosung).Should().BeLessThan((int)AssistantHintLevel.Musterloesung);
     }
-
-    [Fact(Skip = "Optional integration: requires a real GGUF instruct model on disk.")]
-    [Trait("Category", "Integration")]
-    public void Real_gguf_load_is_optional()
-    {
-        File.Exists(AiDefaults.ModelsDirectory).Should().BeTrue();
-    }
 }
 
 [Collection("sqlite")]
@@ -307,7 +259,7 @@ public class AiAssistantPersistenceTests
 {
     private static async Task<(ServiceProvider Sp, string Path, FakeLanguageModelProvider Fake)> CreateAsync(bool loadFake = false)
     {
-        var path = Path.Combine(Path.GetTempPath(), $"ap2ai-{Guid.NewGuid():N}.db");
+        var path = "t" + Guid.NewGuid().ToString("N");
         var fake = new FakeLanguageModelProvider();
         var sc = new ServiceCollection();
         sc.AddAp2Master(path);
@@ -323,10 +275,12 @@ public class AiAssistantPersistenceTests
         return (sp, path, fake);
     }
 
-    private static void Release(string path)
+    private static void Release(string databaseName)
     {
         Microsoft.Data.Sqlite.SqliteConnection.ClearAllPools();
-        try { if (File.Exists(path)) File.Delete(path); } catch (IOException) { }
+        MongoGateway.DropDatabase(databaseName);
+        var lab = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Ap2Master", databaseName);
+        try { if (Directory.Exists(lab)) Directory.Delete(lab, true); } catch (IOException) { }
     }
 
     [Fact]

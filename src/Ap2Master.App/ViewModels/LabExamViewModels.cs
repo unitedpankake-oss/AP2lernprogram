@@ -95,15 +95,7 @@ public sealed partial class CoverageViewModel : ObservableObject, INavigationAwa
     [RelayCommand]
     private void Evaluate()
     {
-        var graph = new ControlFlowGraph(
-            ["s1","s2","s3","s4"],
-            [new("s1","s2","T"), new("s1","s3","F"), new("s2","s4",null), new("s3","s4",null)],
-            ["s1->s2","s1->s3","s2->s4","s3->s4"],
-            ["condA"],
-            [
-                new("p-then", ["s1","s2","s4"], ["s1->s2","s2->s4"], ["condA=true"]),
-                new("p-else", ["s1","s3","s4"], ["s1->s3","s3->s4"], ["condA=false"])
-            ]);
+        var graph = ControlFlowGraph.IfThenElse();
         var selected = Paths.Where(p => p.Selected).Select(p => p.Id);
         var r = _cov.Evaluate(graph, selected);
         var min = _cov.MinimalSet(graph, "branch");
@@ -371,7 +363,7 @@ public partial class ExamHostViewModel : ObservableObject, INavigationAware
         try
         {
             Session.CurrentIndex = i;
-            CurrentQuestion = await _db.LearningContents.Include(c => c.Options).FirstAsync(c => c.Id == _ids[i]);
+            CurrentQuestion = await _db.LearningContents.FirstAsync(c => c.Id == _ids[i]);
             Answer = _answers.GetValueOrDefault(CurrentQuestion.Id, "");
             CurrentMarked = _marked.Contains(CurrentQuestion.Id);
             Remaining = TimeSpan.FromSeconds(Math.Max(0, Session.RemainingSeconds)).ToString(@"mm\:ss");
@@ -521,7 +513,7 @@ public sealed partial class InhalteViewModel : ObservableObject, INavigationAwar
     public async void OnNavigated(object? parameter)
     {
         var topics = await _db.Topics.ToListAsync();
-        var contents = await _db.LearningContents.Include(c => c.Options).ToListAsync();
+        var contents = await _db.LearningContents.ToListAsync();
         var tpls = await _db.ExerciseTemplates.ToListAsync();
         var issues = _val.Validate(topics, contents, tpls);
         Report = Loc.T("Cont.Summary", topics.Count, contents.Count, tpls.Count, await _db.ContentConflicts.CountAsync()) + "\n" +

@@ -186,66 +186,83 @@ public sealed class OllamaLanguageModelProvider : ILocalLanguageModelProvider
     private static string Short(string s) => s.Length < 120 ? s : s[..120];
 }
 
-public sealed class LlamaSharpLanguageModelProvider : ILocalLanguageModelProvider
+public sealed class UnavailableLanguageModelProvider : ILocalLanguageModelProvider
 {
-    public string Name => "LLamaSharp";
+    private readonly Func<LocalModelDefinition, ModelValidationResult> _validate;
+    private readonly string _rejectStatus;
+    private readonly string _rejectMessage;
+    private readonly string _generateMessage;
+    private readonly string? _unloadStatus;
+
+    private UnavailableLanguageModelProvider(
+        string name,
+        string idleStatus,
+        Func<LocalModelDefinition, ModelValidationResult> validate,
+        string rejectStatus,
+        string rejectMessage,
+        string generateMessage,
+        string? unloadStatus)
+    {
+        Name = name;
+        StatusGerman = idleStatus;
+        _validate = validate;
+        _rejectStatus = rejectStatus;
+        _rejectMessage = rejectMessage;
+        _generateMessage = generateMessage;
+        _unloadStatus = unloadStatus;
+    }
+
+    public string Name { get; }
     public bool IsLoaded => false;
-    public string StatusGerman { get; private set; } = "Kein GGUF geladen";
+    public string StatusGerman { get; private set; }
+
+    public static UnavailableLanguageModelProvider ForGguf() => new(
+        "LLamaSharp",
+        "Kein GGUF geladen",
+        model => model.Format != "gguf" || !model.SuitableForChat
+            ? new ModelValidationResult(false, "Format wird nicht unterstützt", false)
+            : new ModelValidationResult(true, "GGUF erkannt. LLamaSharp-CPU kann geladen werden, sobald die Datei ein Instruct-LLM ist.", true),
+        "Kein geeignetes Sprachmodell gefunden",
+        "Im Modellordner liegt kein geladenes GGUF-LLM. Legen Sie eine Instruct-GGUF-Datei ab oder nutzen Sie Ollama (qwen2.5:7b-instruct). Originaldateien wurden nicht verändert.",
+        "Kein geeignetes Sprachmodell gefunden",
+        "Modell entladen");
+
+    public static UnavailableLanguageModelProvider ForOnnx() => new(
+        "OnnxGenAI",
+        "Kein generatives ONNX",
+        model =>
+        {
+            if (model.Task == LocalModelTask.ObjectDetection || (model.Format == "onnx" && !model.SuitableForChat))
+                return new ModelValidationResult(false, "Format wird nicht unterstützt", false);
+            if (!model.SuitableForChat)
+                return new ModelValidationResult(false, "Tokenizer fehlt", false);
+            return new ModelValidationResult(true, "Generatives ONNX möglich.", true);
+        },
+        "Format wird nicht unterstützt",
+        "Die vorhandenen ONNX-Dateien sind Objektdetektoren, keine Textgeneratoren.",
+        "Format wird nicht unterstützt",
+        null);
 
     public Task<ModelValidationResult> ValidateAsync(LocalModelDefinition model, CancellationToken cancellationToken)
-    {
-        if (model.Format != "gguf" || !model.SuitableForChat)
-            return Task.FromResult(new ModelValidationResult(false, "Format wird nicht unterstützt", false));
-        return Task.FromResult(new ModelValidationResult(true, "GGUF erkannt. LLamaSharp-CPU kann geladen werden, sobald die Datei ein Instruct-LLM ist.", true));
-    }
+        => Task.FromResult(_validate(model));
 
     public Task LoadAsync(LocalModelDefinition model, ModelLoadOptions options, IProgress<ModelLoadProgress>? progress, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        StatusGerman = "Kein geeignetes Sprachmodell gefunden";
-        return Task.FromException(new InvalidOperationException(
-            "Im Modellordner liegt kein geladenes GGUF-LLM. Legen Sie eine Instruct-GGUF-Datei ab oder nutzen Sie Ollama (qwen2.5:7b-instruct). Originaldateien wurden nicht verändert."));
+        StatusGerman = _rejectStatus;
+        return Task.FromException(new InvalidOperationException(_rejectMessage));
     }
 
     public async IAsyncEnumerable<AssistantToken> GenerateAsync(LocalGenerationRequest request, [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         await Task.Yield();
-        yield return new AssistantToken("Kein geeignetes Sprachmodell gefunden", true, true);
+        yield return new AssistantToken(_generateMessage, true, true);
     }
 
     public Task UnloadAsync(CancellationToken cancellationToken)
     {
-        StatusGerman = "Modell entladen";
+        if (_unloadStatus is not null)
+            StatusGerman = _unloadStatus;
         return Task.CompletedTask;
     }
-}
-
-public sealed class OnnxGenAiLanguageModelProvider : ILocalLanguageModelProvider
-{
-    public string Name => "OnnxGenAI";
-    public bool IsLoaded => false;
-    public string StatusGerman { get; private set; } = "Kein generatives ONNX";
-
-    public Task<ModelValidationResult> ValidateAsync(LocalModelDefinition model, CancellationToken cancellationToken)
-    {
-        if (model.Task == LocalModelTask.ObjectDetection || model.Format == "onnx" && !model.SuitableForChat)
-            return Task.FromResult(new ModelValidationResult(false, "Format wird nicht unterstützt", false));
-        if (!model.SuitableForChat)
-            return Task.FromResult(new ModelValidationResult(false, "Tokenizer fehlt", false));
-        return Task.FromResult(new ModelValidationResult(true, "Generatives ONNX möglich.", true));
-    }
-
-    public Task LoadAsync(LocalModelDefinition model, ModelLoadOptions options, IProgress<ModelLoadProgress>? progress, CancellationToken cancellationToken)
-    {
-        StatusGerman = "Format wird nicht unterstützt";
-        return Task.FromException(new InvalidOperationException("Die vorhandenen ONNX-Dateien sind Objektdetektoren, keine Textgeneratoren."));
-    }
-
-    public async IAsyncEnumerable<AssistantToken> GenerateAsync(LocalGenerationRequest request, [EnumeratorCancellation] CancellationToken cancellationToken)
-    {
-        await Task.Yield();
-        yield return new AssistantToken("Format wird nicht unterstützt", true, true);
-    }
-
-    public Task UnloadAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 }

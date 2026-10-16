@@ -12,17 +12,22 @@ using Ap2Master.ExamEngine;
 using Ap2Master.Infrastructure.Ai;
 using Ap2Master.Infrastructure.Persistence;
 using Ap2Master.Infrastructure.Services;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDB.EntityFrameworkCore.Extensions;
 
 namespace Ap2Master.Infrastructure;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddAp2Master(this IServiceCollection services, string databasePath)
+    public static IServiceCollection AddAp2Master(this IServiceCollection services, string? databaseName = null)
     {
-        services.AddDbContext<AppDbContext>(o => o.UseSqlite($"Data Source={databasePath};Pooling=False"), ServiceLifetime.Singleton);
+        var name = string.IsNullOrWhiteSpace(databaseName) ? MongoGateway.DatabaseName : databaseName;
+        MaterialLibrary.Shared.Bind(name);
+        services.AddSingleton(new MongoDatabaseOptions(name));
+        services.AddDbContext<AppDbContext>(o => MongoGateway.Apply(o, name), ServiceLifetime.Singleton);
         services.AddSingleton<IClock, SystemClock>();
         services.AddSingleton<IContentCatalog, ContentCatalogFactory>();
         services.AddSingleton<IExerciseGenerator, Generators.SeededTemplateEngine>();
@@ -62,18 +67,22 @@ public sealed class DatabaseInitializer : IAppDatabase
     private readonly IContentCatalog _catalog;
     private readonly Application.Validation.CatalogValidator _validator;
     private readonly IKnowledgeSearchService _knowledge;
+    private readonly MongoDatabaseOptions _mongo;
 
-    public DatabaseInitializer(AppDbContext db, IContentCatalog catalog, Application.Validation.CatalogValidator validator, IKnowledgeSearchService knowledge)
+    public DatabaseInitializer(AppDbContext db, IContentCatalog catalog, Application.Validation.CatalogValidator validator, IKnowledgeSearchService knowledge, MongoDatabaseOptions mongo)
     {
         _db = db;
         _catalog = catalog;
         _validator = validator;
         _knowledge = knowledge;
+        _mongo = mongo;
     }
 
     public async Task InitializeAsync(CancellationToken cancellationToken = default)
     {
+        MaterialLibrary.Shared.Bind(_mongo.DatabaseName);
         await _db.Database.EnsureCreatedAsync(cancellationToken);
+        await MaterialLibrary.Shared.WarmAsync(_db, cancellationToken);
         await AiSchema.EnsureAsync(_db, cancellationToken);
         if (await _db.Topics.AnyAsync(cancellationToken))
         {
@@ -117,12 +126,12 @@ public sealed class DatabaseInitializer : IAppDatabase
 public sealed class BackupService : IBackupService
 {
     private readonly AppDbContext _db;
-    private readonly string _path;
+    private readonly MongoDatabaseOptions _mongo;
 
-    public BackupService(AppDbContext db)
+    public BackupService(AppDbContext db, MongoDatabaseOptions mongo)
     {
         _db = db;
-        _path = db.Database.GetDbConnection().DataSource;
+        _mongo = mongo;
     }
 
     public async Task<string> BackupAsync(string? targetPath = null, CancellationToken cancellationToken = default)
@@ -130,31 +139,50 @@ public sealed class BackupService : IBackupService
         await _db.SaveChangesAsync(cancellationToken);
         var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Ap2Master", "backups");
         Directory.CreateDirectory(dir);
-        var dest = targetPath ?? Path.Combine(dir, $"ap2master-{DateTime.Now:yyyyMMdd-HHmmss}.db");
-        File.Copy(_path, dest, overwrite: true);
-        var zip = dest + ".zip";
+        var zip = targetPath ?? Path.Combine(dir, $"ap2master-{DateTime.Now:yyyyMMdd-HHmmss}.zip");
         if (File.Exists(zip)) File.Delete(zip);
+
+        var database = MongoGateway.Database(_mongo.DatabaseName);
         using var archive = ZipFile.Open(zip, ZipArchiveMode.Create);
-        archive.CreateEntryFromFile(dest, Path.GetFileName(dest));
+        var names = await database.ListCollectionNames().ToListAsync(cancellationToken);
+        foreach (var name in names)
+        {
+            var docs = await database.GetCollection<BsonDocument>(name)
+                .Find(FilterDefinition<BsonDocument>.Empty)
+                .ToListAsync(cancellationToken);
+            var entry = archive.CreateEntry(name + ".json");
+            await using var stream = entry.Open();
+            await using var writer = new StreamWriter(stream);
+            await writer.WriteAsync(new BsonArray(docs).ToJson());
+        }
         return zip;
     }
 
     public async Task RestoreAsync(string sourcePath, CancellationToken cancellationToken = default)
     {
-        await _db.Database.CloseConnectionAsync();
-        var file = sourcePath;
-        if (sourcePath.EndsWith(".zip", StringComparison.OrdinalIgnoreCase))
+        _db.ChangeTracker.Clear();
+        var database = MongoGateway.Database(_mongo.DatabaseName);
+        using var zip = ZipFile.OpenRead(sourcePath);
+        foreach (var collectionName in await database.ListCollectionNames().ToListAsync(cancellationToken))
+            await database.DropCollectionAsync(collectionName, cancellationToken);
+
+        foreach (var entry in zip.Entries.Where(e => e.Name.EndsWith(".json", StringComparison.OrdinalIgnoreCase)))
         {
-            var tmp = Path.Combine(Path.GetTempPath(), "ap2-restore.db");
-            using var zip = ZipFile.OpenRead(sourcePath);
-            zip.Entries[0].ExtractToFile(tmp, true);
-            file = tmp;
+            using var reader = new StreamReader(entry.Open());
+            var json = await reader.ReadToEndAsync(cancellationToken);
+            if (string.IsNullOrWhiteSpace(json)) continue;
+            var docs = MongoDB.Bson.Serialization.BsonSerializer.Deserialize<BsonArray>(json)
+                .Select(v => v.AsBsonDocument)
+                .ToList();
+            if (docs.Count == 0) continue;
+            var name = Path.GetFileNameWithoutExtension(entry.Name);
+            await database.GetCollection<BsonDocument>(name).InsertManyAsync(docs, cancellationToken: cancellationToken);
         }
-        File.Copy(file, _path, overwrite: true);
     }
 
     public async Task ResetAllAsync(CancellationToken cancellationToken = default)
     {
+        _db.ChangeTracker.Clear();
         await _db.Database.EnsureDeletedAsync(cancellationToken);
         await _db.Database.EnsureCreatedAsync(cancellationToken);
         await AiSchema.EnsureAsync(_db, cancellationToken);

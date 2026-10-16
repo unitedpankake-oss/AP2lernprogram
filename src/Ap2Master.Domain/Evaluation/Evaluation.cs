@@ -70,12 +70,10 @@ public static class SortingEvaluator
     {
         itemComparer ??= EqualityComparer<TItem>.Default;
         var groups = original
-            .Select((item, index) => (item, index, key: key(item)!))
+            .Select(item => (item, key: key(item)!))
             .GroupBy(x => x.key)
             .ToDictionary(g => g.Key, g => g.Select(x => x.item).ToList());
 
-        TKey? current = default;
-        var seenNewGroup = true;
         var positions = new Dictionary<TKey, int>();
         foreach (var item in sorted)
         {
@@ -84,12 +82,6 @@ public static class SortingEvaluator
             if (pos >= groups[k].Count || !itemComparer.Equals(groups[k][pos], item))
                 return false;
             positions[k] = pos + 1;
-            if (!seenNewGroup && current is not null && !Equals(current, k) && positions.ContainsKey(k) && positions[k] > 1)
-            {
-                // stability is already checked via original relative order in groups
-            }
-            current = k;
-            seenNewGroup = false;
         }
 
         return true;
@@ -98,11 +90,14 @@ public static class SortingEvaluator
 
 public static class FormulaLibrary
 {
-    public static double Wirtschaftlichkeit(double ertrag, double aufwand) => aufwand == 0 ? double.NaN : ertrag / aufwand;
-    public static double Rentabilitaet(double gewinn, double kapital) => kapital == 0 ? double.NaN : gewinn / kapital * 100.0;
-    public static double Produktivitaet(double ausbringung, double einsatz) => einsatz == 0 ? double.NaN : ausbringung / einsatz;
-    public static double Roi(double gewinn, double einsatz) => einsatz == 0 ? double.NaN : gewinn / einsatz * 100.0;
-    public static double Amortisation(double anschaffung, double rueckfluss) => rueckfluss == 0 ? double.NaN : anschaffung / rueckfluss;
+    public static double Wirtschaftlichkeit(double ertrag, double aufwand) => Ratio(ertrag, aufwand);
+    public static double Rentabilitaet(double gewinn, double kapital) => Ratio(gewinn, kapital, 100);
+    public static double Produktivitaet(double ausbringung, double einsatz) => Ratio(ausbringung, einsatz);
+    public static double Roi(double gewinn, double einsatz) => Ratio(gewinn, einsatz, 100);
+    public static double Amortisation(double anschaffung, double rueckfluss) => Ratio(anschaffung, rueckfluss);
+
+    private static double Ratio(double numerator, double denominator, double scale = 1)
+        => denominator == 0 ? double.NaN : numerator / denominator * scale;
     public static double Kapitalwert(IReadOnlyList<double> cashflows, double rate)
     {
         double npv = 0;

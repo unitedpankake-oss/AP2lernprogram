@@ -91,11 +91,10 @@ public sealed class FlashcardService : IFlashcardService
     {
         var topics = await _db.Topics.AsNoTracking().OrderBy(t => t.SortOrder).ToListAsync(cancellationToken);
         var now = _clock.UtcNow;
-        var rows = await _db.Flashcards.AsNoTracking()
+        var cardRows = await _db.Flashcards.AsNoTracking().Select(f => new { f.TopicId, f.DueAt }).ToListAsync(cancellationToken);
+        var stats = cardRows
             .GroupBy(f => f.TopicId)
-            .Select(g => new { g.Key, Total = g.Count(), Due = g.Count(f => f.DueAt <= now) })
-            .ToListAsync(cancellationToken);
-        var stats = rows.ToDictionary(r => r.Key, r => new TopicCardStats(r.Total, r.Due), StringComparer.Ordinal);
+            .ToDictionary(g => g.Key, g => new TopicCardStats(g.Count(), g.Count(f => f.DueAt <= now)), StringComparer.Ordinal);
         return TopicBoardBuilder.Build(topics, stats);
     }
 
@@ -110,11 +109,16 @@ public sealed class FlashcardService : IFlashcardService
         if (topicIds is { Count: > 0 })
             q = q.Where(f => topicIds.Contains(f.TopicId));
 
+        if (kind == FlashcardQueueKind.Random)
+        {
+            var all = await q.ToListAsync(cancellationToken);
+            return all.OrderBy(_ => Guid.NewGuid()).Take(take).ToList();
+        }
+
         q = kind switch
         {
             FlashcardQueueKind.Due => q.Where(f => f.DueAt <= _clock.UtcNow).OrderBy(f => f.DueAt),
-            FlashcardQueueKind.Weak => q.Where(f => f.Easiness < 2.0 || f.Repetitions == 0).OrderBy(f => f.Easiness),
-            _ => q.OrderBy(_ => Guid.NewGuid())
+            _ => q.Where(f => f.Easiness < 2.0 || f.Repetitions == 0).OrderBy(f => f.Easiness)
         };
 
         return await q.Take(take).ToListAsync(cancellationToken);
@@ -154,19 +158,21 @@ public sealed class LearningPlanAppService : ILearningPlanService
 
     public async Task<LearningPlan> CreateOrRebuildAsync(UserSettings settings, CancellationToken cancellationToken = default)
     {
-        var old = await _db.LearningPlans.Include(p => p.Activities).Where(p => p.IsActive).ToListAsync(cancellationToken);
+        var old = await _db.LearningPlans.Where(p => p.IsActive).ToListAsync(cancellationToken);
         foreach (var p in old) p.IsActive = false;
         var topics = await _db.Topics.AsNoTracking().ToListAsync(cancellationToken);
         var plan = _core.Build(settings, topics, _clock.UtcNow);
         _db.LearningPlans.Add(plan);
+        _db.PlannedActivities.AddRange(plan.Activities);
         await _db.SaveChangesAsync(cancellationToken);
         return plan;
     }
 
     public async Task RescheduleMissedAsync(CancellationToken cancellationToken = default)
     {
-        var plan = await _db.LearningPlans.Include(p => p.Activities).FirstOrDefaultAsync(p => p.IsActive, cancellationToken);
+        var plan = await _db.LearningPlans.FirstOrDefaultAsync(p => p.IsActive, cancellationToken);
         if (plan is null) return;
+        plan.Activities = await _db.PlannedActivities.Where(a => a.LearningPlanId == plan.Id).ToListAsync(cancellationToken);
         _core.RescheduleMissed(plan, DateOnly.FromDateTime(_clock.UtcNow));
         await _db.SaveChangesAsync(cancellationToken);
     }
@@ -197,11 +203,14 @@ public sealed class DashboardService : IDashboardService
     {
         var settings = await _db.UserSettings.FirstAsync(cancellationToken);
         var topics = await _db.Topics.CountAsync(cancellationToken);
-        var touched = await _db.UserAnswers.Select(a => a.TopicId).Distinct().CountAsync(cancellationToken)
-                      + await _db.FlashcardReviews.Include(r => r.Flashcard).Select(r => r.Flashcard!.TopicId).Distinct().CountAsync(cancellationToken);
+        var answerTopics = await _db.UserAnswers.Select(a => a.TopicId).Distinct().CountAsync(cancellationToken);
+        var reviewCardIds = await _db.FlashcardReviews.Select(r => r.FlashcardId).Distinct().ToListAsync(cancellationToken);
+        var reviewTopics = await _db.Flashcards.Where(f => reviewCardIds.Contains(f.Id)).Select(f => f.TopicId).Distinct().CountAsync(cancellationToken);
+        var touched = answerTopics + reviewTopics;
         var due = await _db.Flashcards.CountAsync(f => f.DueAt <= _clock.UtcNow, cancellationToken);
         var today = DateOnly.FromDateTime(_clock.UtcNow);
-        var tasksToday = await _db.UserAnswers.CountAsync(a => DateOnly.FromDateTime(a.AnsweredAt) == today, cancellationToken);
+        var dayStart = _clock.UtcNow.Date;
+        var tasksToday = await _db.UserAnswers.CountAsync(a => a.AnsweredAt >= dayStart && a.AnsweredAt < dayStart.AddDays(1), cancellationToken);
         var weekStart = _clock.UtcNow.Date.AddDays(-(int)_clock.UtcNow.DayOfWeek + 1);
         var weekly = await _db.StudySessions.Where(s => s.StartedAt >= weekStart).SumAsync(s => (int?)s.SecondsSpent, cancellationToken) ?? 0;
         var answers = await _db.UserAnswers.ToListAsync(cancellationToken);
@@ -322,7 +331,8 @@ public sealed class StatisticsService : IStatisticsService
         var times = answers.Select(a => a.SecondsSpent).ToList();
         var exams = await _db.ExamResults.OrderBy(e => e.CompletedAt).Select(e => new ValueTuple<DateTime, int>(e.CompletedAt, e.ScorePercent)).ToListAsync(cancellationToken);
         var retention = cards.Count == 0 ? 0 : cards.Average(c => c.Repetitions >= 2 ? 1.0 : c.Repetitions * 0.4);
-        var mistakes = await _db.MistakeEntries.GroupBy(m => m.MistakeType).ToDictionaryAsync(g => g.Key, g => g.Count(), cancellationToken);
+        var mistakeRows = await _db.MistakeEntries.Select(m => m.MistakeType).ToListAsync(cancellationToken);
+        var mistakes = mistakeRows.GroupBy(m => m).ToDictionary(g => g.Key, g => g.Count());
         var weekly = await _db.StudySessions.ToListAsync(cancellationToken);
         var weekGroups = weekly.GroupBy(s => DateOnly.FromDateTime(s.StartedAt.Date.AddDays(-(int)s.StartedAt.DayOfWeek + 1)))
             .Select(g => (g.Key, g.Sum(x => x.SecondsSpent) / 60)).ToList();

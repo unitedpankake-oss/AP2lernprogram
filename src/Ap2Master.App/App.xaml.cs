@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using Ap2Master.App.Services;
 using Ap2Master.App.ViewModels;
 using Ap2Master.Application.Abstractions;
@@ -17,12 +16,15 @@ public partial class App : System.Windows.Application
     protected override async void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
-        var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Ap2Master");
-        Directory.CreateDirectory(dir);
-        var db = Path.Combine(dir, "ap2master.db");
-
+        DispatcherUnhandledException += (_, args) =>
+        {
+            args.Handled = true;
+            MessageBox.Show(MongoGateway.Redact(args.Exception.GetBaseException().Message), "Ap2Master");
+        };
+        try
+        {
         var services = new ServiceCollection();
-        services.AddAp2Master(db);
+        services.AddAp2Master();
         services.AddSingleton<ThemeService>();
         services.AddSingleton<IThemeService>(sp => sp.GetRequiredService<ThemeService>());
         services.AddSingleton<NavigationService>();
@@ -83,5 +85,11 @@ public partial class App : System.Windows.Application
         MainWindow = main;
         main.Show();
         nav.Navigate(AppSection.Dashboard);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(MongoGateway.Redact(ex.GetBaseException().Message), "Ap2Master");
+            Shutdown();
+        }
     }
 }

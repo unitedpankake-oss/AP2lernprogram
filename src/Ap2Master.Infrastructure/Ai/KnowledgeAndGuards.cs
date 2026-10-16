@@ -63,55 +63,28 @@ public sealed class KnowledgeSearchService : IKnowledgeSearchService
         }
         _db.Set<KnowledgeChunk>().AddRange(chunks);
         await _db.SaveChangesAsync(cancellationToken);
-        await RebuildFtsAsync(cancellationToken);
     }
 
     public async Task<IReadOnlyList<KnowledgeChunk>> SearchAsync(string query, KnowledgeSearchOptions options, CancellationToken cancellationToken)
     {
         await RebuildAsync(cancellationToken);
-        var q = SanitizeFts(query);
-        if (q.Length < 2)
-        {
-            var topic = options.TopicId;
-            return await _db.Set<KnowledgeChunk>().AsNoTracking()
-                .Where(c => topic == null || c.TopicId == topic)
-                .Take(options.Limit).ToListAsync(cancellationToken);
-        }
+        var all = await _db.Set<KnowledgeChunk>().AsNoTracking().ToListAsync(cancellationToken);
+        if (!string.IsNullOrWhiteSpace(options.TopicId))
+            all = all.Where(c => c.TopicId == options.TopicId).ToList();
 
-        try
-        {
-            var ids = await _db.Database.SqlQueryRaw<FtsRow>(
-                    "SELECT ChunkId as Id FROM KnowledgeFts WHERE KnowledgeFts MATCH {0} LIMIT {1}", q, options.Limit)
-                .ToListAsync(cancellationToken);
-            var guidIds = ids.Select(x => Guid.TryParse(x.Id, out var g) ? g : Guid.Empty).Where(g => g != Guid.Empty).ToList();
-            var found = await _db.Set<KnowledgeChunk>().AsNoTracking()
-                .Where(c => guidIds.Contains(c.Id)).ToListAsync(cancellationToken);
-            if (found.Count > 0) return found;
-        }
-        catch
-        {
-            // FTS may be unavailable; fall through to LIKE
-        }
+        var terms = SanitizeFts(query)
+            .Split(" OR ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Select(p => p.Trim('"'))
+            .Where(p => p.Length > 0)
+            .ToList();
+        if (terms.Count == 0)
+            return all.Take(options.Limit).ToList();
 
-        var like = "%" + query.Replace("%", "") + "%";
-        return await _db.Set<KnowledgeChunk>().AsNoTracking()
-            .Where(c => EF.Functions.Like(c.Title, like) || EF.Functions.Like(c.Body, like) || (options.TopicId != null && c.TopicId == options.TopicId))
+        return all.Where(c => terms.Any(t =>
+                c.Title.Contains(t, StringComparison.OrdinalIgnoreCase)
+                || c.Body.Contains(t, StringComparison.OrdinalIgnoreCase)))
             .Take(options.Limit)
-            .ToListAsync(cancellationToken);
-    }
-
-    private async Task RebuildFtsAsync(CancellationToken ct)
-    {
-        await _db.Database.ExecuteSqlRawAsync("DROP TABLE IF EXISTS KnowledgeFts;", ct);
-        await _db.Database.ExecuteSqlRawAsync(
-            "CREATE VIRTUAL TABLE KnowledgeFts USING fts5(ChunkId UNINDEXED, Title, Body, TopicId UNINDEXED, SourceDocument UNINDEXED, SourceSection);", ct);
-        var chunks = await _db.Set<KnowledgeChunk>().AsNoTracking().ToListAsync(ct);
-        foreach (var c in chunks)
-        {
-            await _db.Database.ExecuteSqlInterpolatedAsync(
-                $"INSERT INTO KnowledgeFts(ChunkId, Title, Body, TopicId, SourceDocument, SourceSection) VALUES ({c.Id.ToString()}, {c.Title}, {c.Body}, {c.TopicId}, {c.SourceDocument}, {c.SourceSection})",
-                ct);
-        }
+            .ToList();
     }
 
     public static string SanitizeFts(string query)
@@ -144,51 +117,12 @@ public sealed class KnowledgeSearchService : IKnowledgeSearchService
     }
 
     private static string Trim(string s, int max) => s.Length <= max ? s : s[..max];
-
-    private sealed class FtsRow { public string Id { get; set; } = ""; }
 }
 
 public static class AiSchema
 {
     public static async Task EnsureAsync(AppDbContext db, CancellationToken ct)
     {
-        await db.Database.ExecuteSqlRawAsync("""
-            CREATE TABLE IF NOT EXISTS AssistantConversations (
-              Id TEXT PRIMARY KEY, CreatedAt TEXT, UpdatedAt TEXT, Title TEXT, TopicId TEXT, TaskId TEXT, ModelName TEXT, Restriction INTEGER);
-            """, ct);
-        await db.Database.ExecuteSqlRawAsync("""
-            CREATE TABLE IF NOT EXISTS AssistantMessages (
-              Id TEXT PRIMARY KEY, ConversationId TEXT, CreatedAt TEXT, Role TEXT, Text TEXT, SourcesJson TEXT, HintLevel INTEGER, DurationMs INTEGER, Intent TEXT);
-            """, ct);
-        await db.Database.ExecuteSqlRawAsync("""
-            CREATE TABLE IF NOT EXISTS AssistantFeedbacks (Id TEXT PRIMARY KEY, MessageId TEXT, Helpful INTEGER, Comment TEXT, CreatedAt TEXT);
-            """, ct);
-        await db.Database.ExecuteSqlRawAsync("""
-            CREATE TABLE IF NOT EXISTS AssistantUsages (Id TEXT PRIMARY KEY, At TEXT, ModelName TEXT, Intent TEXT, PromptChars INTEGER, CompletionChars INTEGER, DurationMs INTEGER, UsedLlm INTEGER);
-            """, ct);
-        await db.Database.ExecuteSqlRawAsync("""
-            CREATE TABLE IF NOT EXISTS AiModelDefinitions (Id TEXT PRIMARY KEY, Path TEXT, Format TEXT, Task INTEGER, SuitableForChat INTEGER, Reason TEXT, ScannedAt TEXT);
-            """, ct);
-        await db.Database.ExecuteSqlRawAsync("""
-            CREATE TABLE IF NOT EXISTS AiProviderConfigurations (
-              Id INTEGER PRIMARY KEY, Enabled INTEGER, ModelsDirectory TEXT, PrimaryModelPath TEXT, SecondaryModelPath TEXT,
-              Runtime INTEGER, PreferredLanguage TEXT, ExplanationLevel TEXT, Temperature REAL, MaxResponseTokens INTEGER,
-              MaxContextTokens INTEGER, UseGpuWhenAvailable INTEGER, SaveHistory INTEGER, ExamRestriction INTEGER, OllamaBaseUrl TEXT, OllamaModel TEXT);
-            """, ct);
-        await db.Database.ExecuteSqlRawAsync("""
-            CREATE TABLE IF NOT EXISTS KnowledgeChunks (
-              Id TEXT PRIMARY KEY, TopicId TEXT, Title TEXT, Body TEXT, SourceDocument TEXT, SourceSection TEXT, LegalBasis TEXT,
-              VerifiedAt TEXT, VerificationStatus INTEGER, ValidFrom TEXT, ValidUntil TEXT);
-            """, ct);
-        await db.Database.ExecuteSqlRawAsync("""
-            CREATE TABLE IF NOT EXISTS KnowledgeSources (Id TEXT PRIMARY KEY, DocumentName TEXT, Kind TEXT, ImportedAt TEXT);
-            """, ct);
-        await db.Database.ExecuteSqlRawAsync("""
-            CREATE TABLE IF NOT EXISTS AssistantPromptVersions (Id TEXT PRIMARY KEY, SystemPrompt TEXT, CreatedAt TEXT);
-            """, ct);
-        await db.Database.ExecuteSqlRawAsync("""
-            CREATE TABLE IF NOT EXISTS OcrImports (Id TEXT PRIMARY KEY, CreatedAt TEXT, Text TEXT, Confidence REAL, SavedByLearner INTEGER);
-            """, ct);
         if (!await db.Set<AiProviderConfiguration>().AnyAsync(ct))
         {
             db.Set<AiProviderConfiguration>().Add(new AiProviderConfiguration { Id = 1 });
@@ -204,22 +138,6 @@ public static class AiSchema
                 cfg.ModelsDirectory = AiDefaults.ModelsDirectory;
                 await db.SaveChangesAsync(ct);
             }
-        }
-        try
-        {
-            await db.Database.ExecuteSqlRawAsync("ALTER TABLE UserSettings ADD COLUMN UiLanguage TEXT NOT NULL DEFAULT 'de';", ct);
-        }
-        catch
-        {
-            // column already exists
-        }
-        try
-        {
-            await db.Database.ExecuteSqlRawAsync("ALTER TABLE UserSettings ADD COLUMN SidebarCollapsed INTEGER NOT NULL DEFAULT 0;", ct);
-        }
-        catch
-        {
-            // column already exists
         }
         if (!await db.Set<AssistantPromptVersion>().AnyAsync(ct))
         {
