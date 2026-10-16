@@ -7,7 +7,6 @@ using FluentAssertions;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using MongoDB.Driver;
 
 namespace Ap2Master.Infrastructure.Tests;
 
@@ -27,7 +26,7 @@ public class PersistenceTests
     private static void Release(string databaseName)
     {
         SqliteConnection.ClearAllPools();
-        new MongoClient(MongoSettings.ConnectionString).DropDatabase(databaseName);
+        MongoGateway.DropDatabase(databaseName);
         var lab = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Ap2Master", databaseName);
         try { if (Directory.Exists(lab)) Directory.Delete(lab, true); } catch (IOException) { }
     }

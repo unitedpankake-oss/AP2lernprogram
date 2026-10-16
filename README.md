@@ -28,7 +28,7 @@ dotnet test
 dotnet run --project src/Ap2Master.App
 ```
 
-Lernfortschritt und Katalog liegen in MongoDB Atlas, Datenbank `ap2master`. Lange Lehrtexte werden dort einmal als Brotli-Blob gespeichert und in den Aufgaben nur per Hash referenziert; beim Lesen dekodiert die App sie zurück. Das Helpdesk-SQL-Labor bleibt eine lokale SQLite-Datei unter `%LocalAppData%\Ap2Master\ap2master\helpdesk.db`, weil dort SQL-Abfragen ausgeführt werden.
+Lernfortschritt und Katalog liegen in MongoDB Atlas, Datenbank `ap2master`. Die App authentifiziert sich mit einem Client-Zertifikat (`CN=ap2master-app`, Mechanismus `MONGODB-X509`). Adresse und privater Schlüssel stehen nicht im Quellcode: einmalig `AP2MASTER_MONGO_URL` und `AP2MASTER_MONGO_PFX` setzen, danach liegen sie verschlüsselt unter `%LocalAppData%\Ap2Master\mongo.protected` (Windows-Benutzer, DPAPI). In Atlas unter Security → Advanced „Self-Managed X.509“ einschalten, die CA-Datei `%LocalAppData%\Ap2Master\atlas-ca.pem` hochladen und einen Certificate-Benutzer mit genau diesem Distinguished Name und `readWrite` auf `ap2master` anlegen. Ohne dieses Zertifikat lehnt Atlas die Anmeldung ab. Lange Lehrtexte werden dort einmal als Brotli-Blob gespeichert und in den Aufgaben nur per Hash referenziert; beim Lesen dekodiert die App sie zurück. Das Helpdesk-SQL-Labor bleibt eine lokale SQLite-Datei unter `%LocalAppData%\Ap2Master\ap2master\helpdesk.db`, weil dort SQL-Abfragen ausgeführt werden.
 
 ## AP2 KI-Assistent
 

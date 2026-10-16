@@ -16,6 +16,13 @@ public partial class App : System.Windows.Application
     protected override async void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+        DispatcherUnhandledException += (_, args) =>
+        {
+            args.Handled = true;
+            MessageBox.Show(MongoGateway.Redact(args.Exception.GetBaseException().Message), "Ap2Master");
+        };
+        try
+        {
         var services = new ServiceCollection();
         services.AddAp2Master();
         services.AddSingleton<ThemeService>();
@@ -78,5 +85,11 @@ public partial class App : System.Windows.Application
         MainWindow = main;
         main.Show();
         nav.Navigate(AppSection.Dashboard);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(MongoGateway.Redact(ex.GetBaseException().Message), "Ap2Master");
+            Shutdown();
+        }
     }
 }

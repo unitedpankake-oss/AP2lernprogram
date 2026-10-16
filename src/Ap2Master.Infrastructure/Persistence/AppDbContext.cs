@@ -47,14 +47,24 @@ public sealed class AppDbContext : DbContext
 
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
-        StagePackedTexts();
-        return base.SaveChanges(acceptAllChangesOnSuccess);
+        ClusterLimiter.Enter();
+        try
+        {
+            StagePackedTexts();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+        finally { ClusterLimiter.Exit(); }
     }
 
-    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+    public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
-        StagePackedTexts();
-        return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        ClusterLimiter.Enter();
+        try
+        {
+            StagePackedTexts();
+            return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+        finally { ClusterLimiter.Exit(); }
     }
 
     private void StagePackedTexts()

@@ -71,6 +71,16 @@ public class CatalogStorageTests
     }
 
     [Fact]
+    public void Errors_do_not_reveal_the_connection_string()
+    {
+        var leaked = "timeout mongodb://learner:s3cret@ac-j74dz4y.example.net:27017/?authSource=admin";
+        var safe = MongoGateway.Redact(leaked);
+        safe.Should().NotContain("s3cret");
+        safe.Should().NotContain("learner:");
+        safe.Should().Contain("mongodb://***");
+    }
+
+    [Fact]
     public void Token_roundtrip_restores_the_original_text()
     {
         var library = new MaterialLibrary();

@@ -24,10 +24,10 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddAp2Master(this IServiceCollection services, string? databaseName = null)
     {
-        var name = string.IsNullOrWhiteSpace(databaseName) ? MongoSettings.DatabaseName : databaseName;
+        var name = string.IsNullOrWhiteSpace(databaseName) ? MongoGateway.DatabaseName : databaseName;
         MaterialLibrary.Shared.Bind(name);
-        services.AddSingleton(new MongoDatabaseOptions(MongoSettings.ConnectionString, name));
-        services.AddDbContext<AppDbContext>(o => o.UseMongoDB(MongoSettings.ConnectionString, name), ServiceLifetime.Singleton);
+        services.AddSingleton(new MongoDatabaseOptions(name));
+        services.AddDbContext<AppDbContext>(o => MongoGateway.Apply(o, name), ServiceLifetime.Singleton);
         services.AddSingleton<IClock, SystemClock>();
         services.AddSingleton<IContentCatalog, ContentCatalogFactory>();
         services.AddSingleton<IExerciseGenerator, Generators.SeededTemplateEngine>();
@@ -142,7 +142,7 @@ public sealed class BackupService : IBackupService
         var zip = targetPath ?? Path.Combine(dir, $"ap2master-{DateTime.Now:yyyyMMdd-HHmmss}.zip");
         if (File.Exists(zip)) File.Delete(zip);
 
-        var database = new MongoClient(_mongo.ConnectionString).GetDatabase(_mongo.DatabaseName);
+        var database = MongoGateway.Database(_mongo.DatabaseName);
         using var archive = ZipFile.Open(zip, ZipArchiveMode.Create);
         var names = await database.ListCollectionNames().ToListAsync(cancellationToken);
         foreach (var name in names)
@@ -161,7 +161,7 @@ public sealed class BackupService : IBackupService
     public async Task RestoreAsync(string sourcePath, CancellationToken cancellationToken = default)
     {
         _db.ChangeTracker.Clear();
-        var database = new MongoClient(_mongo.ConnectionString).GetDatabase(_mongo.DatabaseName);
+        var database = MongoGateway.Database(_mongo.DatabaseName);
         using var zip = ZipFile.OpenRead(sourcePath);
         foreach (var collectionName in await database.ListCollectionNames().ToListAsync(cancellationToken))
             await database.DropCollectionAsync(collectionName, cancellationToken);
