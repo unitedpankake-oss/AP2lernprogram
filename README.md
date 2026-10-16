@@ -28,7 +28,7 @@ dotnet test
 dotnet run --project src/Ap2Master.App
 ```
 
-Die SQLite-Datenbank und das Helpdesk-Labor liegen unter `%LocalAppData%\Ap2Master\`.
+Lernfortschritt und Katalog liegen in MongoDB Atlas, Datenbank `ap2master`. Lange Lehrtexte werden dort einmal als Brotli-Blob gespeichert und in den Aufgaben nur per Hash referenziert; beim Lesen dekodiert die App sie zurück. Das Helpdesk-SQL-Labor bleibt eine lokale SQLite-Datei unter `%LocalAppData%\Ap2Master\ap2master\helpdesk.db`, weil dort SQL-Abfragen ausgeführt werden.
 
 ## AP2 KI-Assistent
 

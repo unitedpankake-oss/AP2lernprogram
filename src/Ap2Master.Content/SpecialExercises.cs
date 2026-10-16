@@ -9,15 +9,7 @@ public static class SpecialExercises
 {
     public static IReadOnlyList<LearningContent> Create(IReadOnlyList<Topic> topics, DateTime now)
     {
-        var cfg = new ControlFlowGraph(
-            ["s1", "s2", "s3", "s4"],
-            [new("s1", "s2", "T"), new("s1", "s3", "F"), new("s2", "s4", null), new("s3", "s4", null)],
-            ["s1->s2", "s1->s3", "s2->s4", "s3->s4"],
-            ["condA"],
-            [
-                new("p-then", ["s1", "s2", "s4"], ["s1->s2", "s2->s4"], ["condA=true"]),
-                new("p-else", ["s1", "s3", "s4"], ["s1->s3", "s3->s4"], ["condA=false"])
-            ]);
+        var cfg = ControlFlowGraph.IfThenElse();
 
         return
         [

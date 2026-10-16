@@ -25,7 +25,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Ap2Master.Application\Ap2Master.Application.csproj" />
     <ProjectReference Include="..\..\src\Ap2Master.Domain\Ap2Master.Domain.csproj" />
-    <ProjectReference Include="..\..\src\Ap2Master.Generators\Ap2Master.Generators.csproj" />
     <ProjectReference Include="..\..\src\Ap2Master.Content\Ap2Master.Content.csproj" />
     <ProjectReference Include="..\..\src\Ap2Master.ExamEngine\Ap2Master.ExamEngine.csproj" />
   </ItemGroup>

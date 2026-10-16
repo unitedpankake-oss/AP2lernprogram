@@ -8,6 +8,13 @@ namespace Ap2Master.Content.Tests;
 public class CatalogTests
 {
     [Fact]
+    public void Every_exam_part_has_a_priority_topic()
+    {
+        foreach (var part in new[] { ExamPart.Teil1, ExamPart.Teil2, ExamPart.WiSo })
+            TopicCatalog.All.Where(t => t.Part == part && t.Priority).Should().NotBeEmpty();
+    }
+
+    [Fact]
     public void Every_topic_has_a_non_shallow_teaching_fact()
     {
         foreach (var topic in TopicCatalog.All)

@@ -1,6 +1,7 @@
 using Ap2Master.Domain;
 using Ap2Master.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Ap2Master.Infrastructure.Persistence;
 
@@ -11,7 +12,6 @@ public sealed class AppDbContext : DbContext
     public DbSet<Topic> Topics => Set<Topic>();
     public DbSet<LearningModule> LearningModules => Set<LearningModule>();
     public DbSet<LearningContent> LearningContents => Set<LearningContent>();
-    public DbSet<AnswerOption> AnswerOptions => Set<AnswerOption>();
     public DbSet<SourceReference> SourceReferences => Set<SourceReference>();
     public DbSet<LegalFact> LegalFacts => Set<LegalFact>();
     public DbSet<ContentConflict> ContentConflicts => Set<ContentConflict>();
@@ -43,36 +43,176 @@ public sealed class AppDbContext : DbContext
     public DbSet<KnowledgeSource> KnowledgeSources => Set<KnowledgeSource>();
     public DbSet<AssistantPromptVersion> AssistantPromptVersions => Set<AssistantPromptVersion>();
     public DbSet<OcrImport> OcrImports => Set<OcrImport>();
+    public DbSet<MaterialText> MaterialTexts => Set<MaterialText>();
+
+    public override int SaveChanges(bool acceptAllChangesOnSuccess)
+    {
+        StagePackedTexts();
+        return base.SaveChanges(acceptAllChangesOnSuccess);
+    }
+
+    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+    {
+        StagePackedTexts();
+        return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+    }
+
+    private void StagePackedTexts()
+    {
+        foreach (var entry in ChangeTracker.Entries())
+        {
+            if (entry.State is not (EntityState.Added or EntityState.Modified)) continue;
+            foreach (var prop in entry.Properties)
+            {
+                if (prop.Metadata.FindAnnotation("Packed") is null) continue;
+                if (prop.CurrentValue is string text)
+                    MaterialLibrary.Shared.Encode(text);
+            }
+        }
+
+        foreach (var item in MaterialLibrary.Shared.TakePending())
+        {
+            if (MaterialTexts.Local.All(x => x.Id != item.Id))
+                MaterialTexts.Add(item);
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Topic>(e =>
         {
             e.HasKey(x => x.Id);
-            e.HasOne(x => x.Parent).WithMany(x => x.Children).HasForeignKey(x => x.ParentTopicId).OnDelete(DeleteBehavior.Restrict);
+            e.Ignore(x => x.Parent);
+            e.Ignore(x => x.Children);
+            e.Ignore(x => x.Contents);
         });
         modelBuilder.Entity<LearningContent>(e =>
         {
             e.HasKey(x => x.Id);
-            e.HasOne(x => x.Topic).WithMany(x => x.Contents).HasForeignKey(x => x.TopicId);
-            e.HasMany(x => x.Options).WithOne(x => x.LearningContent).HasForeignKey(x => x.LearningContentId);
+            e.Ignore(x => x.Topic);
+            e.OwnsMany(x => x.Options, o =>
+            {
+                o.HasKey(x => x.Id);
+                o.Ignore(x => x.LearningContent);
+                Pack(o.Property(x => x.Text));
+                Pack(o.Property(x => x.Explanation));
+            });
+            Pack(e.Property(x => x.Title));
+            Pack(e.Property(x => x.Question));
+            Pack(e.Property(x => x.Answer));
+            Pack(e.Property(x => x.Explanation));
+            Pack(e.Property(x => x.HintsJson));
+            Pack(e.Property(x => x.PayloadJson));
         });
-        modelBuilder.Entity<Flashcard>().HasKey(x => x.Id);
-        modelBuilder.Entity<LegalFact>().HasKey(x => x.Id);
-        modelBuilder.Entity<ExerciseTemplate>().HasKey(x => x.Id);
+        modelBuilder.Entity<Flashcard>(e =>
+        {
+            e.HasKey(x => x.Id);
+            e.Ignore(x => x.LearningContent);
+            e.Ignore(x => x.Reviews);
+            Pack(e.Property(x => x.Front));
+            Pack(e.Property(x => x.Back));
+            Pack(e.Property(x => x.Code));
+            Pack(e.Property(x => x.TableJson));
+            Pack(e.Property(x => x.Formula));
+            Pack(e.Property(x => x.PersonalNotes));
+        });
+        modelBuilder.Entity<FlashcardReview>(e =>
+        {
+            e.HasKey(x => x.Id);
+            e.Ignore(x => x.Flashcard);
+        });
+        modelBuilder.Entity<LegalFact>(e =>
+        {
+            e.HasKey(x => x.Id);
+            Pack(e.Property(x => x.Statement));
+            Pack(e.Property(x => x.HistoricalStatement));
+            Pack(e.Property(x => x.Notes));
+        });
+        modelBuilder.Entity<ExerciseTemplate>(e =>
+        {
+            e.HasKey(x => x.Id);
+            Pack(e.Property(x => x.TemplateText));
+            Pack(e.Property(x => x.SolutionTemplate));
+            Pack(e.Property(x => x.ExplanationTemplate));
+            Pack(e.Property(x => x.HintsJson));
+            Pack(e.Property(x => x.ParameterSchemaJson));
+        });
         modelBuilder.Entity<ExamDefinition>().HasKey(x => x.Id);
         modelBuilder.Entity<UserSettings>().HasKey(x => x.Id);
         modelBuilder.Entity<Achievement>().HasKey(x => x.Id);
         modelBuilder.Entity<LearningModule>().HasKey(x => x.Id);
-        modelBuilder.Entity<ContentConflict>().Property(x => x.Id).ValueGeneratedNever();
+        modelBuilder.Entity<ContentConflict>(e =>
+        {
+            e.Property(x => x.Id).ValueGeneratedNever();
+            Pack(e.Property(x => x.ClaimA));
+            Pack(e.Property(x => x.ClaimB));
+            Pack(e.Property(x => x.ResolvedClaim));
+            Pack(e.Property(x => x.Rationale));
+        });
+        modelBuilder.Entity<LearningPlan>(e =>
+        {
+            e.HasKey(x => x.Id);
+            e.Ignore(x => x.Activities);
+        });
+        modelBuilder.Entity<PlannedActivity>(e =>
+        {
+            e.HasKey(x => x.Id);
+            e.Ignore(x => x.LearningPlan);
+        });
         modelBuilder.Entity<AssistantConversation>(e =>
         {
             e.HasKey(x => x.Id);
-            e.HasMany(x => x.Messages).WithOne(x => x.Conversation).HasForeignKey(x => x.ConversationId);
+            e.Ignore(x => x.Messages);
         });
-        modelBuilder.Entity<AssistantMessage>().HasKey(x => x.Id);
         modelBuilder.Entity<AiProviderConfiguration>().HasKey(x => x.Id);
-        modelBuilder.Entity<KnowledgeChunk>().HasKey(x => x.Id);
-        modelBuilder.Entity<AssistantPromptVersion>().HasKey(x => x.Id);
+        modelBuilder.Entity<KnowledgeChunk>(e =>
+        {
+            e.HasKey(x => x.Id);
+            Pack(e.Property(x => x.Title));
+            Pack(e.Property(x => x.Body));
+        });
+        modelBuilder.Entity<MaterialText>().HasKey(x => x.Id);
+        modelBuilder.Entity<GeneratedExercise>(e =>
+        {
+            e.HasKey(x => x.Id);
+            Pack(e.Property(x => x.TaskText));
+            Pack(e.Property(x => x.Solution));
+            Pack(e.Property(x => x.Explanation));
+            Pack(e.Property(x => x.HintsJson));
+            Pack(e.Property(x => x.ParametersJson));
+        });
+        modelBuilder.Entity<UserAnswer>(e =>
+        {
+            Pack(e.Property(x => x.LearnerAnswer));
+            Pack(e.Property(x => x.CorrectAnswer));
+        });
+        modelBuilder.Entity<MistakeEntry>(e =>
+        {
+            Pack(e.Property(x => x.TaskText));
+            Pack(e.Property(x => x.LearnerAnswer));
+            Pack(e.Property(x => x.CorrectAnswer));
+            Pack(e.Property(x => x.Explanation));
+        });
+        modelBuilder.Entity<AssistantMessage>(e =>
+        {
+            e.HasKey(x => x.Id);
+            e.Ignore(x => x.Conversation);
+            Pack(e.Property(x => x.Text));
+        });
+        modelBuilder.Entity<OcrImport>(e => Pack(e.Property(x => x.Text)));
+        modelBuilder.Entity<AssistantPromptVersion>(e =>
+        {
+            e.HasKey(x => x.Id);
+            Pack(e.Property(x => x.SystemPrompt));
+        });
+    }
+
+    private static void Pack(object property)
+    {
+        var builder = (PropertyBuilder<string>)property;
+        builder.HasConversion(
+            v => MaterialLibrary.Shared.Encode(v),
+            v => MaterialLibrary.Shared.Decode(v)!);
+        builder.HasAnnotation("Packed", true);
     }
 }

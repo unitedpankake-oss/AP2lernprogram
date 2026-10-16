@@ -44,15 +44,7 @@ public class ReadinessCalculatorTests
 
 public class CoverageCalculatorTests
 {
-    private static ControlFlowGraph Graph() => new(
-        ["s1", "s2", "s3", "s4"],
-        [new("s1", "s2", "T"), new("s1", "s3", "F"), new("s2", "s4", null), new("s3", "s4", null)],
-        ["s1->s2", "s1->s3", "s2->s4", "s3->s4"],
-        ["condA"],
-        [
-            new("p-then", ["s1", "s2", "s4"], ["s1->s2", "s2->s4"], ["condA=true"]),
-            new("p-else", ["s1", "s3", "s4"], ["s1->s3", "s3->s4"], ["condA=false"])
-        ]);
+    private static ControlFlowGraph Graph() => ControlFlowGraph.IfThenElse();
 
     [Fact]
     public void Then_path_alone_is_half_branch_coverage()

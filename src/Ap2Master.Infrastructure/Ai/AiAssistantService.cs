@@ -66,8 +66,16 @@ public sealed class AiConversationStore : IAiConversationStore
     public async Task<IReadOnlyList<AssistantConversation>> ListAsync(CancellationToken cancellationToken)
         => await _db.Set<AssistantConversation>().AsNoTracking().OrderByDescending(c => c.UpdatedAt).Take(50).ToListAsync(cancellationToken);
 
-    public Task<AssistantConversation?> GetAsync(Guid id, CancellationToken cancellationToken)
-        => _db.Set<AssistantConversation>().Include(c => c.Messages).FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+    public async Task<AssistantConversation?> GetAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var conv = await _db.Set<AssistantConversation>().AsNoTracking().FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+        if (conv is null) return null;
+        conv.Messages = await _db.Set<AssistantMessage>().AsNoTracking()
+            .Where(m => m.ConversationId == id)
+            .OrderBy(m => m.CreatedAt)
+            .ToListAsync(cancellationToken);
+        return conv;
+    }
 
     public async Task DeleteAllAsync(CancellationToken cancellationToken)
     {
@@ -342,7 +350,7 @@ public sealed class AiAssistantService : IAiAssistantService
 public sealed class CompositeLanguageModelProvider : ILocalLanguageModelProvider
 {
     private readonly OllamaLanguageModelProvider _ollama;
-    private readonly LlamaSharpLanguageModelProvider _llama = new();
+    private readonly UnavailableLanguageModelProvider _fileModel = UnavailableLanguageModelProvider.ForGguf();
     private ILocalLanguageModelProvider _active;
     public CompositeLanguageModelProvider(HttpClient http)
     {
@@ -353,13 +361,13 @@ public sealed class CompositeLanguageModelProvider : ILocalLanguageModelProvider
     public bool IsLoaded => _active.IsLoaded;
     public string StatusGerman => _active.StatusGerman;
     public Task<ModelValidationResult> ValidateAsync(LocalModelDefinition model, CancellationToken cancellationToken)
-        => model.Format == "gguf" ? _llama.ValidateAsync(model, cancellationToken) : _ollama.ValidateAsync(model, cancellationToken);
+        => model.Format == "gguf" ? _fileModel.ValidateAsync(model, cancellationToken) : _ollama.ValidateAsync(model, cancellationToken);
     public async Task LoadAsync(LocalModelDefinition model, ModelLoadOptions options, IProgress<ModelLoadProgress>? progress, CancellationToken cancellationToken)
     {
         if (model.Format == "gguf")
         {
-            _active = _llama;
-            await _llama.LoadAsync(model, options, progress, cancellationToken);
+            _active = _fileModel;
+            await _fileModel.LoadAsync(model, options, progress, cancellationToken);
             return;
         }
         _active = _ollama;
